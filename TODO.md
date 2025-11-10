@@ -26,7 +26,6 @@
 - [ ] Implement a leaderboard
 - [ ] Flash text on screen (not an alert) when a strike is hit ("Strike 1!" etc.)
 - [ ] Add BOM styling to all elements (Background texture & color, gold letters, font, etc.)
-- [ ] Disable new round button until a guess has been made
 - [ ] Clean up console.log clutter
 - [X] Add 'No Time Limit' Option
   - [X] Also Other timing options
@@ -35,35 +34,37 @@
 - [ ] Style Improvements
   - [ ] Game Screen
     - [X] Show strikes immediately under diamond
-- [ ] UI Improvements
+- [ ] **UI Improvements**
   - [ ] Settings Screen
     - [ ] Add spacing between elements
     - [ ] Add multiple tabs for space management
     - [ ] Fix Checkbox menu to make it dropdown instead of always being big
     - [X] Add 'check all' and 'uncheck all' option for chapter exclusion selection
     - [ ] Match styling of multi-check dropdown with other dropdowns
-  - [ ] Game Screen
+  - [ ] **Game Screen**
     - [ ] Set fixed size verse display with auto-scrolling as needed
     - [X] Staple diamond to the top of screen so it's easily visible next to verse
-  - [ ] Main Menu
+  - [ ] **Main Menu**
     - [ ] Center vertically
-- [ ] Refactoring
-  - [ ] HTML
+- [ ] **Refactoring**
+  - [ ] **HTML**
     - [ ] 
-  - [ ] JS
+  - [ ] **JS**
     - [ ] Add addAllEventListeners() function to clean up initiation code
     - [ ] Run through the whole file and prayerfully record refactoring ideas and insights
-  - [ ] CSS
+  - [ ] **CSS**
     - [ ] 
 - [ ] Bugs and Features 
   - [ ] Bug fixes
     - [ ] strikes:strikes on game screen right collumn
+- [ ] **Bugs and Features** 
+  - [ ] **Bug fixes**
     - [X] Reset runners when game ends
-    - [ ] Disable buttons when they should be disabled
-      - [ ] New Round
-      - [ ] Only allow one guess before reset. (This might be re-added as a feature later, but it's a bug right now)
-      - [ ] Disable all except reveal buttons on game-over 
-  - [ ] Features
+    - [X] Disable buttons when they should be disabled
+      - [X] New Round
+      - [X] Only allow one guess before reset. (This might be re-added as a feature later, but it's a bug right now)
+      - [X] Disable all except reveal buttons on game-over 
+  - [ ] **Features**
     - [ ] Offer default difficulty options to make selection easy
     - [ ] Put current independent selection options on a different screen ("Custom Difficulty Level")
     - [ ] 

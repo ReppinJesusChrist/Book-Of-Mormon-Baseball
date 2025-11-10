@@ -464,6 +464,7 @@ function submitGuess() {
     const chapterGuess = document.getElementById('chapterSelect').value;
 
     const resultEl = document.getElementById('result');
+    document.getElementById("newRound").disabled = false;
 
     if (!currentSelection) {
       resultEl.textContent = "No verses loaded yet.";
@@ -508,6 +509,7 @@ function startRound(){
   ++round;
   updateScoreboard();
   startTimer(handleTimeUp, TIMER_DURATIONS[difficulty]);
+  document.getElementById("newRound").disabled = true;
 }
 
 function handleTimeUp() {
@@ -550,12 +552,14 @@ function startGame(){
 }
 
 async function endGame(){
+  document.getElementById('newRound').disabled = true;
   document.getElementById('final-score').textContent = score;
   localStorage.setItem("Last Score", score);
   resetBases();
+
   if(score > localStorage.getItem("High Score")) localStorage.setItem("High Score", score);
   sleep(1000).then(() => {
-    showScreen(GAME_STATES.GAME_OVER);
+    //showScreen(GAME_STATES.GAME_OVER);
     stopTimer();
   }); 
 }
@@ -567,6 +571,7 @@ function resetBases(){
   document.querySelectorAll('#diamond .runner').forEach(r=>r.remove());
   updateBases();
 }
+
 
 window.addStrike = addStrike;
 window.advanceRunners = advanceRunners;
