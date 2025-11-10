@@ -1,36 +1,3 @@
-const ANIMATION_TIME_MS = 600; // Time in ms for runner animation
-const TIMER_DURATIONS = {
-  unlimited: Infinity,
-  leisurely: 180,
-  relaxed: 60,
-  easy: 30,
-  medium: 20,
-  hard: 10
-}; // Timer durations for different difficulties
-const THRESHOLD_ARRAYS = {
-  otest: [25, 50, 100, 250],
-  barn: [12, 25, 50, 100],
-  wider: [7, 12, 25, 50],
-  wide: [4, 7, 12, 25],
-  average: [2, 4, 7, 12],
-  narrow: [1, 2, 4, 7],
-  pinhead: [0, 1, 2, 4]
-}
-const STANDARD_WORKS_FILE_NAMES = {
-  bofm: 'data/bofm.json',
-  ot: 'data/ot.json',
-  nt: 'data/nt.json',
-  dc: 'data/dc.json',
-  gc: 'data/gc.json'
-};
-const GAME_STATES = {
-  MENU: 'menu',
-  IN_GAME: 'in_game',
-  GAME_OVER: 'game_over',
-  SETTINGS: 'settings',
-  LEADERBOARD: 'leaderboard'
-}
-
 const vSelect = document.getElementById('volume-select-value');
 const toggle = document.getElementById('include-exclude-toggle');
 const IESelect = document.getElementById('include-exclude-values');
@@ -39,7 +6,7 @@ const dropdown = document.getElementById('include-exclude-dropdown');
 import { startTimer, stopTimer } from "./timer.js";
 import { makeScriptureLink, sleep } from "./helper_functions.js";
 import { initializeGame } from "./game_logic.js";
-
+import {ANIMATION_TIME_MS, TIMER_DURATIONS, THRESHOLD_ARRAYS, STANDARD_WORKS_FILE_NAMES, GAME_STATES} from './config.js'
 
 let gameState = GAME_STATES.MENU;
 
@@ -83,87 +50,32 @@ document.addEventListener('DOMContentLoaded', function () {
   document.getElementById('volume-select-value').addEventListener('change', handleVSelectChange);
   document.getElementById('threshold-value').addEventListener('change', handleThreshValueChange);
   document.getElementById('revealDistance').addEventListener('click', handleRevealDistance);
+  document.getElementById('revealReference').addEventListener('click', handleRevealReference);
+  document.getElementById('newRound').addEventListener('click', handleNewRound);
+  document.getElementById('leaderboard-button').addEventListener('click', handleLeaderboardButton);
+  document.getElementById('finalizeGuess').addEventListener('click', handleFinalizeGuess);
+  document.getElementById('settings-button').addEventListener('click',handleSettingsButton);
+  document.getElementById('check-all-inex').addEventListener('click', handleCheckAllInex);
+  document.getElementById('uncheck-all-inex').addEventListener('click', handleUncheckAllInex);  
 
-  document.getElementById('revealReference').addEventListener('click', function () {
-    const refEl = document.getElementById('reference');
-    console.log('Reveal button clicked');
-    // SIMPLE REVEAL: just show once
-    if (!refEl.textContent && currentSelection) {
-      let cs = currentSelection;
-      const url = makeScriptureLink(currentVolume, cs);
-      const link = document.createElement('a');
-      link.href = url;
-      link.target = "_blank";
-      link.rel = "noopener noreferrer";
-      link.textContent = cs.reference;
-      refEl.appendChild(link);
+  document.querySelectorAll('.start-restart-button').forEach(button => {
+    button.addEventListener('click', function(){
+      if(button.id === 'start-button'){
+      let difEl = document.getElementById('difficulty-value');
+      difficulty = difEl.value;
+      console.log(`Difficulty: ${difficulty}; Timer: ${TIMER_DURATIONS[difficulty]}s`);
     }
+    startGame();
+    });
   });
-
-  document.getElementById('newRound').addEventListener('click', function () {
-    startRound();
+  document.querySelectorAll('.main-menu-button').forEach(button => {
+    button.addEventListener('click', handleMainMenuButton);
   });
 
   toggle.addEventListener('click', (e)=>{
     e.stopPropagation(); // Study this further to understand
     dropdown.classList.toggle('open');
   })
-
-  /**
-   // Close dropdown if clicked outside
-    document.addEventListener('click', (e) => {
-      if (!dropdown.contains(e.target)) dropdown.classList.remove('open');
-    });
-  */
-
-  document.getElementById('finalizeGuess').addEventListener('click', function () {
-    submitGuess();
-    stopTimer();
-  });
-
-  document.getElementById('settings-button').addEventListener('click', function () {
-    showScreen(GAME_STATES.SETTINGS);
-  });
-
-  document.getElementById('leaderboard-button').addEventListener('click', function () {
-    document.getElementById('most-recent-score').textContent = "Most Recent Score: "
-     + localStorage.getItem("Last Score");
-     document.getElementById('high-score').textContent = "High Score: "
-     + localStorage.getItem("High Score");
-    showScreen(GAME_STATES.LEADERBOARD);
-  });
-
-  document.getElementById('check-all-inex').addEventListener('click', function (){
-    let targetDiv = document.getElementById("include-exclude-values");
-    toggleAllBoxes(targetDiv, true);
-    populateIncludeExcludeOptions();
-  });
-
-  document.getElementById('uncheck-all-inex').addEventListener('click', function (){
-    let targetDiv = document.getElementById("include-exclude-values");
-    toggleAllBoxes(targetDiv, false);
-    includedBooks.clear();
-  });
-
-  document.querySelectorAll('.main-menu-button').forEach(button => {
-    button.addEventListener('click', function () {
-      showScreen(GAME_STATES.MENU);
-      stopTimer();
-      // Reset game state. Eventually move to new resetGame() function
-      strikes = 0;
-    });
-  });
-
-  document.querySelectorAll('.start-restart-button').forEach(button => {
-    button.addEventListener('click', function () {
-      if(button.id === 'start-button'){
-        let difEl = document.getElementById('difficulty-value');
-        difficulty = difEl.value;
-        console.log(`Difficulty: ${difficulty}; Timer: ${TIMER_DURATIONS[difficulty]}s`);
-      }
-      startGame();
-    });
-  });
 });
 
 function fetchScriptures() {
@@ -581,3 +493,53 @@ function handleRevealDistance(){
       refEl.textContent = `(Off by ${currGuessDistance} chapters)`;
     }
 }
+function handleRevealReference(){
+  const refEl = document.getElementById('reference');
+  console.log('Reveal button clicked');
+  // SIMPLE REVEAL: just show once
+  if (!refEl.textContent && currentSelection) {
+    let cs = currentSelection;
+    const url = makeScriptureLink(currentVolume, cs);
+    const link = document.createElement('a');
+    link.href = url;
+    link.target = "_blank";
+    link.rel = "noopener noreferrer";
+    link.textContent = cs.reference;
+    refEl.appendChild(link);
+  }
+}
+function handleNewRound(){
+  startRound();
+}
+function handleLeaderboardButton(){
+  document.getElementById('most-recent-score').textContent = "Most Recent Score: "
+     + localStorage.getItem("Last Score");
+     document.getElementById('high-score').textContent = "High Score: "
+     + localStorage.getItem("High Score");
+    showScreen(GAME_STATES.LEADERBOARD);
+}
+function handleFinalizeGuess(){
+  submitGuess();
+  stopTimer();
+}
+function handleSettingsButton(){
+    showScreen(GAME_STATES.SETTINGS);
+}
+function handleCheckAllInex(){
+  let targetDiv = document.getElementById("include-exclude-values");
+  toggleAllBoxes(targetDiv, true);
+  populateIncludeExcludeOptions();
+}
+function handleUncheckAllInex(){
+  let targetDiv = document.getElementById("include-exclude-values");
+  toggleAllBoxes(targetDiv, false);
+  includedBooks.clear();
+}
+function handleMainMenuButton(){
+  showScreen(GAME_STATES.MENU);
+    stopTimer();
+    // Reset game state. Eventually move to new resetGame() function
+    strikes = 0;
+}
+function handleStartRestart(button){
+} // Look up why this broke
