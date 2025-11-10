@@ -54,6 +54,9 @@
     - [ ] Run through the whole file and prayerfully record refactoring ideas and insights
   - [ ] **CSS**
     - [ ] 
+- [ ] Bugs and Features 
+  - [ ] Bug fixes
+    - [ ] strikes:strikes on game screen right collumn
 - [ ] **Bugs and Features** 
   - [ ] **Bug fixes**
     - [X] Reset runners when game ends
