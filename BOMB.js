@@ -4,9 +4,10 @@ const IESelect = document.getElementById('include-exclude-values');
 const dropdown = document.getElementById('include-exclude-dropdown');
 
 import { startTimer, stopTimer } from "./timer.js";
-import { makeScriptureLink, sleep } from "./helper_functions.js";
+import { makeScriptureLink, sleep, nextFrame } from "./helper_functions.js";
 import { initializeGame } from "./game_logic.js";
-import {ANIMATION_TIME_MS, TIMER_DURATIONS, THRESHOLD_ARRAYS, STANDARD_WORKS_FILE_NAMES, GAME_STATES} from './config.js'
+import {updateStrikeBoxes, updateScoreboard} from "./ui_manager.js";
+import {ANIMATION_TIME_MS, TIMER_DURATIONS, THRESHOLD_ARRAYS, STANDARD_WORKS_FILE_NAMES, GAME_STATES, BASE_POSITIONS} from './config.js'
 
 let gameState = GAME_STATES.MENU;
 
@@ -28,14 +29,6 @@ let difficulty = 'easy';
 let currentVolume = 'bofm';
 let thresholdSetting = 'average'; 
 let numDisplayVerses = 3;
-
-const basePositions = {
-  home:  { left: 50,  top: 90 },
-  first: { left: 90, top: 50  },
-  second:{ left: 50,  top: 10   },
-  third: { left: 10,   top: 50  },
-  back_home: { left: 50,  top: 90 } // Back to home for scoring
-};
 
 document.addEventListener('DOMContentLoaded', function () {
   // Set CSS variables for animation time
@@ -260,10 +253,6 @@ function buildVerseList(scriptures) {
   }
 }
 
-function nextFrame(){
-  return new Promise(resolve => requestAnimationFrame(resolve));
-}
-
 async function advanceRunners(numBases){
   if(numBases > 0){
     spawnRunner();
@@ -297,7 +286,7 @@ async function advanceRunners(numBases){
     });
   }
   
-  updateScoreboard();
+  updateScoreboard(score, round, strikes);
 }
 
 function spawnRunner(){
@@ -325,15 +314,8 @@ function updateBases() {
     document.getElementById("third").classList.toggle("active", bases[3]);
 }
 
-function updateScoreboard() {
-  document.getElementById("score").textContent = `${score}`;
-  document.getElementById("round").textContent = `${round}`;
-  document.getElementById("strikes").textContent = `Strikes: ${strikes}`;
-  updateStrikeBoxes();
-}
-
 function setRunnerPosition(runner, base){
-  const coords = basePositions[base];
+  const coords = BASE_POSITIONS[base];
   runner.style.left = coords.left + -2.5 + "%";
   runner.style.top = coords.top + -2.5 + "%";
   //runner.style.transform = `translate(${coords.left}%, ${coords.top}%)`; 
@@ -347,7 +329,7 @@ function getNextBase(currentBase){
 }
 
 function positionBases(){
-  for (const [base, pos] of Object.entries(basePositions)) {
+  for (const [base, pos] of Object.entries(BASE_POSITIONS)) {
     if(base === "back_home") continue; // No element for this one
     const baseEl = document.getElementById(base);
     baseEl.style.position = "absolute";
@@ -407,7 +389,7 @@ function submitGuess() {
 function startRound(){
   showVerses();
   ++round;
-  updateScoreboard();
+  updateScoreboard(score, round, strikes);
   startTimer(handleTimeUp, TIMER_DURATIONS[difficulty]);
   document.getElementById("newRound").disabled = true;
 }
@@ -428,17 +410,10 @@ function showScreen(state){
 
 function addStrike(){
   ++strikes;
-  updateScoreboard();
+  updateScoreboard(score, round, strikes);
   if(strikes >= 3){
     document.getElementById('final-score').textContent = score;
     endGame();
-  }
-}
-
-function updateStrikeBoxes(){
-  for(let i = 1; i <=3; ++i){
-    const box = document.getElementById(`strike-box-${i}`);
-    box.textContent = i <= strikes ? 'X' : '';
   }
 }
 
@@ -446,7 +421,7 @@ function startGame(){
   strikes = 0;
   score = 0;
   round = 0;
-  updateScoreboard();
+  updateScoreboard(score, round, strikes);
   showScreen(GAME_STATES.IN_GAME);
   startRound();
 }

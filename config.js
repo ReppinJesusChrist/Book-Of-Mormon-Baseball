@@ -30,3 +30,10 @@ export const GAME_STATES = {
   SETTINGS: 'settings',
   LEADERBOARD: 'leaderboard'
 }
+export const BASE_POSITIONS = {
+  home:  { left: 50,  top: 90 },
+  first: { left: 90, top: 50  },
+  second:{ left: 50,  top: 10   },
+  third: { left: 10,   top: 50  },
+  back_home: { left: 50,  top: 90 } // Back to home for scoring
+};
