@@ -2,11 +2,13 @@ const vSelect = document.getElementById('volume-select-value');
 const toggle = document.getElementById('include-exclude-toggle');
 const IESelect = document.getElementById('include-exclude-values');
 const dropdown = document.getElementById('include-exclude-dropdown');
+const bookSelect = document.getElementById('bookSelect');
+const chapterSelect = document.getElementById('chapterSelect');
 
 import { startTimer, stopTimer } from "./timer.js";
 import { makeScriptureLink, sleep, nextFrame } from "./helper_functions.js";
 import { initializeGame } from "./game_logic.js";
-import {updateScoreboard} from "./ui_manager.js";
+import {populateGuessOptions, updateScoreboard} from "./ui_manager.js";
 import {fetchScriptures} from "./data_manager.js";
 import {ANIMATION_TIME_MS, TIMER_DURATIONS, THRESHOLD_ARRAYS, STANDARD_WORKS_FILE_NAMES, GAME_STATES, BASE_POSITIONS} from './config.js'
 
@@ -18,6 +20,8 @@ let score = 0;
 let strikes = 0;
 let round = 0;
 let scriptures = null;
+window.scriptureDebug = scriptures;
+
 let currentSelection = null;
 let allVerses = [];
 let chapterIndexMap = {};
@@ -34,14 +38,7 @@ let numDisplayVerses = 3;
 document.addEventListener('DOMContentLoaded', function () {
   // Set CSS variables for animation time
   document.documentElement.style.setProperty('--runner-animation-time', `${ANIMATION_TIME_MS}ms`);
-
-  positionBases();
-
-  // Load verses from bom.json when the page loads
-  loadData();
   
-
-  document.getElementById('volume-select-value').addEventListener('change', handleVSelectChange);
   document.getElementById('threshold-value').addEventListener('change', handleThreshValueChange);
   document.getElementById('revealDistance').addEventListener('click', handleRevealDistance);
   document.getElementById('revealReference').addEventListener('click', handleRevealReference);
@@ -50,7 +47,9 @@ document.addEventListener('DOMContentLoaded', function () {
   document.getElementById('finalizeGuess').addEventListener('click', handleFinalizeGuess);
   document.getElementById('settings-button').addEventListener('click',handleSettingsButton);
   document.getElementById('check-all-inex').addEventListener('click', handleCheckAllInex);
-  document.getElementById('uncheck-all-inex').addEventListener('click', handleUncheckAllInex);  
+  document.getElementById('uncheck-all-inex').addEventListener('click', handleUncheckAllInex);
+  vSelect.addEventListener('change', handleVSelectChange); 
+  bookSelect.addEventListener('change', handleBookSelectChange);
 
   document.querySelectorAll('.start-restart-button').forEach(button => {
     button.addEventListener('click', function(){
@@ -62,6 +61,7 @@ document.addEventListener('DOMContentLoaded', function () {
     startGame();
     });
   });
+
   document.querySelectorAll('.main-menu-button').forEach(button => {
     button.addEventListener('click', handleMainMenuButton);
   });
@@ -70,37 +70,31 @@ document.addEventListener('DOMContentLoaded', function () {
     e.stopPropagation(); // Study this further to understand
     dropdown.classList.toggle('open');
   })
+
+  positionBases();
+
+  // Load verses from bom.json when the page loads
+  loadData();
 });
 
 async function loadData() {
   try{
     const response = await fetchScriptures(STANDARD_WORKS_FILE_NAMES[currentVolume]);
-    scriptures = response;
-    
+    scriptures = await response;
+    scriptureDebug = scriptures;
+
     buildVerseList(scriptures);
     buildChapterIndex(scriptures);
-    populateGuessOptions();
+    populateGuessOptions(scriptures);
     populateIncludeExcludeOptions();
     
   } catch (err) {
     console.error('Error loading verses: ', err);
   }
   
-  /*
-  fetch(`${STANDARD_WORKS_FILE_NAMES[currentVolume]}`)
-    .then(response => response.json())
-    .then(data => {
-      scriptures = data;
-      buildVerseList(scriptures);
-      buildChapterIndex(scriptures);
-      populateGuessOptions();
-      populateIncludeExcludeOptions();
-    })
-    .catch(err => console.error('Error loading verses:', err));
-  */
-  
 }
 
+/*
 function populateGuessOptions() {
   const bookSelect = document.getElementById('bookSelect');
   bookSelect.innerHTML = ''; // Clear previous options
@@ -131,6 +125,8 @@ function populateGuessOptions() {
     document.getElementById('finalizeGuess').disabled = !(bookSelect.value && chapterSelect.value);
   });
 }
+ */
+
 
 function populateIncludeExcludeOptions() {
   IESelect.innerHTML = ''; // Clear previous options
@@ -163,13 +159,6 @@ function populateIncludeExcludeOptions() {
       wrapper.appendChild(label);
       IESelect.appendChild(wrapper);
     });
-
-
-  vSelect.addEventListener('change', () =>{
-    currentVolume = vSelect.value;
-    loadData();
-    populateIncludeExcludeOptions();
-  });
 }
 
 /**
@@ -470,9 +459,6 @@ window.advanceRunners = advanceRunners;
 window.resetBases = resetBases;
 
 // Event Listener Functions (Will be exported or regrouped soon I think)
-function handleVSelectChange(){
-  populateIncludeExcludeOptions();
-}
 function handleThreshValueChange(){
   thresholdSetting = document.getElementById('threshold-value').value;
 }
@@ -529,6 +515,23 @@ function handleUncheckAllInex(){
 function handleMainMenuButton(){
   endGame()
   showScreen(GAME_STATES.MENU); 
+}
+function handleVSelectChange(){
+  currentVolume = vSelect.value;
+  loadData();
+}
+function handleBookSelectChange(){
+  chapterSelect.innerHTML = ''; // Clear previous options
+    const chapters = Object.keys(scriptures[bookSelect.value]);
+    chapters.forEach(chapter => {
+      const option = document.createElement('option');
+      option.value = chapter;
+      option.textContent = chapter;
+      chapterSelect.appendChild(option);
+    });
+
+    // Enable submit button when both selections are made
+    document.getElementById('finalizeGuess').disabled = !(bookSelect.value && chapterSelect.value);
 }
 function handleStartRestart(button){
 } // Look up why this broke

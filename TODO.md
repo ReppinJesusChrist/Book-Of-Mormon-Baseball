@@ -58,6 +58,11 @@
   - [ ] **JS**
     - [ ] Add addAllEventListeners() function to clean up initiation code
     - [ ] Run through the whole file and prayerfully record refactoring ideas and insights
+    - [ ] Move from BOMB
+      - [ ] To ui_manager
+        - [ ] populateGuessOptions()
+      - [ ] To game_logic
+        - [ ] 
   - [ ] **CSS**
     - [ ]  
 
