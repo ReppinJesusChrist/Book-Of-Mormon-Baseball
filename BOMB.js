@@ -6,7 +6,8 @@ const dropdown = document.getElementById('include-exclude-dropdown');
 import { startTimer, stopTimer } from "./timer.js";
 import { makeScriptureLink, sleep, nextFrame } from "./helper_functions.js";
 import { initializeGame } from "./game_logic.js";
-import {updateStrikeBoxes, updateScoreboard} from "./ui_manager.js";
+import {updateScoreboard} from "./ui_manager.js";
+import {fetchScriptures} from "./data_manager.js";
 import {ANIMATION_TIME_MS, TIMER_DURATIONS, THRESHOLD_ARRAYS, STANDARD_WORKS_FILE_NAMES, GAME_STATES, BASE_POSITIONS} from './config.js'
 
 let gameState = GAME_STATES.MENU;
@@ -37,7 +38,7 @@ document.addEventListener('DOMContentLoaded', function () {
   positionBases();
 
   // Load verses from bom.json when the page loads
-  fetchScriptures();
+  loadData();
   
 
   document.getElementById('volume-select-value').addEventListener('change', handleVSelectChange);
@@ -71,7 +72,21 @@ document.addEventListener('DOMContentLoaded', function () {
   })
 });
 
-function fetchScriptures() {
+async function loadData() {
+  try{
+    const response = await fetchScriptures(STANDARD_WORKS_FILE_NAMES[currentVolume]);
+    scriptures = response;
+    
+    buildVerseList(scriptures);
+    buildChapterIndex(scriptures);
+    populateGuessOptions();
+    populateIncludeExcludeOptions();
+    
+  } catch (err) {
+    console.error('Error loading verses: ', err);
+  }
+  
+  /*
   fetch(`${STANDARD_WORKS_FILE_NAMES[currentVolume]}`)
     .then(response => response.json())
     .then(data => {
@@ -82,6 +97,8 @@ function fetchScriptures() {
       populateIncludeExcludeOptions();
     })
     .catch(err => console.error('Error loading verses:', err));
+  */
+  
 }
 
 function populateGuessOptions() {
@@ -150,7 +167,7 @@ function populateIncludeExcludeOptions() {
 
   vSelect.addEventListener('change', () =>{
     currentVolume = vSelect.value;
-    fetchScriptures();
+    loadData();
     populateIncludeExcludeOptions();
   });
 }
