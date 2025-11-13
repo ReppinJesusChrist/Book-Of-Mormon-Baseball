@@ -1,11 +1,20 @@
 export const ANIMATION_TIME_MS = 600; // Time in ms for runner animation
-export const TIMER_DURATIONS = {
+/**export const TIMER_DURATIONS = {
   unlimited: Infinity,
   leisurely: 180,
   relaxed: 60,
   easy: 30,
   medium: 20,
   hard: 10
+}; **/// Timer durations for different difficulties
+export const TIMER_DURATIONS = {
+  otest: Infinity,
+  barn: Infinity,
+  wider: 180,
+  wide: 60,
+  average: 30,
+  narrow: 20,
+  pinhead: 10
 }; // Timer durations for different difficulties
 export const THRESHOLD_ARRAYS = {
   otest: [25, 50, 100, 250],
