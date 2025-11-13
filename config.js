@@ -37,7 +37,7 @@ export const BASE_POSITIONS = {
   third: { left: 10,   top: 50  },
   back_home: { left: 50,  top: 90 } // Back to home for scoring
 };
-export const EL_NAMES = {
+export const ELS = {
   vSelect: document.getElementById('volume-select-value'),
   toggle: document.getElementById('include-exclude-toggle'),
   IESelect: document.getElementById('include-exclude-values'),

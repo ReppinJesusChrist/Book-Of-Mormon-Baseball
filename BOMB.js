@@ -4,7 +4,7 @@ import { endGame, getNextBase, initializeGame } from "./game_logic.js";
 import {populateIncludeExcludeOptions, populateGuessOptions, updateScoreboard,
   showGameOver, hideGameOver} from "./ui_manager.js";
 import {fetchScriptures} from "./data_manager.js";
-import {BUTTON_ELS, EL_NAMES, ANIMATION_TIME_MS, TIMER_DURATIONS, 
+import {BUTTON_ELS, ELS, ANIMATION_TIME_MS, TIMER_DURATIONS, 
   THRESHOLD_ARRAYS, STANDARD_WORKS_FILE_NAMES, GAME_STATES, BASE_POSITIONS} from './config.js'
 
 let gameState = GAME_STATES.MENU;
@@ -43,8 +43,8 @@ document.addEventListener('DOMContentLoaded', function () {
   document.getElementById('check-all-inex').addEventListener('click', handleCheckAllInex);
   document.getElementById('uncheck-all-inex').addEventListener('click', handleUncheckAllInex);
   BUTTON_ELS.hideOverlay.addEventListener('click', handleHideOverlay);
-  EL_NAMES.vSelect.addEventListener('change', handleVSelectChange); 
-  EL_NAMES.bookSelect.addEventListener('change', handleBookSelectChange);
+  ELS.vSelect.addEventListener('change', handleVSelectChange); 
+  ELS.bookSelect.addEventListener('change', handleBookSelectChange);
 
   document.querySelectorAll('.start-restart-button').forEach(button => {
     button.addEventListener('click', function(){
@@ -60,9 +60,9 @@ document.addEventListener('DOMContentLoaded', function () {
     button.addEventListener('click', handleMainMenuButton);
   });
 
-  EL_NAMES.toggle.addEventListener('click', (e)=>{
+  ELS.toggle.addEventListener('click', (e)=>{
     e.stopPropagation(); // Study this further to understand
-    EL_NAMES.dropdown.classList.toggle('open');
+    ELS.dropdown.classList.toggle('open');
   })
 
   positionBases();
@@ -86,40 +86,7 @@ async function loadData() {
   }
   
 }
-/*
-function populateIncludeExcludeOptions() {
-  EL_NAMES.IESelect.innerHTML = ''; // Clear previous options
-    Object.keys(scriptures).forEach(bookName => {
-      const wrapper = document.createElement('div');
-      wrapper.style.display = 'block';
 
-      const checkbox = document.createElement('input');
-      checkbox.type = 'checkbox';
-      checkbox.id = `inex-${bookName}`;
-      checkbox.value = bookName;
-      checkbox.textContent = bookName;
-      checkbox.checked = true; // Default to include all books
-      includedBooks.add(bookName); // Update set to reflect ^^^
-
-      const label = document.createElement('label');
-      label.setAttribute('for', `inex-${bookName}`);
-      label.textContent = bookName;
-
-      checkbox.addEventListener('change', () => {
-        if(checkbox.checked){
-          includedBooks.add(bookName);
-        } else {
-          includedBooks.delete(bookName);
-        }
-        console.log(`Included books:`, includedBooks);
-      });
-
-      wrapper.appendChild(checkbox);
-      wrapper.appendChild(label);
-      EL_NAMES.IESelect.appendChild(wrapper);
-    });
-}
-*/
 /**
  * 
  * @param {HTMLElement} targetDiv - the element to iterate through 
@@ -167,8 +134,8 @@ function showVerses() {
   const resultEl = document.getElementById('result');
   const distanceEl = document.getElementById('distance');
 
-  EL_NAMES.bookSelect.value = '';
-  EL_NAMES.chapterSelect.innerHTML = '';
+  ELS.bookSelect.value = '';
+  ELS.chapterSelect.innerHTML = '';
   resultEl.textContent = '';
   distanceEl.textContent = '';
 
@@ -292,8 +259,8 @@ function positionBases(){
 function submitGuess() {
     document.getElementById('revealDistance').disabled = false;
     document.getElementById('revealReference').disabled = false;
-    const bookGuess = EL_NAMES.bookSelect.value;
-    const chapterGuess = EL_NAMES.chapterSelect.value;
+    const bookGuess = ELS.bookSelect.value;
+    const chapterGuess = ELS.chapterSelect.value;
 
     const resultEl = document.getElementById('result');
     document.getElementById("newRound").disabled = false;
@@ -363,7 +330,7 @@ function addStrike(){
   if(strikes >= 3){
     document.getElementById('final-score').textContent = score;
     sleep(1000).then(() => {
-      endGame();
+      endGame(score);
       showGameOver(score);
     });
   }
@@ -436,26 +403,26 @@ function handleUncheckAllInex(){
   includedBooks.clear();
 }
 function handleMainMenuButton(){
-  endGame();
+  endGame(score);
   hideGameOver();
   showScreen(GAME_STATES.MENU); 
 }
 function handleVSelectChange(){
-  currentVolume = EL_NAMES.vSelect.value;
+  currentVolume = ELS.vSelect.value;
   loadData();
 }
 function handleBookSelectChange(){
-  EL_NAMES.chapterSelect.innerHTML = ''; // Clear previous options
-    const chapters = Object.keys(scriptures[EL_NAMES.bookSelect.value]);
+  ELS.chapterSelect.innerHTML = ''; // Clear previous options
+    const chapters = Object.keys(scriptures[ELS.bookSelect.value]);
     chapters.forEach(chapter => {
       const option = document.createElement('option');
       option.value = chapter;
       option.textContent = chapter;
-      EL_NAMES.chapterSelect.appendChild(option);
+      ELS.chapterSelect.appendChild(option);
     });
 
     // Enable submit button when both selections are made
-    document.getElementById('finalizeGuess').disabled = !(EL_NAMES.bookSelect.value && EL_NAMES.chapterSelect.value);
+    document.getElementById('finalizeGuess').disabled = !(ELS.bookSelect.value && ELS.chapterSelect.value);
 }
 function handleHideOverlay(){
   hideGameOver();

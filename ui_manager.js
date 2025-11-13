@@ -1,16 +1,16 @@
-import {EL_NAMES} from "./config.js";
+import {ELS} from "./config.js";
 
 export function showGameOver(score){
-  EL_NAMES.finalScore.textContent = score;
-  EL_NAMES.overlay.classList.add('visible');
+  ELS.finalScore.textContent = score;
+  ELS.overlay.classList.add('visible');
 }
 
 export function hideGameOver(){
-  EL_NAMES.overlay.classList.remove('visible');
+  ELS.overlay.classList.remove('visible');
 }
 
 export function populateIncludeExcludeOptions(scriptures, includedBooks) {
-  EL_NAMES.IESelect.innerHTML = ''; // Clear previous options
+  ELS.IESelect.innerHTML = ''; // Clear previous options
     Object.keys(scriptures).forEach(bookName => {
       const wrapper = document.createElement('div');
       wrapper.style.display = 'block';
@@ -38,7 +38,7 @@ export function populateIncludeExcludeOptions(scriptures, includedBooks) {
 
       wrapper.appendChild(checkbox);
       wrapper.appendChild(label);
-      EL_NAMES.IESelect.appendChild(wrapper);
+      ELS.IESelect.appendChild(wrapper);
     });
 }
 
