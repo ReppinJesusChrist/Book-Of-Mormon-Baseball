@@ -1,8 +1,8 @@
 import { startTimer, stopTimer } from "./timer.js";
 import { makeScriptureLink, sleep, nextFrame } from "./helper_functions.js";
-import { initializeGame } from "./game_logic.js";
+import { endGame, getNextBase, initializeGame } from "./game_logic.js";
 import {populateIncludeExcludeOptions, populateGuessOptions, updateScoreboard,
-  showGameOver} from "./ui_manager.js";
+  showGameOver, hideGameOver} from "./ui_manager.js";
 import {fetchScriptures} from "./data_manager.js";
 import {BUTTON_ELS, EL_NAMES, ANIMATION_TIME_MS, TIMER_DURATIONS, 
   THRESHOLD_ARRAYS, STANDARD_WORKS_FILE_NAMES, GAME_STATES, BASE_POSITIONS} from './config.js'
@@ -271,24 +271,11 @@ function waitForAllRunners(runners, duration) {
   });
 }
 
-function updateBases() {
-    document.getElementById("first").classList.toggle("active", bases[1]);
-    document.getElementById("second").classList.toggle("active", bases[2]);
-    document.getElementById("third").classList.toggle("active", bases[3]);
-}
-
 function setRunnerPosition(runner, base){
   const coords = BASE_POSITIONS[base];
   runner.style.left = coords.left + -2.5 + "%";
   runner.style.top = coords.top + -2.5 + "%";
   //runner.style.transform = `translate(${coords.left}%, ${coords.top}%)`; 
-}
-
-function getNextBase(currentBase){
-  const order = ["home", "first", "second", "third", "back_home"];
-  const index = order.indexOf(currentBase);
-  let nextIndex = (index + 1);
-  return order[nextIndex];
 }
 
 function positionBases(){
@@ -332,7 +319,7 @@ function submitGuess() {
                    distance <= tripleThreshold ? 3 :
                    distance <= doubleThreshold ? 2 :
                    distance <= singleThreshold ? 1 : 0);
-    updateBases();
+
     if (distance <= homeRunThreshold){
       resultEl.textContent = `HOME RUN!!! (Within ${homeRunThreshold} chapters).`;
     } else if(distance <= tripleThreshold){
@@ -375,7 +362,10 @@ function addStrike(){
   updateScoreboard(score, round, strikes);
   if(strikes >= 3){
     document.getElementById('final-score').textContent = score;
-    endGame();
+    sleep(1000).then(() => {
+      endGame();
+      showGameOver(score);
+    });
   }
 }
 
@@ -388,30 +378,8 @@ function startGame(){
   startRound();
 }
 
-async function endGame(){
-  document.getElementById('newRound').disabled = true;
-  document.getElementById('final-score').textContent = score;
-  localStorage.setItem("Last Score", score);
-  resetBases();
-  stopTimer();
-  if(score > localStorage.getItem("High Score")) localStorage.setItem("High Score", score);
-  sleep(1000).then(() => {
-    showGameOver(score);
-  }); 
-}
-
-function resetBases(){
-  console.log("Bases Reset");
-  bases = [false, false, false, false];
-  runners.length = 0;
-  document.querySelectorAll('#diamond .runner').forEach(r=>r.remove());
-  updateBases();
-}
-
-
 window.addStrike = addStrike;
 window.advanceRunners = advanceRunners;
-window.resetBases = resetBases;
 
 // Event Listener Functions (Will be exported or regrouped soon I think)
 function handleThreshValueChange(){
@@ -468,7 +436,8 @@ function handleUncheckAllInex(){
   includedBooks.clear();
 }
 function handleMainMenuButton(){
-  endGame()
+  endGame();
+  hideGameOver();
   showScreen(GAME_STATES.MENU); 
 }
 function handleVSelectChange(){
@@ -489,7 +458,7 @@ function handleBookSelectChange(){
     document.getElementById('finalizeGuess').disabled = !(EL_NAMES.bookSelect.value && EL_NAMES.chapterSelect.value);
 }
 function handleHideOverlay(){
-  EL_NAMES.overlay.classList.remove('visible');
+  hideGameOver();
 }
 function handleStartRestart(button){
 } // Look up why this broke

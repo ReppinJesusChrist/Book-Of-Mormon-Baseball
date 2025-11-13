@@ -48,5 +48,6 @@ export const EL_NAMES = {
   finalScore: document.getElementById('final-score'),
 }
 export const BUTTON_ELS = {
-  hideOverlay: document.getElementById('hide-overlay')
+  hideOverlay: document.getElementById('hide-overlay'),
+  newRound: document.getElementById('newRound')
 }

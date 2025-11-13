@@ -53,6 +53,7 @@
     - [ ] 
   - [ ] **JS**
     - [ ] Add addAllEventListeners() function to clean up initiation code?
+    - [ ] Create updateHighScore function
     - [ ] Rename EL_NAMES to ELS (until that conflicts it's much easier)
     - [ ] Use ELS everywhere
     - [ ] Make seperate EL_ constant objects for buttons [X] and other elements [ ] to make referencing easier (in config.js)
@@ -61,7 +62,7 @@
       - [ ] To ui_manager
         - [ ]
       - [ ] To game_logic
-        - [ ] 
+        - [ ] advanceRunners
   - [ ] **CSS**
     - [ ] Pass the code by AI to ask for general style/CSS refactoring advice 
 
@@ -72,7 +73,7 @@
   - [ ] **Features**
     - [ ] Offer default difficulty options to make selection easy
     - [ ] Put current independent selection options on a different screen ("Custom Difficulty Level")
-    - [ ] Turn Game-over screen into an overlay
+    - [X] Turn Game-over screen into an overlay
 - [ ] **Misc**
   - [ ] Increase searchability online
     - [X] Add favicon.ico
@@ -88,4 +89,5 @@
 
 - **Sequel/Spinoff ideas**
   - [ ] Same gameplay loop with different minigames/payoffs in the right column
+    - [ ] Earn in-game currency based on closeness of answer?
   - [ ] 

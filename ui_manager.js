@@ -5,6 +5,10 @@ export function showGameOver(score){
   EL_NAMES.overlay.classList.add('visible');
 }
 
+export function hideGameOver(){
+  EL_NAMES.overlay.classList.remove('visible');
+}
+
 export function populateIncludeExcludeOptions(scriptures, includedBooks) {
   EL_NAMES.IESelect.innerHTML = ''; // Clear previous options
     Object.keys(scriptures).forEach(bookName => {
@@ -71,8 +75,3 @@ export function updateScoreboard(score, round, strikes){
     document.getElementById("strikes").textContent = `${strikes}`;
     updateStrikeBoxes(strikes);
 }
-
-export function showFinalScore(){
-    document.getElementById('final-score').textContent = score;
-}
-
