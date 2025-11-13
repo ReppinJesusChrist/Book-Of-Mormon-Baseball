@@ -49,9 +49,9 @@ document.addEventListener('DOMContentLoaded', function () {
   document.querySelectorAll('.start-restart-button').forEach(button => {
     button.addEventListener('click', function(){
       if(button.id === 'start-button'){
-        let difEl = document.getElementById('difficulty-value');
+        let difEl = document.getElementById('threshold-value');
         difficulty = difEl.value;
-        console.log(`Difficulty: ${difficulty}; Timer: ${TIMER_DURATIONS[difficulty]}s`);
+        console.log(`Difficulty: ${thresholdSetting}; Timer: ${TIMER_DURATIONS[thresholdSetting]}s`);
       }
       startGame();
     });
@@ -353,7 +353,7 @@ function startRound(){
   showVerses();
   ++round;
   updateScoreboard(score, round, strikes);
-  startTimer(handleTimeUp, TIMER_DURATIONS[difficulty]);
+  startTimer(handleTimeUp, TIMER_DURATIONS[thresholdSetting]);
   document.getElementById("newRound").disabled = true;
 }
 
