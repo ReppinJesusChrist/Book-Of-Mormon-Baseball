@@ -1,3 +1,38 @@
+import {EL_NAMES} from "./config.js";
+
+export function populateIncludeExcludeOptions(scriptures, includedBooks) {
+  EL_NAMES.IESelect.innerHTML = ''; // Clear previous options
+    Object.keys(scriptures).forEach(bookName => {
+      const wrapper = document.createElement('div');
+      wrapper.style.display = 'block';
+
+      const checkbox = document.createElement('input');
+      checkbox.type = 'checkbox';
+      checkbox.id = `inex-${bookName}`;
+      checkbox.value = bookName;
+      checkbox.textContent = bookName;
+      checkbox.checked = true; // Default to include all books
+      includedBooks.add(bookName); // Update set to reflect ^^^
+
+      const label = document.createElement('label');
+      label.setAttribute('for', `inex-${bookName}`);
+      label.textContent = bookName;
+
+      checkbox.addEventListener('change', () => {
+        if(checkbox.checked){
+          includedBooks.add(bookName);
+        } else {
+          includedBooks.delete(bookName);
+        }
+        console.log(`Included books:`, includedBooks);
+      });
+
+      wrapper.appendChild(checkbox);
+      wrapper.appendChild(label);
+      EL_NAMES.IESelect.appendChild(wrapper);
+    });
+}
+
 export function populateGuessOptions(scriptures) {
   if(!scriptures){
     console.warn("function called before scriptures were loaded");

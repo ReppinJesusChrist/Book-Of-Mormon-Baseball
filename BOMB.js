@@ -1,16 +1,9 @@
-const vSelect = document.getElementById('volume-select-value');
-const toggle = document.getElementById('include-exclude-toggle');
-const IESelect = document.getElementById('include-exclude-values');
-const dropdown = document.getElementById('include-exclude-dropdown');
-const bookSelect = document.getElementById('bookSelect');
-const chapterSelect = document.getElementById('chapterSelect');
-
 import { startTimer, stopTimer } from "./timer.js";
 import { makeScriptureLink, sleep, nextFrame } from "./helper_functions.js";
 import { initializeGame } from "./game_logic.js";
-import {populateGuessOptions, updateScoreboard} from "./ui_manager.js";
+import {populateIncludeExcludeOptions, populateGuessOptions, updateScoreboard} from "./ui_manager.js";
 import {fetchScriptures} from "./data_manager.js";
-import {ANIMATION_TIME_MS, TIMER_DURATIONS, THRESHOLD_ARRAYS, STANDARD_WORKS_FILE_NAMES, GAME_STATES, BASE_POSITIONS} from './config.js'
+import {EL_NAMES, ANIMATION_TIME_MS, TIMER_DURATIONS, THRESHOLD_ARRAYS, STANDARD_WORKS_FILE_NAMES, GAME_STATES, BASE_POSITIONS} from './config.js'
 
 let gameState = GAME_STATES.MENU;
 
@@ -20,7 +13,6 @@ let score = 0;
 let strikes = 0;
 let round = 0;
 let scriptures = null;
-window.scriptureDebug = scriptures;
 
 let currentSelection = null;
 let allVerses = [];
@@ -48,27 +40,26 @@ document.addEventListener('DOMContentLoaded', function () {
   document.getElementById('settings-button').addEventListener('click',handleSettingsButton);
   document.getElementById('check-all-inex').addEventListener('click', handleCheckAllInex);
   document.getElementById('uncheck-all-inex').addEventListener('click', handleUncheckAllInex);
-  vSelect.addEventListener('change', handleVSelectChange); 
-  bookSelect.addEventListener('change', handleBookSelectChange);
+  EL_NAMES.vSelect.addEventListener('change', handleVSelectChange); 
+  EL_NAMES.bookSelect.addEventListener('change', handleBookSelectChange);
 
   document.querySelectorAll('.start-restart-button').forEach(button => {
     button.addEventListener('click', function(){
       if(button.id === 'start-button'){
-      let difEl = document.getElementById('difficulty-value');
-      difficulty = difEl.value;
-      console.log(`Difficulty: ${difficulty}; Timer: ${TIMER_DURATIONS[difficulty]}s`);
-    }
-    startGame();
+        let difEl = document.getElementById('difficulty-value');
+        difficulty = difEl.value;
+        console.log(`Difficulty: ${difficulty}; Timer: ${TIMER_DURATIONS[difficulty]}s`);
+      }
+      startGame();
     });
   });
-
   document.querySelectorAll('.main-menu-button').forEach(button => {
     button.addEventListener('click', handleMainMenuButton);
   });
 
-  toggle.addEventListener('click', (e)=>{
+  EL_NAMES.toggle.addEventListener('click', (e)=>{
     e.stopPropagation(); // Study this further to understand
-    dropdown.classList.toggle('open');
+    EL_NAMES.dropdown.classList.toggle('open');
   })
 
   positionBases();
@@ -81,55 +72,20 @@ async function loadData() {
   try{
     const response = await fetchScriptures(STANDARD_WORKS_FILE_NAMES[currentVolume]);
     scriptures = await response;
-    scriptureDebug = scriptures;
 
     buildVerseList(scriptures);
     buildChapterIndex(scriptures);
     populateGuessOptions(scriptures);
-    populateIncludeExcludeOptions();
+    populateIncludeExcludeOptions(scriptures, includedBooks);
     
   } catch (err) {
     console.error('Error loading verses: ', err);
   }
   
 }
-
 /*
-function populateGuessOptions() {
-  const bookSelect = document.getElementById('bookSelect');
-  bookSelect.innerHTML = ''; // Clear previous options
-  const chapterSelect = document.getElementById('chapterSelect');
-
-  // Fill book options
-  const books = Object.keys(scriptures);
-  books.forEach(book => {
-    const option = document.createElement('option');
-    option.value = book;
-    option.textContent = book;
-    bookSelect.appendChild(option);
-    bookSelect.value = ''; // Default to no selection
-  });
-
-  // Update chapters when a book is selected
-  bookSelect.addEventListener('change', () => {
-    chapterSelect.innerHTML = ''; // Clear previous options
-    const chapters = Object.keys(scriptures[bookSelect.value]);
-    chapters.forEach(chapter => {
-      const option = document.createElement('option');
-      option.value = chapter;
-      option.textContent = chapter;
-      chapterSelect.appendChild(option);
-    });
-
-    // Enable submit button when both selections are made
-    document.getElementById('finalizeGuess').disabled = !(bookSelect.value && chapterSelect.value);
-  });
-}
- */
-
-
 function populateIncludeExcludeOptions() {
-  IESelect.innerHTML = ''; // Clear previous options
+  EL_NAMES.IESelect.innerHTML = ''; // Clear previous options
     Object.keys(scriptures).forEach(bookName => {
       const wrapper = document.createElement('div');
       wrapper.style.display = 'block';
@@ -157,10 +113,10 @@ function populateIncludeExcludeOptions() {
 
       wrapper.appendChild(checkbox);
       wrapper.appendChild(label);
-      IESelect.appendChild(wrapper);
+      EL_NAMES.IESelect.appendChild(wrapper);
     });
 }
-
+*/
 /**
  * 
  * @param {HTMLElement} targetDiv - the element to iterate through 
@@ -205,13 +161,11 @@ function showVerses() {
   const revealButton = document.getElementById('revealReference');
   const distanceButton = document.getElementById('revealDistance');
 
-  const bookSelect = document.getElementById('bookSelect');
-  const chapterSelect = document.getElementById('chapterSelect');
   const resultEl = document.getElementById('result');
   const distanceEl = document.getElementById('distance');
 
-  bookSelect.value = '';
-  chapterSelect.innerHTML = '';
+  EL_NAMES.bookSelect.value = '';
+  EL_NAMES.chapterSelect.innerHTML = '';
   resultEl.textContent = '';
   distanceEl.textContent = '';
 
@@ -348,8 +302,8 @@ function positionBases(){
 function submitGuess() {
     document.getElementById('revealDistance').disabled = false;
     document.getElementById('revealReference').disabled = false;
-    const bookGuess = document.getElementById('bookSelect').value;
-    const chapterGuess = document.getElementById('chapterSelect').value;
+    const bookGuess = EL_NAMES.bookSelect.value;
+    const chapterGuess = EL_NAMES.chapterSelect.value;
 
     const resultEl = document.getElementById('result');
     document.getElementById("newRound").disabled = false;
@@ -505,7 +459,7 @@ function handleSettingsButton(){
 function handleCheckAllInex(){
   let targetDiv = document.getElementById("include-exclude-values");
   toggleAllBoxes(targetDiv, true);
-  populateIncludeExcludeOptions();
+  populateIncludeExcludeOptions(scriptures, includedBooks);
 }
 function handleUncheckAllInex(){
   let targetDiv = document.getElementById("include-exclude-values");
@@ -517,21 +471,21 @@ function handleMainMenuButton(){
   showScreen(GAME_STATES.MENU); 
 }
 function handleVSelectChange(){
-  currentVolume = vSelect.value;
+  currentVolume = EL_NAMES.vSelect.value;
   loadData();
 }
 function handleBookSelectChange(){
-  chapterSelect.innerHTML = ''; // Clear previous options
-    const chapters = Object.keys(scriptures[bookSelect.value]);
+  EL_NAMES.chapterSelect.innerHTML = ''; // Clear previous options
+    const chapters = Object.keys(scriptures[EL_NAMES.bookSelect.value]);
     chapters.forEach(chapter => {
       const option = document.createElement('option');
       option.value = chapter;
       option.textContent = chapter;
-      chapterSelect.appendChild(option);
+      EL_NAMES.chapterSelect.appendChild(option);
     });
 
     // Enable submit button when both selections are made
-    document.getElementById('finalizeGuess').disabled = !(bookSelect.value && chapterSelect.value);
+    document.getElementById('finalizeGuess').disabled = !(EL_NAMES.bookSelect.value && EL_NAMES.chapterSelect.value);
 }
 function handleStartRestart(button){
 } // Look up why this broke

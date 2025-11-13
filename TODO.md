@@ -41,7 +41,7 @@
   - [ ] Settings Screen
     - [ ] Add spacing between elements
     - [ ] Add multiple tabs for space management
-    - [ ] Fix Checkbox menu to make it dropdown instead of always being big
+    - [X] Fix Checkbox menu to make it dropdown instead of always being big
     - [X] Add 'check all' and 'uncheck all' option for chapter exclusion selection
     - [ ] Match styling of multi-check dropdown with other dropdowns
   - [ ] **Game Screen**
@@ -56,11 +56,11 @@
   - [ ] **HTML**
     - [ ] 
   - [ ] **JS**
-    - [ ] Add addAllEventListeners() function to clean up initiation code
+    - [ ] Add addAllEventListeners() function to clean up initiation code?
     - [ ] Run through the whole file and prayerfully record refactoring ideas and insights
     - [ ] Move from BOMB
       - [ ] To ui_manager
-        - [ ] populateGuessOptions()
+        - [X] populateGuessOptions()
       - [ ] To game_logic
         - [ ] 
   - [ ] **CSS**
@@ -69,14 +69,14 @@
 
 - [ ] **Bugs and Features** 
   - [ ] **Bug fixes**
-    - [ ]  
+    - [ ] Timer doesn't work for one round after changing book of scripture in vSelect. 
   - [ ] **Features**
     - [ ] Offer default difficulty options to make selection easy
     - [ ] Put current independent selection options on a different screen ("Custom Difficulty Level")
     - [ ] Turn Game-over screen into an overlay
 - [ ] **Misc**
   - [ ] Increase searchability online
-    - [ ] Add favicon.ico
+    - [X] Add favicon.ico
     - [ ] Add metadata
     - [ ] Create sitemap
     - [ ] Use google search console
@@ -84,3 +84,9 @@
       - [ ] Share on social media
       - [ ] Share on forums
       - [ ] Share on other websites
+
+
+
+- **Sequel/Spinoff ideas**
+  - [ ] Same gameplay loop with different minigames/payoffs in the right column
+  - [ ] 
