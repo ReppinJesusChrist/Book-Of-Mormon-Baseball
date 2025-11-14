@@ -2,7 +2,7 @@ import { startTimer, stopTimer } from "./timer.js";
 import { toggleAllBoxes, makeScriptureLink, sleep, nextFrame } from "./helper_functions.js";
 import { endGame, getNextBase, initializeGame } from "./game_logic.js";
 import {populateIncludeExcludeOptions, populateGuessOptions, updateScoreboard,
-  showGameOver, hideGameOver, populateLBTableRows} from "./ui_manager.js";
+  showGameOver, hideGameOver, initializeLBTableRows} from "./ui_manager.js";
 import {fetchScriptures} from "./data_manager.js";
 import {ELS, ANIMATION_TIME_MS, TIMER_DURATIONS, 
   THRESHOLD_ARRAYS, STANDARD_WORKS_FILE_NAMES, GAME_STATES, BASE_POSITIONS} from './config.js'
@@ -13,6 +13,7 @@ let score = 0;
 let strikes = 0;
 let round = 0;
 let scriptures = null;
+let gameState = 'menu';
 
 let currentSelection = null;
 let allVerses = [];
@@ -63,7 +64,7 @@ document.addEventListener('DOMContentLoaded', function () {
     ELS.dropdown.classList.toggle('open');
   })
 
-  populateLBTableRows();
+  initializeLBTableRows();
   positionBases();
 
   // Load verses from bom.json when the page loads
@@ -179,11 +180,7 @@ async function advanceRunners(numBases){
 
   // Move runners forward one base the correct number of times
   for(let i = 0; i < numBases; ++i){
-    console.log(`Advancing runners: ${i} bases moved`);
-
     runners.forEach(runner => {
-      console.log(`Runner on ${runner.base} advancing`);
-
       let newBase = getNextBase(runner.base); 
       setRunnerPosition(runner.el, newBase);
       runner.base = newBase;
@@ -302,6 +299,7 @@ function handleTimeUp() {
 }
 
 function showScreen(state){
+  gameState = state;
   document.getElementById('menu-screen').style.display = (state === GAME_STATES.MENU) ? 'block' : 'none';
   document.getElementById('game-screen').style.display = (state === GAME_STATES.IN_GAME) ? 'block' : 'none';
   document.getElementById('settings-screen').style.display = (state === GAME_STATES.SETTINGS) ? 'block' : 'none';
@@ -387,8 +385,10 @@ function handleUncheckAllInex(){
   includedBooks.clear();
 }
 function handleMainMenuButton(){
-  endGame(score);
-  hideGameOver();
+  if(gameState === 'in_game'){
+    endGame(score);
+    hideGameOver();
+  }
   showScreen(GAME_STATES.MENU); 
 }
 function handleVSelectChange(){

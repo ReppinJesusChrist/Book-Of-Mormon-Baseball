@@ -1,8 +1,8 @@
 import {ELS} from "./config.js";
 
-const LB_tbody = document.querySelector("#leaderboard-table tbody");
+const LB_tbody = document.querySelector("#leaderboard-table tbody"); 
 
-export function populateLBTableRows(){
+export function initializeLBTableRows(){
   for(let i = 0; i < 10; ++i){
     const row = document.createElement("tr");
     row.innerHTML = 
@@ -14,6 +14,18 @@ export function populateLBTableRows(){
     `;
     LB_tbody.appendChild(row);
   }
+  updateLBTableRows();
+}
+
+export function updateLBTableRows(){
+  console.log("Table rows updated");
+  let scores = JSON.parse(localStorage.getItem("topScores")) || [];
+
+  let rows = document.querySelectorAll("#leaderboard-table tbody tr");
+
+  scores.forEach((entry, i) => {
+    rows[i].children[1].textContent = entry;
+  }); 
 }
 
 export function showGameOver(score){

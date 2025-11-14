@@ -1,6 +1,6 @@
-import {showGameOver, updateScoreboard} from "./ui_manager.js";
+import {showGameOver, updateScoreboard, updateLBTableRows} from "./ui_manager.js";
 import {stopTimer} from "./timer.js";
-import {ELS} from "./config.js";
+import {ELS, NUM_LB_SCORES} from "./config.js";
 
 export async function endGame(score){
   ELS.BUTTONS.newRound.disabled = true;
@@ -8,7 +8,25 @@ export async function endGame(score){
   localStorage.setItem("Last Score", score);
   resetBases();
   stopTimer();
+  updateHighScores(score);
+  updateLBTableRows();
+  // Deprecated. Remove as soon as ^^^ is implemented
   if(score > localStorage.getItem("High Score")) localStorage.setItem("High Score", score); 
+}
+
+function updateHighScores(newScore){
+  let scores = JSON.parse(localStorage.getItem("topScores")) || [];
+
+  // Add new score to array
+  scores.push(newScore);
+
+  // Sort new score to correct place
+  scores.sort((a,b) => b - a);
+
+  // Trim to size
+  scores = scores.slice(0, NUM_LB_SCORES);
+
+  localStorage.setItem("topScores", JSON.stringify(scores));
 }
 
 function resetBases(bases, runners){

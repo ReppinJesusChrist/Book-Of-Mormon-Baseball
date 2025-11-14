@@ -1,4 +1,5 @@
 export const ANIMATION_TIME_MS = 600; // Time in ms for runner animation
+export const NUM_LB_SCORES = 10;
 /**export const TIMER_DURATIONS = {
   unlimited: Infinity,
   leisurely: 180,
@@ -35,7 +36,6 @@ export const STANDARD_WORKS_FILE_NAMES = {
 export const GAME_STATES = {
   MENU: 'menu',
   IN_GAME: 'in_game',
-  GAME_OVER: 'game_over',
   SETTINGS: 'settings',
   LEADERBOARD: 'leaderboard'
 }
