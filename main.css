@@ -169,3 +169,37 @@ h1 {
 .hidden {
   display: none;
 }
+
+#leaderboard {
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 20px;
+    text-align: center;
+}
+
+#leaderboard-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 1rem;
+    font-family:Arial, sans-serif;
+    font-size:1rem;
+}
+
+#leaderboard-table th {
+    background-color: rgba(0,0,0,0.1);
+    padding: 10px;
+}
+
+#leaderboard-table td {
+    padding: 10px;
+    border-bottom: 1px solid rgba(0,0,0,0.15);
+}
+
+#leaderboard-table tr:nth-child(even) {
+    background-color: rgba(0, 0, 0, 0.05);
+}
+
+#leaderboard-table tr:hover {
+    background-color: rgba(0,0,0,0.1);
+}
+

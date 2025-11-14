@@ -1,5 +1,21 @@
 import {ELS} from "./config.js";
 
+const LB_tbody = document.querySelector("#leaderboard-table tbody");
+
+export function populateLBTableRows(){
+  for(let i = 0; i < 10; ++i){
+    const row = document.createElement("tr");
+    row.innerHTML = 
+    `
+      <td>${i+1}</td>
+      <td></td>
+      <td></td>
+      <td></td>
+    `;
+    LB_tbody.appendChild(row);
+  }
+}
+
 export function showGameOver(score){
   ELS.finalScore.textContent = score;
   ELS.overlay.classList.add('visible');

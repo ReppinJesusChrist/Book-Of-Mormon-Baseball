@@ -1,9 +1,9 @@
 import {showGameOver, updateScoreboard} from "./ui_manager.js";
 import {stopTimer} from "./timer.js";
-import {BUTTON_ELS, ELS} from "./config.js";
+import {ELS} from "./config.js";
 
 export async function endGame(score){
-  BUTTON_ELS.newRound.disabled = true;
+  ELS.BUTTONS.newRound.disabled = true;
   ELS.finalScore.textContent = score;
   localStorage.setItem("Last Score", score);
   resetBases();

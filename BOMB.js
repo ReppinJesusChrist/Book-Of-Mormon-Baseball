@@ -2,9 +2,9 @@ import { startTimer, stopTimer } from "./timer.js";
 import { toggleAllBoxes, makeScriptureLink, sleep, nextFrame } from "./helper_functions.js";
 import { endGame, getNextBase, initializeGame } from "./game_logic.js";
 import {populateIncludeExcludeOptions, populateGuessOptions, updateScoreboard,
-  showGameOver, hideGameOver} from "./ui_manager.js";
+  showGameOver, hideGameOver, populateLBTableRows} from "./ui_manager.js";
 import {fetchScriptures} from "./data_manager.js";
-import {BUTTON_ELS, ELS, ANIMATION_TIME_MS, TIMER_DURATIONS, 
+import {ELS, ANIMATION_TIME_MS, TIMER_DURATIONS, 
   THRESHOLD_ARRAYS, STANDARD_WORKS_FILE_NAMES, GAME_STATES, BASE_POSITIONS} from './config.js'
 
 // Variable Initiation
@@ -40,7 +40,7 @@ document.addEventListener('DOMContentLoaded', function () {
   document.getElementById('settings-button').addEventListener('click',handleSettingsButton);
   document.getElementById('check-all-inex').addEventListener('click', handleCheckAllInex);
   document.getElementById('uncheck-all-inex').addEventListener('click', handleUncheckAllInex);
-  BUTTON_ELS.hideOverlay.addEventListener('click', handleHideOverlay);
+  ELS.BUTTONS.hideOverlay.addEventListener('click', handleHideOverlay);
   ELS.vSelect.addEventListener('change', handleVSelectChange); 
   ELS.bookSelect.addEventListener('change', handleBookSelectChange);
 
@@ -63,6 +63,7 @@ document.addEventListener('DOMContentLoaded', function () {
     ELS.dropdown.classList.toggle('open');
   })
 
+  populateLBTableRows();
   positionBases();
 
   // Load verses from bom.json when the page loads

@@ -24,6 +24,8 @@
   - [X] Fix "Strikes: text" bug
   - [X] Add Main Menu button to game over screen
 - [ ] Implement a leaderboard
+  - [ ] Make a menu to select difficulty
+  - [ ] Display high-scores (top 10?; with times?) and most recent score in a table for each difficulty level
 - [ ] Flash text on screen (not an alert) when a strike is hit ("Strike 1!" etc.)
 - [ ] Add BOM styling to all elements (Background texture & color, gold letters, font, etc.)
 - [ ] Clean up console.log clutter

@@ -47,6 +47,10 @@ export const BASE_POSITIONS = {
   back_home: { left: 50,  top: 90 } // Back to home for scoring
 };
 export const ELS = {
+  BUTTONS: {
+    hideOverlay: document.getElementById('hide-overlay'),
+    newRound: document.getElementById('newRound')
+  },
   vSelect: document.getElementById('volume-select-value'),
   toggle: document.getElementById('include-exclude-toggle'),
   IESelect: document.getElementById('include-exclude-values'),
