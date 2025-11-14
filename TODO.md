@@ -73,7 +73,8 @@
   - [ ] **Features**
     - [ ] Offer default difficulty options to make selection easy
     - [ ] Put current independent selection options on a different screen ("Custom Difficulty Level")
-    - [X] Turn Game-over screen into an overlay
+    - [ ] Book opening animation for leaving main-menu
+    - [ ] Add tool-tip for range details (hover to view)
 - [ ] **Misc**
   - [ ] Increase searchability online
     - [X] Add favicon.ico

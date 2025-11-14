@@ -104,8 +104,7 @@ export function makeScriptureLink(volume, cs){
         // https://www.churchofjesuschrist.org/study/general-conference/2025/04/13holland?lang=eng (Ideal link)
         // https://www.churchofjesuschrist.org/study/general-conference/2025/April/41holland?lang=eng (My current link generated)
         return `https://www.churchofjesuschrist.org/study/general-conference/${formatSessionName(book).year}/${formatSessionName(book).monthNum}?lang=eng`
-    }
-    
+    }   
 }
 
 function formatSessionName(session){
@@ -120,4 +119,18 @@ export function sleep(ms) {
 
 export function nextFrame(){
   return new Promise(resolve => requestAnimationFrame(resolve));
+}
+
+/**
+ * 
+ * @param {HTMLElement} targetDiv - the element to iterate through 
+ * @param {boolean} check - true = check all boxes, false = uncheck all boxes 
+ */
+export function toggleAllBoxes(targetDiv, check){
+  if(!targetDiv) return;
+
+  const checkboxes = targetDiv.querySelectorAll('input[type="checkbox"]');
+  checkboxes.forEach(box => {
+    box.checked = check;
+  });
 }

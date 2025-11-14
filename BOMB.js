@@ -1,13 +1,11 @@
 import { startTimer, stopTimer } from "./timer.js";
-import { makeScriptureLink, sleep, nextFrame } from "./helper_functions.js";
+import { toggleAllBoxes, makeScriptureLink, sleep, nextFrame } from "./helper_functions.js";
 import { endGame, getNextBase, initializeGame } from "./game_logic.js";
 import {populateIncludeExcludeOptions, populateGuessOptions, updateScoreboard,
   showGameOver, hideGameOver} from "./ui_manager.js";
 import {fetchScriptures} from "./data_manager.js";
 import {BUTTON_ELS, ELS, ANIMATION_TIME_MS, TIMER_DURATIONS, 
   THRESHOLD_ARRAYS, STANDARD_WORKS_FILE_NAMES, GAME_STATES, BASE_POSITIONS} from './config.js'
-
-let gameState = GAME_STATES.MENU;
 
 // Variable Initiation
 let includedBooks = new Set(); // Books to include in selection
@@ -85,20 +83,6 @@ async function loadData() {
     console.error('Error loading verses: ', err);
   }
   
-}
-
-/**
- * 
- * @param {HTMLElement} targetDiv - the element to iterate through 
- * @param {boolean} check - true = check all boxes, false = uncheck all boxes 
- */
-function toggleAllBoxes(targetDiv, check){
-  if(!targetDiv) return;
-
-  const checkboxes = targetDiv.querySelectorAll('input[type="checkbox"]');
-  checkboxes.forEach(box => {
-    box.checked = check;
-  });
 }
 
 function getRandomVerses() {
@@ -317,7 +301,6 @@ function handleTimeUp() {
 }
 
 function showScreen(state){
-  gameState = state;
   document.getElementById('menu-screen').style.display = (state === GAME_STATES.MENU) ? 'block' : 'none';
   document.getElementById('game-screen').style.display = (state === GAME_STATES.IN_GAME) ? 'block' : 'none';
   document.getElementById('settings-screen').style.display = (state === GAME_STATES.SETTINGS) ? 'block' : 'none';
