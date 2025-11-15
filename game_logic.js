@@ -17,11 +17,13 @@ export async function endGame(score){
 function updateHighScores(newScore){
   let scores = JSON.parse(localStorage.getItem("topScores")) || [];
 
+  const newScoreObject = makeScoreObject(newScore);
+
   // Add new score to array
-  scores.push(newScore);
+  scores.push(newScoreObject);
 
   // Sort new score to correct place
-  scores.sort((a,b) => b - a);
+  scores.sort((a,b) => b.score - a.score);
 
   // Trim to size
   scores = scores.slice(0, NUM_LB_SCORES);
@@ -50,6 +52,14 @@ export function addStrike(score, round, strikes){
       showGameOver();
       endGame();
   }); 
+}
+
+function makeScoreObject(score){
+  const scoreObj = {
+    score: score,
+    datetime: new Date().toISOString()
+  }
+  return scoreObj;
 }
 
 export function initializeGame(){

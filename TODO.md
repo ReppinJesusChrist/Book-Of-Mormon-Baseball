@@ -23,9 +23,9 @@
   - [O] Use faces of prophets as players (Is this legal? NO.)
   - [X] Fix "Strikes: text" bug
   - [X] Add Main Menu button to game over screen
-- [ ] Implement a leaderboard
+- [X] Implement a leaderboard
   - [ ] Make a menu to select difficulty
-  - [ ] Display high-scores (top 10?; with times?) and most recent score in a table for each difficulty level
+  - [ ] Display high-scores (top 10 [X]; with times?) and most recent score in a table for each difficulty level
 - [ ] Flash text on screen (not an alert) when a strike is hit ("Strike 1!" etc.)
 - [ ] Add BOM styling to all elements (Background texture & color, gold letters, font, etc.)
 - [ ] Clean up console.log clutter
@@ -72,6 +72,7 @@
 - [ ] **Bugs and Features** 
   - [ ] **Bug fixes**
     - [ ] Timer doesn't work for one round after changing book of scripture in vSelect. 
+    - [ ] High-score double records on strikeout because endGame() is double called (once from strike 3 and once from main menu button)
   - [ ] **Features**
     - [ ] Offer default difficulty options to make selection easy
     - [ ] Put current independent selection options on a different screen ("Custom Difficulty Level")

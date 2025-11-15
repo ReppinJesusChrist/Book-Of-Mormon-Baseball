@@ -18,13 +18,15 @@ export function initializeLBTableRows(){
 }
 
 export function updateLBTableRows(){
-  console.log("Table rows updated");
   let scores = JSON.parse(localStorage.getItem("topScores")) || [];
 
   let rows = document.querySelectorAll("#leaderboard-table tbody tr");
 
   scores.forEach((entry, i) => {
-    rows[i].children[1].textContent = entry;
+    const d = new Date(entry.datetime);
+    rows[i].children[1].textContent = entry.score;
+    rows[i].children[2].textContent = d.toLocaleDateString();
+    rows[i].children[3].textContent = d.toLocaleTimeString();
   }); 
 }
 

@@ -45,7 +45,7 @@ document.addEventListener('DOMContentLoaded', function () {
   ELS.vSelect.addEventListener('change', handleVSelectChange); 
   ELS.bookSelect.addEventListener('change', handleBookSelectChange);
 
-  document.querySelectorAll('.start-restart-button').forEach(button => {
+  document.querySelectorAll('.start-button').forEach(button => {
     button.addEventListener('click', function(){
       if(button.id === 'start-button'){
         let difEl = document.getElementById('threshold-value');
@@ -54,6 +54,9 @@ document.addEventListener('DOMContentLoaded', function () {
       }
       startGame();
     });
+  });
+  document.querySelectorAll('.restart-button').forEach(button => {
+    button.addEventListener('click', handleRestartButton);
   });
   document.querySelectorAll('.main-menu-button').forEach(button => {
     button.addEventListener('click', handleMainMenuButton);
@@ -411,5 +414,7 @@ function handleBookSelectChange(){
 function handleHideOverlay(){
   hideGameOver();
 }
-function handleStartRestart(button){
-} // Look up why this broke
+function handleRestartButton(){
+  endGame(score);
+  startGame();
+}
