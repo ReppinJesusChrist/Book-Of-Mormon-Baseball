@@ -51,6 +51,15 @@ export const ELS = {
     hideOverlay: document.getElementById('hide-overlay'),
     newRound: document.getElementById('newRound')
   },
+  LB: {
+    difficultyLabel: document.getElementById('lb-display-difficulty') 
+  },
+  GO: {
+    BTNS: {
+      menu: document.getElementById('game-over-menu-btn'),
+      restart: document.getElementById('try-again-btn')
+    }
+  },
   vSelect: document.getElementById('volume-select-value'),
   toggle: document.getElementById('include-exclude-toggle'),
   IESelect: document.getElementById('include-exclude-values'),

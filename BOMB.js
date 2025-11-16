@@ -2,7 +2,8 @@ import { startTimer, stopTimer } from "./timer.js";
 import { toggleAllBoxes, makeScriptureLink, sleep, nextFrame } from "./helper_functions.js";
 import { endGame, getNextBase, initializeGame } from "./game_logic.js";
 import {populateIncludeExcludeOptions, populateGuessOptions, updateScoreboard,
-  showGameOver, hideGameOver, initializeLBTableRows} from "./ui_manager.js";
+  showGameOver, hideGameOver, initializeLBTableRows, updateLBDifficulty,
+  } from "./ui_manager.js";
 import {fetchScriptures} from "./data_manager.js";
 import {ELS, ANIMATION_TIME_MS, TIMER_DURATIONS, 
   THRESHOLD_ARRAYS, STANDARD_WORKS_FILE_NAMES, GAME_STATES, BASE_POSITIONS} from './config.js'
@@ -14,6 +15,7 @@ let strikes = 0;
 let round = 0;
 let scriptures = null;
 let gameState = 'menu';
+let LBDisplayDifficulty = 'Enter at the gate';
 
 let currentSelection = null;
 let allVerses = [];
@@ -44,6 +46,8 @@ document.addEventListener('DOMContentLoaded', function () {
   ELS.BUTTONS.hideOverlay.addEventListener('click', handleHideOverlay);
   ELS.vSelect.addEventListener('change', handleVSelectChange); 
   ELS.bookSelect.addEventListener('change', handleBookSelectChange);
+  ELS.GO.BTNS.menu.addEventListener('click', handleGOMenuButton);
+  ELS.GO.BTNS.restart.addEventListener('click', handleGORestartButton);
 
   document.querySelectorAll('.start-button').forEach(button => {
     button.addEventListener('click', function(){
@@ -69,6 +73,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
   initializeLBTableRows();
   positionBases();
+  updateLBDifficulty('Enter at the gate');
 
   // Load verses from bom.json when the page loads
   loadData();
@@ -364,11 +369,7 @@ function handleNewRound(){
   startRound();
 }
 function handleLeaderboardButton(){
-  document.getElementById('most-recent-score').textContent = "Most Recent Score: "
-     + localStorage.getItem("Last Score");
-     document.getElementById('high-score').textContent = "High Score: "
-     + localStorage.getItem("High Score");
-    showScreen(GAME_STATES.LEADERBOARD);
+  showScreen(GAME_STATES.LEADERBOARD);
 }
 function handleFinalizeGuess(){
   submitGuess();
@@ -390,7 +391,6 @@ function handleUncheckAllInex(){
 function handleMainMenuButton(){
   if(gameState === 'in_game'){
     endGame(score);
-    hideGameOver();
   }
   showScreen(GAME_STATES.MENU); 
 }
@@ -417,4 +417,12 @@ function handleHideOverlay(){
 function handleRestartButton(){
   endGame(score);
   startGame();
+}
+function handleGORestartButton(){
+  hideGameOver();
+  startGame();
+}
+function handleGOMenuButton(){
+  hideGameOver();
+  showScreen(GAME_STATES.MENU);
 }

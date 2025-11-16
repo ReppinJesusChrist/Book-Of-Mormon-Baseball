@@ -75,8 +75,8 @@
         <div class="overlay-content">
         <h2>Game Over</h2>
         <p>Your final score is: <span id="final-score">__</span></p>
-        <button class="start-button" id="try-again-button">Play Again?</button>
-        <button class="main-menu-button">Back to Main Menu</button>
+        <button class="start-button" id="try-again-btn">Play Again?</button>
+        <button id="game-over-menu-btn">Back to Main Menu</button>
         <button id="hide-overlay">Back to Game Screen</button>
         </div>
     </div>
@@ -126,8 +126,11 @@
         <button class="main-menu-button">Back to Menu</button>
     </div>
     <div id="leaderboard-screen" style="display:none;">
+        <div>
+
+        </div>
         <section id="leaderboard">
-            <h2>Leaderboard</h2>
+            <h2>Leaderboard - <span id="lb-display-difficulty"></span></h2>
             <table id="leaderboard-table">
                 <thead>
                     <tr>
@@ -142,8 +145,6 @@
                 </tbody>
             </table>
         </section>
-        <div id="most-recent-score"></div>
-        <div id="high-score"></div>
         <button class="main-menu-button">Back to Main Menu</button>
     </div>
     <script type="module" src="BOMB.js"></script>

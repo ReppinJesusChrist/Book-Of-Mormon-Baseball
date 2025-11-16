@@ -25,7 +25,8 @@
   - [X] Add Main Menu button to game over screen
 - [X] Implement a leaderboard
   - [ ] Make a menu to select difficulty
-  - [ ] Display high-scores (top 10 [X]; with times?) and most recent score in a table for each difficulty level
+  - [X] Display high-scores (top 10 [X]; with times[X]) and most recent score in a table 
+  - [ ] For each difficulty level
 - [ ] Flash text on screen (not an alert) when a strike is hit ("Strike 1!" etc.)
 - [ ] Add BOM styling to all elements (Background texture & color, gold letters, font, etc.)
 - [ ] Clean up console.log clutter
@@ -55,8 +56,8 @@
     - [ ] 
   - [ ] **JS**
     - [ ] Add addAllEventListeners() function to clean up initiation code?
-    - [ ] Create updateHighScore function
-    - [ ] Rename EL_NAMES to ELS (until that conflicts it's much easier)
+    - [X] Create updateHighScore function
+    - [X] Rename EL_NAMES to ELS (until that conflicts it's much easier)
     - [ ] Use ELS everywhere
     - [ ] Make seperate EL_ constant objects for buttons [X] and other elements [ ] to make referencing easier (in config.js)
     - [ ] Run through the whole file and prayerfully record refactoring ideas and insights

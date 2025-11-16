@@ -10,8 +10,6 @@ export async function endGame(score){
   stopTimer();
   updateHighScores(score);
   updateLBTableRows();
-  // Deprecated. Remove as soon as ^^^ is implemented
-  if(score > localStorage.getItem("High Score")) localStorage.setItem("High Score", score); 
 }
 
 function updateHighScores(newScore){

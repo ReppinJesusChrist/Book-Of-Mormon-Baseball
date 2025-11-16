@@ -105,3 +105,7 @@ export function updateScoreboard(score, round, strikes){
     document.getElementById("strikes").textContent = `${strikes}`;
     updateStrikeBoxes(strikes);
 }
+
+export function updateLBDifficulty(difficulty){
+  ELS.LB.difficultyLabel.textContent = difficulty;
+}
