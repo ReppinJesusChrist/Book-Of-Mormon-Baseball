@@ -29,12 +29,6 @@
   - [ ] For each difficulty level
 - [ ] Flash text on screen (not an alert) when a strike is hit ("Strike 1!" etc.)
 - [ ] Add BOM styling to all elements (Background texture & color, gold letters, font, etc.)
-- [ ] Clean up console.log clutter
-  - [ ] Runner advancement alerts
-- [X] Add 'No Time Limit' Option
-  - [X] Also Other timing options
-- [ ] Add button to game-over screen that allows viewing the game screen to see how close the player was, etc. without the option to keep playing
-- [X] Allow for adjusting thresholds in settings as well
 - [ ] Style Improvements
   - [ ] Game Screen
     - [X] Show strikes immediately under diamond
@@ -73,12 +67,14 @@
 - [ ] **Bugs and Features** 
   - [ ] **Bug fixes**
     - [ ] Timer doesn't work for one round after changing book of scripture in vSelect. 
-    - [ ] High-score double records on strikeout because endGame() is double called (once from strike 3 and once from main menu button)
+    - [X] High-score double records on strikeout because endGame() is double called (once from strike 3 and once from main menu button)
   - [ ] **Features**
     - [ ] Offer default difficulty options to make selection easy
     - [ ] Put current independent selection options on a different screen ("Custom Difficulty Level")
     - [ ] Book opening animation for leaving main-menu
-    - [ ] Add tool-tip for range details (hover to view)
+    - [ ] Self-drawn runners (build your own team)
+    - [ ] Matrix for difficulty selection
+      - [ ] Add tool-tip for range details (hover to view)
 - [ ] **Misc**
   - [ ] Increase searchability online
     - [X] Add favicon.ico

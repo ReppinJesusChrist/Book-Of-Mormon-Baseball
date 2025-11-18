@@ -1,16 +1,19 @@
 /* 1. GLOBAL COLOR AND STYLE VARIABLES */
 :root {
     /* Define global color and style variables for site-wide consistency */
-    --color-primary-blue: ;
-    --color-primary-blue-hover: ;
-    --color-menu-gold: ;
-    --color-menu-brown: ;
-    --color-bg-light: ;
-    --color-timer-start: ;
+    --color-primary-blue: #3498db;
+    --color-primary-blue-hover: #2980b9;
+    --color-primary-gold: #ddb11f;
+    --color-primary-gold-hover: #96750a;
+    --color-primary-brown: #743903;
+    --color-bg-dark: #eeeeee;
+    --color-bg-light: #f8f8f8;
+    --color-timer-start: #76c7ac;
     --color-timer-end: ;
 
     --font-serif: 'Georgia', serif;
     --font-size-base: 1.1rem;
+    --font-size-large: 1.6rem;
 
     --border-radius-lg: 10px;
 }
@@ -57,6 +60,7 @@ button {
 
 button:hover {
     background-color: var(--color-primary-blue-hover);
+    transform: scale(1.05);
 }
 
 button:active {

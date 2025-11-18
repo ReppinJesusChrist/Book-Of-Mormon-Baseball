@@ -1,13 +1,22 @@
 export const ANIMATION_TIME_MS = 600; // Time in ms for runner animation
 export const NUM_LB_SCORES = 10;
-/**export const TIMER_DURATIONS = {
+
+/**
+ * Use for possible future update to difficulty selection
+export const TIMER_OPTIONS = {
   unlimited: Infinity,
-  leisurely: 180,
   relaxed: 60,
-  easy: 30,
-  medium: 20,
-  hard: 10
-}; **/// Timer durations for different difficulties
+  default: 30,
+  hard: 15
+};
+export const THRESHOLD_OPTIONS = {
+  otest:    [25, 50, 100, 250],
+  wider:    [7, 12, 25, 50],
+  average:  [2, 4, 7, 12],
+  pinhead:  [0, 1, 2, 4]
+}
+*/
+
 export const TIMER_DURATIONS = {
   otest: Infinity,
   barn: Infinity,
