@@ -52,7 +52,8 @@ export const ELS = {
     newRound: document.getElementById('newRound')
   },
   LB: {
-    difficultyLabel: document.getElementById('lb-display-difficulty') 
+    difficultyLabel: document.getElementById('lb-display-difficulty'),
+    difLadder: document.getElementById('difficultyLadder')
   },
   GO: {
     BTNS: {

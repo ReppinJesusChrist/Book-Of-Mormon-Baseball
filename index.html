@@ -126,25 +126,35 @@
         <button class="main-menu-button">Back to Menu</button>
     </div>
     <div id="leaderboard-screen" style="display:none;">
-        <div>
+        <div id="lb-container">
+            <div id="difficulty-ladder">
+                <button class="lb-difficulty-option" data-diff="otest">Hit Noah's ark</button>
+                <button class="lb-difficulty-option" data-diff="barn">Hit the side of a barn</button>
+                <button class="lb-difficulty-option" data-diff="wider">Love thy neighbor</button>
+                <button class="lb-difficulty-option" data-diff="wide">Follow the star</button>
+                <button class="lb-difficulty-option" data-diff="average">Enter at the Gate</button>
+                <button class="lb-difficulty-option" data-diff="narrow">Hold to the rod</button>
+                <button class="lb-difficulty-option" data-diff="pinhead">Find the piece of silver</button>
+                <button class="lb-difficulty-option" data-diff="custom">Custom Difficulty</button>
+            </div>
+           
+            <section id="leaderboard">
+                <h2>Leaderboard - <span id="lb-display-difficulty"></span></h2>
+                <table id="leaderboard-table">
+                    <thead>
+                        <tr>
+                            <th>Rank</th>
+                            <th>Score</th>
+                            <th>Date</th>
+                            <th>Time</th>
+                        </tr>
+                    </thead>
+                    <tbody>
 
+                    </tbody>
+                </table>
+            </section>
         </div>
-        <section id="leaderboard">
-            <h2>Leaderboard - <span id="lb-display-difficulty"></span></h2>
-            <table id="leaderboard-table">
-                <thead>
-                    <tr>
-                        <th>Rank</th>
-                        <th>Score</th>
-                        <th>Date</th>
-                        <th>Time</th>
-                    </tr>
-                </thead>
-                <tbody>
-
-                </tbody>
-            </table>
-        </section>
         <button class="main-menu-button">Back to Main Menu</button>
     </div>
     <script type="module" src="BOMB.js"></script>

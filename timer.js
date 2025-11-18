@@ -3,7 +3,6 @@ let timerInterval;
 let timeLeft;
 
 export function startTimer(onTimeUp, duration) {
-    console.log(`Starting timer for ${duration} seconds`);
     clearInterval(timerInterval);
     timeLeft = duration;
 

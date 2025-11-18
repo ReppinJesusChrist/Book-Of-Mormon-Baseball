@@ -1,3 +1,5 @@
+@import './_base.css';
+
 .runner {
     width: 20px;
     height: 20px;
@@ -8,20 +10,9 @@
     z-index: 1;
 }
 
-h1 {
-    text-align: center;
-    font-size: 2.5rem;
-    margin-top: 20px;
-}
-
 #scoreboard {
     text-align: center;
     margin-top: 20px;
-}
-
-#scoreboard h2 {
-    font-size: 2rem;
-    margin: 10px 0;
 }
 
 #container {
@@ -77,13 +68,6 @@ h1 {
 .controls button,
 .controls select {
     flex-shrink: 0; /* Prevent buttons from shrinking */
-}
-
-@keyframes flash-red {
-    0% {box-shadow: 0 0 10px 2px rgba(255, 0, 0, 0.4);}
-    50% {box-shadow: 0 0 10px 4px rgba(255,0,0,0.9);}
-    100% {box-shadow: 0 0 10px 2px rgba(255,0,0,0.4);}
-
 }
 
 #timer-container.warning-flash {

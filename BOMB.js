@@ -65,6 +65,9 @@ document.addEventListener('DOMContentLoaded', function () {
   document.querySelectorAll('.main-menu-button').forEach(button => {
     button.addEventListener('click', handleMainMenuButton);
   });
+  document.querySelectorAll('.lb-difficulty-option').forEach(button => {
+    button.addEventListener("click", handleLBDiffButton);
+  });
 
   ELS.toggle.addEventListener('click', (e)=>{
     e.stopPropagation(); // Study this further to understand
@@ -210,8 +213,6 @@ async function advanceRunners(numBases){
 }
 
 function spawnRunner(){
-  console.log("Spawning runner");
-
   const runner = document.createElement('div');
   runner.classList.add('runner');
   document.getElementById('diamond').appendChild(runner);
@@ -425,4 +426,8 @@ function handleGORestartButton(){
 function handleGOMenuButton(){
   hideGameOver();
   showScreen(GAME_STATES.MENU);
+}
+function handleLBDiffButton(difficulty){
+  LBDisplayDifficulty = difficulty;
+  updateLBDifficulty(difficulty);
 }
