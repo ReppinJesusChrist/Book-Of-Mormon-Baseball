@@ -1,0 +1,82 @@
+#menu-screen, #game-over-screen, #settings-screen {
+    text-align: center;
+    padding: 10px;
+}
+
+#menu-screen{
+    background-image: url('./images/BOM_texture_background.jpg');
+    background-size: cover;
+    background-repeat: repeat;
+    background-position: center;
+    text-shadow: 2px 2px 4px #000;
+    min-height: 100vh;
+    display: flex;
+    flex-direction:column;
+    align-items: center;
+    justify-content: center;
+}
+
+#menu-screen h1 {
+    color: var(--color-primary-gold);
+    font-family: var(--font-serif);
+    text-shadow: 2px 2px 6px #000;
+    margin-bottom: 40px;
+    font-size: 5rem; 
+}
+
+#menu-screen button {
+    background-color: var(--color-primary-gold);
+    color: var(--color-primary-brown);
+    border: none;
+    padding: 20px 30px;
+    margin: 10px;
+    font-weight: bold;
+    font-size: var(--font-size-large);
+    box-shadow: 0 3px 5px rgba(0,0,0,0.4);
+}
+
+#menu-screen button:hover{
+    background-color: var(--color-primary-gold-hover);
+}
+
+#game-over-overlay {
+  position: fixed;          /* stays over everything */
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.6); /* translucent black */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;            /* make sure it's above everything else */
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s ease;
+}
+
+#game-over-overlay.visible {
+  opacity: 1;
+  pointer-events: all;
+}
+
+.overlay-content {
+  background-color: white;
+  color: black;
+  padding: 2em;
+  border-radius: 10px;
+  text-align: center;
+  box-shadow: 0 0 10px rgba(0,0,0,0.3);
+}
+
+/* optional helper class to keep it hidden initially */
+.hidden {
+  display: none;
+}
+
+#leaderboard {
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 20px;
+    text-align: center;
+}

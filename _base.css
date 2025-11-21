@@ -6,8 +6,13 @@
     --color-primary-gold: #ddb11f;
     --color-primary-gold-hover: #96750a;
     --color-primary-brown: #743903;
-    --color-bg-dark: #eeeeee;
+
     --color-bg-light: #f8f8f8;
+    --color-bg-dark: #eeeeee;
+
+    --color-dropdown-base: #bbbbbb;
+    --color-dropdown-hover: #5f5f5f;
+    
     --color-timer-start: #76c7ac;
     --color-timer-end: ;
 
@@ -16,6 +21,8 @@
     --font-size-large: 1.6rem;
 
     --border-radius-lg: 10px;
+
+    --strike-box-size: 80px;
 }
 
 @keyframes flash-red {
@@ -47,13 +54,14 @@ select,
     box-shadow: 0 2px 5px rgba(0,0,0,0.09);
     transition: background-color 0.3s ease, transform 0.1s ease;
     flex-shrink: 0; /* Prevents buttons from shrinking */
+    border-radius: var(--border-radius-lg);
+    margin: 3px 5px 3px 5px; /* Top, Right, Bottom, Left*/
 }
 
 button {
     padding: 14px 22px;
     font-size: 1.2rem;
     font-weight: 500;
-    border-radius: var(--border-radius-lg);
     background-color: var(--color-primary-blue);
     box-shadow: 0 2px 5px rgba(0,0,0,0.2); /* Stronger shadow for action buttons */
 }

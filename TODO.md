@@ -66,8 +66,11 @@
 
 - [ ] **Bugs and Features** 
   - [ ] **Bug fixes**
-    - [ ] Timer doesn't work for one round after changing book of scripture in vSelect. 
-    - [X] High-score double records on strikeout because endGame() is double called (once from strike 3 and once from main menu button)
+    - [ ] Timer doesn't work for one round after changing book of scripture in vSelect.
+    - [ ] New stylesheets don't work in official deployment (github.io)
+    - [ ] Make buttons unclickable at appropriate times
+      - [ ] No reveal buttons available until guess is submitted
+      - [ ] Reveal reference ONLY after reveal distance is pressed
   - [ ] **Features**
     - [ ] Offer default difficulty options to make selection easy
     - [ ] Put current independent selection options on a different screen ("Custom Difficulty Level")
@@ -75,6 +78,8 @@
     - [ ] Self-drawn runners (build your own team)
     - [ ] Matrix for difficulty selection
       - [ ] Add tool-tip for range details (hover to view)
+    - [ ] Graph (scatterplot) of scores over time to show progress
+    - [ ] Option to display more rows in Leaderboard
 - [ ] **Misc**
   - [ ] Increase searchability online
     - [X] Add favicon.ico

@@ -1,0 +1,140 @@
+/* Dropdown menu styles */
+select{
+    padding: 12px 18px;
+    border: none;
+    cursor: pointer;
+    background-color: var(--color-dropdown-base);
+    color: white;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.09); /* Subtle shadow */
+}
+
+select:hover {
+    background-color: var(--color-dropdown-hover); /* Slightly darker on hover */
+}
+
+#chapter-select {
+  margin-bottom: 40px; /* give space for dropdown expansion */
+}
+
+/*  Custom Dropdowns */
+.custom-dropdown {
+    position: relative;
+    display: inline-block;
+    width: 100%;
+    max-width: fit-content;
+}
+
+#include-exclude-toggle {
+    /*  Makes it look like a dropdown */
+    border-radius: 0px;
+    padding: 12px 18px;
+    background-color: var(--color-dropdown-base);
+    min-width: 200px;
+}
+
+#include-exclude-toggle:hover {
+    background-color: var(--color-dropdown-hover);
+}
+
+.dropdown-content {
+    display : none;
+    position: absolute;
+    background: white;
+    border: 1px solid #ccc;
+    border-radius: 0px;
+    padding: 8px;
+    margin-top: 4px;
+    width: 100%;
+    max-height: 200px;
+    overflow-y: auto;
+    z-index: 10;
+}
+
+.custom-dropdown.open .dropdown-content {
+    display: block;
+}
+
+/*      =======================================     */
+/*      2. SCOREBOARD, LEADERBOARD & GAME ELEMENTS  */
+/*      =======================================     */
+
+#leaderboard-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 1rem;
+    font-family:Arial, sans-serif;
+    font-size:1rem;
+}
+
+#leaderboard-table th {
+    background-color: rgba(0,0,0,0.1);
+    padding: 10px;
+}
+
+#leaderboard-table td {
+    padding: 10px;
+    border-bottom: 1px solid rgba(0,0,0,0.15);
+}
+
+#leaderboard-table tr:nth-child(even) {
+    background-color: rgba(0, 0, 0, 0.05);
+}
+
+#leaderboard-table tr:hover {
+    background-color: rgba(0,0,0,0.1);
+}
+
+#scoreboard {
+    text-align: center;
+    margin-top: 20px;
+}
+
+.runner {
+    width: 20px;
+    height: 20px;
+    background: red;
+    border-radius: 50%;
+    position: absolute;
+    transition: left var(--runner-animation-time) ease, top var(--runner-animation-time) ease;
+    z-index: 1;
+}
+
+#diamond {
+    position: relative;
+    top: 0;
+    width: 400px;
+    height: 400px;
+    margin-top: 0;
+    background: #7cf786;
+}
+
+/* Baseball base elements (first, second, third, home) */
+.base {
+    width: 40px;
+    height: 40px;
+    background: #ffcf88;
+    border: 2px solid #000;
+    position: absolute;
+    transform: rotate(45deg);
+    z-index: 0;
+}
+
+#strike-boxes {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    margin-top: 20px;
+}
+
+.strike-box {
+    width: var(--strike-box-size);
+    height: var(--strike-box-size);
+    border: 2px solid #333;
+    border-radius: 8px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 6rem;
+    font-weight: bold;
+    color: red;
+}
