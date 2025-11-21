@@ -80,3 +80,11 @@
     padding: 20px;
     text-align: center;
 }
+
+#right-panel {
+    background: #ffffff;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+}
