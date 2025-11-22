@@ -6,7 +6,8 @@ import {populateIncludeExcludeOptions, populateGuessOptions, updateScoreboard,
   } from "./ui_manager.js";
 import {fetchScriptures} from "./data_manager.js";
 import {ELS, ANIMATION_TIME_MS, TIMER_DURATIONS, 
-  THRESHOLD_ARRAYS, STANDARD_WORKS_FILE_NAMES, GAME_STATES, BASE_POSITIONS} from './config.js'
+  THRESHOLD_ARRAYS, STANDARD_WORKS_FILE_NAMES, GAME_STATES, BASE_POSITIONS,
+  DIFFICULTY_NAMES} from './config.js'
 
 // Variable Initiation
 let includedBooks = new Set(); // Books to include in selection
@@ -15,7 +16,6 @@ let strikes = 0;
 let round = 0;
 let scriptures = null;
 let gameState = 'menu';
-let LBDisplayDifficulty = 'Enter at the gate';
 
 let currentSelection = null;
 let allVerses = [];
@@ -25,7 +25,8 @@ let bases = [false, false, false, false]; // Tracks whether each base is occupie
 let runners = []; // Tracks runner elements for animation
 
 // Default Setting Values
-let difficulty = 'easy'; 
+let difficulty = 'average'; // easiest -> average -> hardest
+let lbDifficulty = 'average';
 let currentVolume = 'bofm';
 let thresholdSetting = 'average'; 
 let numDisplayVerses = 3;
@@ -68,7 +69,6 @@ document.addEventListener('DOMContentLoaded', function () {
   document.querySelectorAll('.lb-difficulty-option').forEach(button => {
     button.addEventListener("click", handleLBDiffButton);
   });
-
   ELS.toggle.addEventListener('click', (e)=>{
     e.stopPropagation(); // Study this further to understand
     ELS.dropdown.classList.toggle('open');
@@ -76,7 +76,6 @@ document.addEventListener('DOMContentLoaded', function () {
 
   initializeLBTableRows();
   positionBases();
-  updateLBDifficulty('Enter at the gate');
 
   // Load verses from bom.json when the page loads
   loadData();
@@ -427,7 +426,9 @@ function handleGOMenuButton(){
   hideGameOver();
   showScreen(GAME_STATES.MENU);
 }
-function handleLBDiffButton(difficulty){
-  LBDisplayDifficulty = difficulty;
-  updateLBDifficulty(difficulty);
+function handleLBDiffButton(event){
+  const button = event.currentTarget;
+  const diff = button.dataset.diff;
+  lbDifficulty = diff;
+  updateLBDifficulty(lbDifficulty);
 }

@@ -26,7 +26,6 @@ select:hover {
 
 #include-exclude-toggle {
     /*  Makes it look like a dropdown */
-    border-radius: 0px;
     padding: 12px 18px;
     background-color: var(--color-dropdown-base);
     min-width: 200px;
@@ -39,7 +38,7 @@ select:hover {
 .dropdown-content {
     display : none;
     position: absolute;
-    background: white;
+    background: var(--color-dropdown-base);
     border: 1px solid #ccc;
     border-radius: 0px;
     padding: 8px;

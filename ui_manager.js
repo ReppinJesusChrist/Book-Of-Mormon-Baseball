@@ -1,4 +1,4 @@
-import {ELS} from "./config.js";
+import {ELS, DIFFICULTY_NAMES} from "./config.js";
 
 const LB_tbody = document.querySelector("#leaderboard-table tbody"); 
 
@@ -107,5 +107,5 @@ export function updateScoreboard(score, round, strikes){
 }
 
 export function updateLBDifficulty(difficulty){
-  ELS.LB.difficultyLabel.textContent = difficulty;
+  ELS.LB.difficultyLabel.textContent = DIFFICULTY_NAMES[difficulty];
 }

@@ -114,31 +114,29 @@
         <div id="threshold-selection">
             <label for="threshold-dropdown-label">Select Difficulty:</label>
             <select id="threshold-value">
-                <option value="otest">Hit the side of Noah's ark (Single: 250 chapters, Double: 100 chapters, Triple: 50 chapters, Home Run: 25 chapters)</option>
-                <option value="barn">Hit the side of a barn (Single: 100 chapters, Double: 50 chapters, Triple: 25 chapters, Home Run: 12 chapters)</option>
-                <option value="wider">Love thy neighbor (Single: 50 chapters, Double: 25 chapters, Triple: 12 chapters, Home Run: 7 chapters)</option>
-                <option value="wide">Follow the star (Single: 25 chapters, Double: 12 chapters, Triple: 7 chapters, Home Run: 4 chapters)</option>
-                <option value="average" selected>Enter at the gate (Single: 12 chapters, Double: 7 chapters, Triple: 4 chapters, Home Run: 2 chapters)</option>
-                <option value="narrow">Hold the iron rod (Single: 7 chapters, Double: 4 chapters, Triple: 2 chapters, Home Run: 1 chapters)</option>
-                <option value="pinhead">Find the piece of silver (Single: 4 chapters, Double: 2 chapters, Triple: 1 chapter, Home Run: Dead-on)</option>
+                <option value="easiest">Hit the side of Noah's ark (Single: 250 chapters, Double: 100 chapters, Triple: 50 chapters, Home Run: 25 chapters)</option>
+                <option value="easier">Hit the side of a barn (Single: 100 chapters, Double: 50 chapters, Triple: 25 chapters, Home Run: 12 chapters)</option>
+                <option value="easy">Love thy neighbor (Single: 50 chapters, Double: 25 chapters, Triple: 12 chapters, Home Run: 7 chapters)</option>
+                <option value="average">Follow the star (Single: 25 chapters, Double: 12 chapters, Triple: 7 chapters, Home Run: 4 chapters)</option>
+                <option value="hard" selected>Enter at the gate (Single: 12 chapters, Double: 7 chapters, Triple: 4 chapters, Home Run: 2 chapters)</option>
+                <option value="harder">Hold the iron rod (Single: 7 chapters, Double: 4 chapters, Triple: 2 chapters, Home Run: 1 chapters)</option>
+                <option value="hardest">Find the piece of silver (Single: 4 chapters, Double: 2 chapters, Triple: 1 chapter, Home Run: Dead-on)</option>
             </select>
         </div>
         <button class="main-menu-button">Back to Menu</button>
     </div>
     <div id="leaderboard-screen" style="display:none;">
         <div id="lb-container">
-            <!--
-                <div id="difficulty-ladder">
-                <button class="lb-difficulty-option" data-diff="otest">Hit Noah's ark</button>
-                <button class="lb-difficulty-option" data-diff="barn">Hit the side of a barn</button>
-                <button class="lb-difficulty-option" data-diff="wider">Love thy neighbor</button>
-                <button class="lb-difficulty-option" data-diff="wide">Follow the star</button>
-                <button class="lb-difficulty-option" data-diff="average">Enter at the Gate</button>
-                <button class="lb-difficulty-option" data-diff="narrow">Hold to the rod</button>
-                <button class="lb-difficulty-option" data-diff="pinhead">Find the piece of silver</button>
-                <button class="lb-difficulty-option" data-diff="custom">Custom Difficulty</button>
+                <div id="lb-difficulty-ladder">
+                    <button class="lb-difficulty-option" data-diff="easiest">Hit Noah's ark</button>
+                    <button class="lb-difficulty-option" data-diff="easier">Hit the stable</button>
+                    <button class="lb-difficulty-option" data-diff="easy">Love thy neighbor</button>
+                    <button class="lb-difficulty-option" data-diff="average">Follow the star</button>
+                    <button class="lb-difficulty-option" data-diff="hard">Enter at the Gate</button>
+                    <button class="lb-difficulty-option" data-diff="harder">Hold to the rod</button>
+                    <button class="lb-difficulty-option" data-diff="hardest">Find the piece of silver</button>
+                    <button class="lb-difficulty-option" data-diff="custom">Custom Difficulty</button>
                 </div>
-            -->
             <section id="leaderboard">
                 <h2>Leaderboard - <span id="lb-display-difficulty"></span></h2>
                 <table id="leaderboard-table">

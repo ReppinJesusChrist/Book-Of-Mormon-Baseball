@@ -67,7 +67,7 @@
 - [ ] **Bugs and Features** 
   - [ ] **Bug fixes**
     - [ ] Timer doesn't work for one round after changing book of scripture in vSelect.
-    - [ ] New stylesheets don't work in official deployment (github.io)
+    - [X] New stylesheets don't work in official deployment (github.io)
     - [ ] Make buttons unclickable at appropriate times
       - [ ] No reveal buttons available until guess is submitted
       - [ ] Reveal reference ONLY after reveal distance is pressed

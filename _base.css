@@ -50,7 +50,7 @@ select,
     font-size: var(--font-size-base);
     border: none;
     cursor: pointer;
-    color:antiquewhite;
+    color:white;
     box-shadow: 0 2px 5px rgba(0,0,0,0.09);
     transition: background-color 0.3s ease, transform 0.1s ease;
     flex-shrink: 0; /* Prevents buttons from shrinking */

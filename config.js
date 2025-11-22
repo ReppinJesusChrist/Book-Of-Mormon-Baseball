@@ -16,24 +16,34 @@ export const THRESHOLD_OPTIONS = {
   pinhead:  [0, 1, 2, 4]
 }
 */
+export const DIFFICULTY_NAMES ={
+  easiest: 'Hit Noah\'s ark',
+  easier: 'Hit the side of the stable',
+  easy: 'Love thy neighbor',
+  average: 'Follow the star',
+  hard: 'Enter at the gate',
+  harder: 'Hold to the iron rod',
+  hardest: 'Find the piece of silver',
+  custom: 'Custom'
+}
 
 export const TIMER_DURATIONS = {
-  otest: Infinity,
-  barn: Infinity,
-  wider: 180,
-  wide: 60,
-  average: 30,
-  narrow: 20,
-  pinhead: 10
+  easiest: Infinity,
+  easier: Infinity,
+  easy: 180,
+  average: 60,
+  easy: 30,
+  easier: 20,
+  easiest: 10
 }; // Timer durations for different difficulties
 export const THRESHOLD_ARRAYS = {
-  otest: [25, 50, 100, 250],
-  barn: [12, 25, 50, 100],
-  wider: [7, 12, 25, 50],
-  wide: [4, 7, 12, 25],
-  average: [2, 4, 7, 12],
-  narrow: [1, 2, 4, 7],
-  pinhead: [0, 1, 2, 4]
+  easiest: [25, 50, 100, 250],
+  easier: [12, 25, 50, 100],
+  easy: [7, 12, 25, 50],
+  average: [4, 7, 12, 25],
+  hard: [2, 4, 7, 12],
+  harder: [1, 2, 4, 7],
+  hardest: [0, 1, 2, 4]
 }
 export const STANDARD_WORKS_FILE_NAMES = {
   bofm: 'data/bofm.json',
