@@ -1,6 +1,8 @@
 import { startTimer, stopTimer } from "./timer.js";
 import { toggleAllBoxes, makeScriptureLink, sleep, nextFrame } from "./helper_functions.js";
-import { endGame, getNextBase, initializeGame } from "./game_logic.js";
+import { gameState, endGame, getNextBase, initializeGame,
+  /*startRound*/
+  } from "./game_logic.js";
 import {populateIncludeExcludeOptions, populateGuessOptions, updateScoreboard,
   showGameOver, hideGameOver, initializeLBTableRows, updateLBDifficulty,
   } from "./ui_manager.js";
@@ -10,12 +12,6 @@ import {ELS, ANIMATION_TIME_MS, TIMER_DURATIONS,
   DIFFICULTY_NAMES} from './config.js'
 
 // Variable Initiation
-let includedBooks = new Set(); // Books to include in selection
-let score = 0;
-let strikes = 0;
-let round = 0;
-let scriptures = null;
-let gameState = 'menu';
 
 let currentSelection = null;
 let allVerses = [];
@@ -23,13 +19,6 @@ let chapterIndexMap = {};
 let currGuessDistance = Infinity;
 let bases = [false, false, false, false]; // Tracks whether each base is occupied
 let runners = []; // Tracks runner elements for animation
-
-// Default Setting Values
-let difficulty = 'average'; // easiest -> average -> hardest
-let lbDifficulty = 'average';
-let currentVolume = 'bofm';
-let thresholdSetting = 'average'; 
-let numDisplayVerses = 3;
 
 document.addEventListener('DOMContentLoaded', function () {
   // Set CSS variables for animation time
@@ -54,8 +43,8 @@ document.addEventListener('DOMContentLoaded', function () {
     button.addEventListener('click', function(){
       if(button.id === 'start-button'){
         let difEl = document.getElementById('threshold-value');
-        difficulty = difEl.value;
-        console.log(`Difficulty: ${thresholdSetting}; Timer: ${TIMER_DURATIONS[thresholdSetting]}s`);
+        gameState.settings.difficulty = difEl.value;
+        console.log(`Difficulty: ${gameState.settings.thresholdSetting}; Timer: ${TIMER_DURATIONS[gameState.settings.thresholdSetting]}s`);
       }
       startGame();
     });
@@ -83,13 +72,13 @@ document.addEventListener('DOMContentLoaded', function () {
 
 async function loadData() {
   try{
-    const response = await fetchScriptures(STANDARD_WORKS_FILE_NAMES[currentVolume]);
-    scriptures = await response;
+    const response = await fetchScriptures(STANDARD_WORKS_FILE_NAMES[gameState.settings.currentVolume]);
+    gameState.scriptures = await response;
 
-    buildVerseList(scriptures);
-    buildChapterIndex(scriptures);
-    populateGuessOptions(scriptures);
-    populateIncludeExcludeOptions(scriptures, includedBooks);
+    buildVerseList(gameState.scriptures);
+    buildChapterIndex(gameState.scriptures);
+    populateGuessOptions(gameState.scriptures);
+    populateIncludeExcludeOptions();
     
   } catch (err) {
     console.error('Error loading verses: ', err);
@@ -98,16 +87,16 @@ async function loadData() {
 }
 
 function getRandomVerses() {
-  const maxStartIndex = allVerses.length - numDisplayVerses;
+  const maxStartIndex = allVerses.length - gameState.settings.numDisplayVerses;
   const startIndex = Math.floor(Math.random() * (maxStartIndex + 1));
 
-  const selectedVerses = allVerses.slice(startIndex, startIndex + numDisplayVerses);
+  const selectedVerses = allVerses.slice(startIndex, startIndex + gameState.settings.numDisplayVerses);
 
   const firstVerse = selectedVerses[0];
   const lastVerse = selectedVerses[selectedVerses.length - 1];
   if (firstVerse.book !== lastVerse.book || 
     firstVerse.chapter !== lastVerse.chapter ||
-    !includedBooks.has(firstVerse.book)) {
+    !gameState.includedBooks.has(firstVerse.book)) {
     return getRandomVerses(); // Try again recursively if spanning multiple chapters or books
   }
 
@@ -200,7 +189,7 @@ async function advanceRunners(numBases){
 
     runners = runners.filter(runner => {
       if(runner.base === "back_home"){
-        ++score;
+        ++gameState.score;
         runner.el.remove();
         return false; // Remove from runners array
       }
@@ -208,7 +197,7 @@ async function advanceRunners(numBases){
     });
   }
   
-  updateScoreboard(score, round, strikes);
+  updateScoreboard(gameState.score, gameState.round, gameState.strikes);
 }
 
 function spawnRunner(){
@@ -270,7 +259,7 @@ function submitGuess() {
     const distance = Math.abs(guessIndex - answerIndex);
     currGuessDistance = distance;
 
-    const [homeRunThreshold, tripleThreshold, doubleThreshold, singleThreshold] = THRESHOLD_ARRAYS[thresholdSetting];
+    const [homeRunThreshold, tripleThreshold, doubleThreshold, singleThreshold] = THRESHOLD_ARRAYS[gameState.settings.thresholdSetting];
 
     advanceRunners(distance <= homeRunThreshold ? 4 :
                    distance <= tripleThreshold ? 3 :
@@ -295,19 +284,19 @@ function submitGuess() {
 
 function startRound(){
   showVerses();
-  ++round;
-  updateScoreboard(score, round, strikes);
-  startTimer(handleTimeUp, TIMER_DURATIONS[thresholdSetting]);
+  ++gameState.round;
+  updateScoreboard(gameState.score, gameState.round, gameState.strikes);
+  startTimer(handleTimeUp, TIMER_DURATIONS[gameState.settings.thresholdSetting]);
   document.getElementById("newRound").disabled = true;
 }
 
 function handleTimeUp() {
   addStrike();
-  console.log("Time's Up! That's strike #" + strikes);
+  console.log("Time's Up! That's strike #" + gameState.strikes);
 }
 
 function showScreen(state){
-  gameState = state;
+  gameState.displayScreen = state;
   document.getElementById('menu-screen').style.display = (state === GAME_STATES.MENU) ? 'block' : 'none';
   document.getElementById('game-screen').style.display = (state === GAME_STATES.IN_GAME) ? 'block' : 'none';
   document.getElementById('settings-screen').style.display = (state === GAME_STATES.SETTINGS) ? 'block' : 'none';
@@ -315,22 +304,22 @@ function showScreen(state){
 }
 
 function addStrike(){
-  ++strikes;
-  updateScoreboard(score, round, strikes);
-  if(strikes >= 3){
-    document.getElementById('final-score').textContent = score;
+  ++gameState.strikes;
+  updateScoreboard(gameState.score, gameState.round, gameState.strikes);
+  if(gameState.strikes >= 3){
+    document.getElementById('final-score').textContent = gameState.score;
     sleep(1000).then(() => {
-      endGame(score);
-      showGameOver(score);
+      endGame(gameState.score);
+      showGameOver();
     });
   }
 }
 
 function startGame(){
-  strikes = 0;
-  score = 0;
-  round = 0;
-  updateScoreboard(score, round, strikes);
+  gameState.strikes = 0;
+  gameState.score = 0;
+  gameState.round = 0;
+  updateScoreboard(gameState.score, gameState.round, gameState.strikes);
   showScreen(GAME_STATES.IN_GAME);
   startRound();
 }
@@ -340,7 +329,7 @@ window.advanceRunners = advanceRunners;
 
 // Event Listener Functions (Will be exported or regrouped soon I think)
 function handleThreshValueChange(){
-  thresholdSetting = document.getElementById('threshold-value').value;
+  gameState.settings.thresholdSetting = document.getElementById('threshold-value').value;
 }
 function handleRevealDistance(){
   const refEl = document.getElementById('distance');
@@ -356,7 +345,7 @@ function handleRevealReference(){
   //refEl.hidden = false;
   if (!refEl.textContent && currentSelection) {
     let cs = currentSelection;
-    const url = makeScriptureLink(currentVolume, cs);
+    const url = makeScriptureLink(gameState.settings.currentVolume, cs);
     const link = document.createElement('a');
     link.href = url;
     link.target = "_blank";
@@ -381,26 +370,26 @@ function handleSettingsButton(){
 function handleCheckAllInex(){
   let targetDiv = document.getElementById("include-exclude-values");
   toggleAllBoxes(targetDiv, true);
-  populateIncludeExcludeOptions(scriptures, includedBooks);
+  populateIncludeExcludeOptions();
 }
 function handleUncheckAllInex(){
   let targetDiv = document.getElementById("include-exclude-values");
   toggleAllBoxes(targetDiv, false);
-  includedBooks.clear();
+  gameState.includedBooks.clear();
 }
 function handleMainMenuButton(){
-  if(gameState === 'in_game'){
-    endGame(score);
+  if(gameState.displayScreen === 'in_game'){
+    endGame(gameState.score);
   }
   showScreen(GAME_STATES.MENU); 
 }
 function handleVSelectChange(){
-  currentVolume = ELS.vSelect.value;
+  gameState.settings.currentVolume = ELS.vSelect.value;
   loadData();
 }
 function handleBookSelectChange(){
   ELS.chapterSelect.innerHTML = ''; // Clear previous options
-    const chapters = Object.keys(scriptures[ELS.bookSelect.value]);
+    const chapters = Object.keys(gameState.scriptures[ELS.bookSelect.value]);
     chapters.forEach(chapter => {
       const option = document.createElement('option');
       option.value = chapter;
@@ -415,7 +404,7 @@ function handleHideOverlay(){
   hideGameOver();
 }
 function handleRestartButton(){
-  endGame(score);
+  endGame(gameState.score);
   startGame();
 }
 function handleGORestartButton(){
@@ -429,6 +418,6 @@ function handleGOMenuButton(){
 function handleLBDiffButton(event){
   const button = event.currentTarget;
   const diff = button.dataset.diff;
-  lbDifficulty = diff;
-  updateLBDifficulty(lbDifficulty);
+  gameState.settings.lbDifficulty = diff;
+  updateLBDifficulty(gameState.settings.lbDifficulty);
 }

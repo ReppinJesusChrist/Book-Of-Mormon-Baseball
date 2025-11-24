@@ -1,4 +1,5 @@
 import {ELS, DIFFICULTY_NAMES} from "./config.js";
+import {gameState} from "./game_logic.js";
 
 const LB_tbody = document.querySelector("#leaderboard-table tbody"); 
 
@@ -30,8 +31,8 @@ export function updateLBTableRows(){
   }); 
 }
 
-export function showGameOver(score){
-  ELS.finalScore.textContent = score;
+export function showGameOver(){
+  ELS.finalScore.textContent = gameState.score;
   ELS.overlay.classList.add('visible');
 }
 
@@ -39,9 +40,9 @@ export function hideGameOver(){
   ELS.overlay.classList.remove('visible');
 }
 
-export function populateIncludeExcludeOptions(scriptures, includedBooks) {
+export function populateIncludeExcludeOptions() {
   ELS.IESelect.innerHTML = ''; // Clear previous options
-    Object.keys(scriptures).forEach(bookName => {
+    Object.keys(gameState.scriptures).forEach(bookName => {
       const wrapper = document.createElement('div');
       wrapper.style.display = 'block';
 
@@ -51,7 +52,7 @@ export function populateIncludeExcludeOptions(scriptures, includedBooks) {
       checkbox.value = bookName;
       checkbox.textContent = bookName;
       checkbox.checked = true; // Default to include all books
-      includedBooks.add(bookName); // Update set to reflect ^^^
+      gameState.includedBooks.add(bookName); // Update set to reflect ^^^
 
       const label = document.createElement('label');
       label.setAttribute('for', `inex-${bookName}`);
@@ -59,11 +60,11 @@ export function populateIncludeExcludeOptions(scriptures, includedBooks) {
 
       checkbox.addEventListener('change', () => {
         if(checkbox.checked){
-          includedBooks.add(bookName);
+          gameState.includedBooks.add(bookName);
         } else {
-          includedBooks.delete(bookName);
+          gameState.includedBooks.delete(bookName);
         }
-        console.log(`Included books:`, includedBooks);
+        console.log(`Included books:`, gameState.includedBooks);
       });
 
       wrapper.appendChild(checkbox);

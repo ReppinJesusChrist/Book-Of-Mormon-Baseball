@@ -32,9 +32,9 @@ export const TIMER_DURATIONS = {
   easier: Infinity,
   easy: 180,
   average: 60,
-  easy: 30,
-  easier: 20,
-  easiest: 10
+  hard: 30,
+  harder: 20,
+  hardest: 10
 }; // Timer durations for different difficulties
 export const THRESHOLD_ARRAYS = {
   easiest: [25, 50, 100, 250],

@@ -2,6 +2,34 @@ import {showGameOver, updateScoreboard, updateLBTableRows} from "./ui_manager.js
 import {stopTimer} from "./timer.js";
 import {ELS, NUM_LB_SCORES} from "./config.js";
 
+export const gameState = {
+  score : 0,
+  strikes : 0,
+  round : 0,
+  scriptures : null,
+  includedBooks : new Set(),
+  displayScreen : 'menu',
+
+  // Default Setting Values
+  settings: {
+    numDisplayVerses: 3,
+    difficulty : 'average', // easiest -> average -> hardest
+    lbDifficulty : 'average',
+    currentVolume : 'bofm',
+    thresholdSetting : 'average'
+  }
+}
+
+/*
+export function startRound(){
+  showVerses();
+  ++gameState.round;
+  updateScoreboard(gameState.score, gameState.round, gameState.strikes);
+  startTimer(handleTimeUp, TIMER_DURATIONS[gameState.settings.thresholdSetting]);
+  document.getElementById("newRound").disabled = true;
+}
+*/
+
 export async function endGame(score){
   ELS.BUTTONS.newRound.disabled = true;
   ELS.finalScore.textContent = score;
