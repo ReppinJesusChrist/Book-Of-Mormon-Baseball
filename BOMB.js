@@ -3,6 +3,7 @@ import { toggleAllBoxes, makeScriptureLink, sleep, nextFrame } from "./helper_fu
 import { gameState, endGame, getNextBase, initializeGame,
   /*startRound*/
   } from "./game_logic.js";
+import {gameData, getRandomVerses, buildVerseList} from "./data_manager.js";
 import {populateIncludeExcludeOptions, populateGuessOptions, updateScoreboard,
   showGameOver, hideGameOver, initializeLBTableRows, updateLBDisplayDifficulty,
   updateLBTableRows, updateLBDisplayBook} from "./ui_manager.js";
@@ -15,7 +16,6 @@ import {ELS, ANIMATION_TIME_MS, TIMER_DURATIONS,
 
 // Variable Initiation
 let currentSelection = null;
-let allVerses = [];
 let chapterIndexMap = {};
 let currGuessDistance = Infinity;
 let bases = [false, false, false, false]; // Tracks whether each base is occupied
@@ -111,30 +111,6 @@ async function loadData() {
   
 }
 
-function getRandomVerses() {
-  const maxStartIndex = allVerses.length - gameState.settings.numDisplayVerses;
-  const startIndex = Math.floor(Math.random() * (maxStartIndex + 1));
-
-  const selectedVerses = allVerses.slice(startIndex, startIndex + gameState.settings.numDisplayVerses);
-
-  const firstVerse = selectedVerses[0];
-  const lastVerse = selectedVerses[selectedVerses.length - 1];
-  if (firstVerse.book !== lastVerse.book || 
-    firstVerse.chapter !== lastVerse.chapter ||
-    !gameState.includedBooks.has(firstVerse.book)) {
-    return getRandomVerses(); // Try again recursively if spanning multiple chapters or books
-  }
-
-  const reference = `${firstVerse.book} ${firstVerse.chapter}:${firstVerse.verse}-${lastVerse.verse}`;
-
-  return {
-    book: firstVerse.book,
-    chapter: firstVerse.chapter,
-    verses: selectedVerses,
-    reference: reference
-  }
-}
-
 function showVerses() {
   const container = document.getElementById('verses');
   const referenceElement = document.getElementById('reference');
@@ -172,23 +148,6 @@ function  buildChapterIndex(scriptures) {
     for (const chapter in scriptures[book]) {
       const key = `${book} ${chapter}`;
       chapterIndexMap[key] = index++;
-    }
-  }
-}
-
-function buildVerseList(scriptures) {
-  allVerses = [];
-  for (const book in scriptures) {
-    for (const chapter in scriptures[book]) {
-      const verses = scriptures[book][chapter];
-      verses.forEach(verse => {
-        allVerses.push({
-          book,
-          chapter,
-          verse: verse.verse,
-          text: verse.text
-        });
-      });
     }
   }
 }
