@@ -1,4 +1,4 @@
-import {ELS, DIFFICULTY_NAMES, BOOK_NAMES} from "./config.js";
+import {ELS, DIFFICULTY_NAMES, BOOK_NAMES, GAME_STATES} from "./config.js";
 import {getRandomVerses} from "./data_manager.js";
 import {gameState} from "./game_logic.js";
 
@@ -158,4 +158,12 @@ export function showVerses() {
       p.textContent = verse.text;
       container.appendChild(p);
     });
+}
+
+export function showScreen(state){
+  gameState.displayScreen = state;
+  document.getElementById('menu-screen').style.display = (state === GAME_STATES.MENU) ? 'block' : 'none';
+  document.getElementById('game-screen').style.display = (state === GAME_STATES.IN_GAME) ? 'block' : 'none';
+  document.getElementById('settings-screen').style.display = (state === GAME_STATES.SETTINGS) ? 'block' : 'none';
+  document.getElementById('leaderboard-screen').style.display = (state === GAME_STATES.LEADERBOARD) ? 'block' : 'none';
 }

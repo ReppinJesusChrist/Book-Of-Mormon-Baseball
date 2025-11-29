@@ -1,6 +1,9 @@
-import {showGameOver, updateScoreboard, updateLBTableRows, showVerses} from "./ui_manager.js";
+import {showGameOver, updateScoreboard, updateLBTableRows, 
+  showVerses, showScreen
+} from "./ui_manager.js";
 import {startTimer, stopTimer} from "./timer.js";
-import {ELS, NUM_LB_SCORES, TIMER_DURATIONS} from "./config.js";
+import {ELS, NUM_LB_SCORES, TIMER_DURATIONS, GAME_STATES
+} from "./config.js";
 
 export const gameState = {
   inRound: false,
@@ -35,6 +38,16 @@ export function startRound(){
   updateScoreboard();
   startTimer(handleTimeUp, TIMER_DURATIONS[gameState.settings.thresholdSetting]);
   document.getElementById("newRound").disabled = true;
+}
+
+export function startGame(){
+  gameState.strikes = 0;
+  gameState.score = 0;
+  gameState.round = 0;
+  gameState.inRound = true;
+  updateScoreboard()
+  showScreen(GAME_STATES.IN_GAME);
+  startRound();
 }
 
 export async function endGame(){
@@ -108,8 +121,5 @@ function handleTimeUp() {
 }
 
 export function initializeGame(){
-
-}
-export function startGame(){
 
 }

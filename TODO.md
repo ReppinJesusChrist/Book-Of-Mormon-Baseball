@@ -48,7 +48,7 @@
 
 - [ ] **Refactoring**
   - [ ] **HTML**
-    - [ ] 
+    - [ ] Use the system I was using in ELS to name elements instead of sorting them afterwards in JS (E.G. 'go-btns-menu')
   - [ ] **JS**
     - [X] Add inGame variable to gameState to fix bug with double counting scores
     - [ ] Consolidate all main-menu buttons and all restart buttons using inGame

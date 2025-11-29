@@ -44,6 +44,7 @@ export const TIMER_DURATIONS = {
   harder: 20,
   hardest: 10
 }; // Timer durations for different difficulties
+
 export const THRESHOLD_ARRAYS = {
   easiest: [25, 50, 100, 250],
   easier: [12, 25, 50, 100],
@@ -89,10 +90,10 @@ export const ELS = {
   GO: {
     BTNS: {
       menu: document.getElementById('game-over-menu-btn'),
-      restart: document.getElementById('try-again-btn')
+      restart: document.getElementById('go-btns-tryagain')
     }
   },
-  vSelect: document.getElementById('volume-select-value'),
+  vSelect: document.getElementById('settings-vselect-value'),
   toggle: document.getElementById('include-exclude-toggle'),
   IESelect: document.getElementById('include-exclude-values'),
   dropdown: document.getElementById('include-exclude-dropdown'),
@@ -101,7 +102,4 @@ export const ELS = {
   overlay: document.getElementById('game-over-overlay'),
   finalScore: document.getElementById('final-score'),
 }
-export const BUTTON_ELS = {
-  hideOverlay: document.getElementById('hide-overlay'),
-  newRound: document.getElementById('newRound')
-}
+

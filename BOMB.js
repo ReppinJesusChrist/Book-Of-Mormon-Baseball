@@ -1,17 +1,36 @@
 import { startTimer, stopTimer } from "./timer.js";
 import { toggleAllBoxes, makeScriptureLink, sleep, nextFrame } from "./helper_functions.js";
 import { gameState, endGame, getNextBase, initializeGame, addStrike,
-  startRound
+  startRound, startGame
   } from "./game_logic.js";
 import {gameData, getRandomVerses, buildVerseList} from "./data_manager.js";
 import {populateIncludeExcludeOptions, populateGuessOptions, updateScoreboard,
   showGameOver, hideGameOver, initializeLBTableRows, updateLBDisplayDifficulty,
-  updateLBTableRows, updateLBDisplayBook} from "./ui_manager.js";
+  updateLBTableRows, updateLBDisplayBook, showScreen} from "./ui_manager.js";
 import {loadData} from "./data_manager.js";
 import {ELS, ANIMATION_TIME_MS, TIMER_DURATIONS, 
   THRESHOLD_ARRAYS, STANDARD_WORKS_FILE_NAMES, GAME_STATES, BASE_POSITIONS,
   DIFFICULTY_NAMES, BOOK_NAMES} from './config.js'
 
+const CLICK_HANDLERS = {
+  'revealDistance': handleRevealDistance,
+  'revealReference': handleRevealReference,
+  'newRound': handleNewRound,
+  'leaderboard-button': handleLeaderboardButton,
+  'finalizeGuess': handleFinalizeGuess,
+  'settings-button': handleSettingsButton,
+  'check-all-inex': handleCheckAllInex,
+  'uncheck-all-inex': handleUncheckAllInex,
+  'hide-overlay': handleHideOverlay,
+  'game-over-menu-btn': handleGOMenuButton,
+  'go-btns-tryagain': handleGORestartButton
+}
+
+const CHANGE_HANDLERS = {
+  'settings-vselect-value': handleVSelectChange,
+  'bookSelect': handleBookSelectChange,
+
+}
 // let updateNeeded = true;
 
 // Variable Initiation
@@ -23,21 +42,14 @@ document.addEventListener('DOMContentLoaded', function () {
   // Set CSS variables for animation time
   document.documentElement.style.setProperty('--runner-animation-time', `${ANIMATION_TIME_MS}ms`);
   
-  document.getElementById('threshold-value').addEventListener('change', handleThreshValueChange);
-  document.getElementById('revealDistance').addEventListener('click', handleRevealDistance);
-  document.getElementById('revealReference').addEventListener('click', handleRevealReference);
-  document.getElementById('newRound').addEventListener('click', handleNewRound);
-  document.getElementById('leaderboard-button').addEventListener('click', handleLeaderboardButton);
-  document.getElementById('finalizeGuess').addEventListener('click', handleFinalizeGuess);
-  document.getElementById('settings-button').addEventListener('click',handleSettingsButton);
-  document.getElementById('check-all-inex').addEventListener('click', handleCheckAllInex);
-  document.getElementById('uncheck-all-inex').addEventListener('click', handleUncheckAllInex);
+  for(const [id, handler] of Object.entries(CLICK_HANDLERS)){
+    document.getElementById(id).addEventListener('click', handler);
+  }
+
+  for(const [id, handler] of Object.entries(CHANGE_HANDLERS)){
+    document.getElementById(id).addEventListener('change', handler);
+  }
   
-  ELS.BUTTONS.hideOverlay.addEventListener('click', handleHideOverlay);
-  ELS.vSelect.addEventListener('change', handleVSelectChange); 
-  ELS.bookSelect.addEventListener('change', handleBookSelectChange);
-  ELS.GO.BTNS.menu.addEventListener('click', handleGOMenuButton);
-  ELS.GO.BTNS.restart.addEventListener('click', handleGORestartButton);
   ELS.LB.BTNS.bookSelect.forEach(button => {
     button.addEventListener('click', handleLBBookButton);
   });
@@ -209,23 +221,6 @@ function submitGuess() {
     }
 
     document.getElementById('finalizeGuess').disabled = true;
-}
-
-function showScreen(state){
-  gameState.displayScreen = state;
-  document.getElementById('menu-screen').style.display = (state === GAME_STATES.MENU) ? 'block' : 'none';
-  document.getElementById('game-screen').style.display = (state === GAME_STATES.IN_GAME) ? 'block' : 'none';
-  document.getElementById('settings-screen').style.display = (state === GAME_STATES.SETTINGS) ? 'block' : 'none';
-  document.getElementById('leaderboard-screen').style.display = (state === GAME_STATES.LEADERBOARD) ? 'block' : 'none';
-}
-
-function startGame(){
-  gameState.strikes = 0;
-  gameState.score = 0;
-  gameState.round = 0;
-  updateScoreboard()
-  showScreen(GAME_STATES.IN_GAME);
-  startRound();
 }
 
 window.addStrike = addStrike;
