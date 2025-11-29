@@ -16,6 +16,14 @@ export const THRESHOLD_OPTIONS = {
   pinhead:  [0, 1, 2, 4]
 }
 */
+export const BOOK_NAMES = {
+  bofm: 'Book of Mormon',
+  nt: 'New Testament',
+  ot: 'Old Testament',
+  dc: 'Doctrine and Covenants',
+  gc: 'General Conference'
+}
+
 export const DIFFICULTY_NAMES ={
   easiest: 'Hit Noah\'s ark',
   easier: 'Hit the side of the stable',
@@ -72,7 +80,11 @@ export const ELS = {
   },
   LB: {
     difficultyLabel: document.getElementById('lb-display-difficulty'),
-    difLadder: document.getElementById('difficultyLadder')
+    bookLabel: document.getElementById('lb-display-book'),
+    difLadder: document.getElementById('difficultyLadder'),
+    BTNS: {
+      bookSelect: document.querySelectorAll('.lb-book-option')
+    }
   },
   GO: {
     BTNS: {

@@ -4,15 +4,16 @@ import { gameState, endGame, getNextBase, initializeGame,
   /*startRound*/
   } from "./game_logic.js";
 import {populateIncludeExcludeOptions, populateGuessOptions, updateScoreboard,
-  showGameOver, hideGameOver, initializeLBTableRows, updateLBDifficulty,
-  } from "./ui_manager.js";
+  showGameOver, hideGameOver, initializeLBTableRows, updateLBDisplayDifficulty,
+  updateLBTableRows, updateLBDisplayBook} from "./ui_manager.js";
 import {fetchScriptures} from "./data_manager.js";
 import {ELS, ANIMATION_TIME_MS, TIMER_DURATIONS, 
   THRESHOLD_ARRAYS, STANDARD_WORKS_FILE_NAMES, GAME_STATES, BASE_POSITIONS,
-  DIFFICULTY_NAMES} from './config.js'
+  DIFFICULTY_NAMES, BOOK_NAMES} from './config.js'
+
+// let updateNeeded = true;
 
 // Variable Initiation
-
 let currentSelection = null;
 let allVerses = [];
 let chapterIndexMap = {};
@@ -21,6 +22,7 @@ let bases = [false, false, false, false]; // Tracks whether each base is occupie
 let runners = []; // Tracks runner elements for animation
 
 document.addEventListener('DOMContentLoaded', function () {
+
   // Set CSS variables for animation time
   document.documentElement.style.setProperty('--runner-animation-time', `${ANIMATION_TIME_MS}ms`);
   
@@ -33,11 +35,15 @@ document.addEventListener('DOMContentLoaded', function () {
   document.getElementById('settings-button').addEventListener('click',handleSettingsButton);
   document.getElementById('check-all-inex').addEventListener('click', handleCheckAllInex);
   document.getElementById('uncheck-all-inex').addEventListener('click', handleUncheckAllInex);
+  
   ELS.BUTTONS.hideOverlay.addEventListener('click', handleHideOverlay);
   ELS.vSelect.addEventListener('change', handleVSelectChange); 
   ELS.bookSelect.addEventListener('change', handleBookSelectChange);
   ELS.GO.BTNS.menu.addEventListener('click', handleGOMenuButton);
   ELS.GO.BTNS.restart.addEventListener('click', handleGORestartButton);
+  ELS.LB.BTNS.bookSelect.forEach(button => {
+    button.addEventListener('click', handleLBBookButton);
+  });
 
   document.querySelectorAll('.start-button').forEach(button => {
     button.addEventListener('click', function(){
@@ -58,12 +64,31 @@ document.addEventListener('DOMContentLoaded', function () {
   document.querySelectorAll('.lb-difficulty-option').forEach(button => {
     button.addEventListener("click", handleLBDiffButton);
   });
+
   ELS.toggle.addEventListener('click', (e)=>{
     e.stopPropagation(); // Study this further to understand
     ELS.dropdown.classList.toggle('open');
-  })
+  });
+
+  
+  let scores = localStorage.getItem("topScores");
+  if(!scores){
+    const initial = {};
+    for(const bookName in BOOK_NAMES){
+      initial[bookName] = {};
+      for(const difficultyName in DIFFICULTY_NAMES){
+      initial[bookName][difficultyName] = [];
+      }
+    }
+    scores = JSON.stringify(initial);
+    localStorage.setItem("topScores", scores);
+  };
 
   initializeLBTableRows();
+  updateLBDisplayDifficulty();
+  updateLBDisplayBook();
+  updateLBTableRows();
+
   positionBases();
 
   // Load verses from bom.json when the page loads
@@ -292,7 +317,8 @@ function startRound(){
 
 function handleTimeUp() {
   addStrike();
-  console.log("Time's Up! That's strike #" + gameState.strikes);
+  stopTimer();
+  document.getElementById("newRound").disabled = false;
 }
 
 function showScreen(state){
@@ -309,7 +335,7 @@ function addStrike(){
   if(gameState.strikes >= 3){
     document.getElementById('final-score').textContent = gameState.score;
     sleep(1000).then(() => {
-      endGame(gameState.score);
+      endGame();
       showGameOver();
     });
   }
@@ -378,8 +404,8 @@ function handleUncheckAllInex(){
   gameState.includedBooks.clear();
 }
 function handleMainMenuButton(){
-  if(gameState.displayScreen === 'in_game'){
-    endGame(gameState.score);
+  if(gameState.inRound){
+    endGame();
   }
   showScreen(GAME_STATES.MENU); 
 }
@@ -404,7 +430,9 @@ function handleHideOverlay(){
   hideGameOver();
 }
 function handleRestartButton(){
-  endGame(gameState.score);
+  if(gameState.inRound) {
+    endGame();
+  }
   startGame();
 }
 function handleGORestartButton(){
@@ -419,5 +447,13 @@ function handleLBDiffButton(event){
   const button = event.currentTarget;
   const diff = button.dataset.diff;
   gameState.settings.lbDifficulty = diff;
-  updateLBDifficulty(gameState.settings.lbDifficulty);
+  updateLBDisplayDifficulty();
+  updateLBTableRows();
+}
+function handleLBBookButton(event){
+  const button = event.currentTarget;
+  const diff = button.dataset.diff;
+  gameState.settings.lbBook = diff;
+  updateLBDisplayBook();
+  updateLBTableRows();
 }

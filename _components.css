@@ -83,6 +83,18 @@ select:hover {
     background-color: rgba(0,0,0,0.1);
 }
 
+#lb-book-ladder,
+#lb-difficulty-ladder {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 10px;
+}
+
+#lb-book-ladder button,
+#lb-difficulty-ladder button {
+    width: 100%;
+}
+
 #scoreboard {
     text-align: center;
     margin-top: 20px;

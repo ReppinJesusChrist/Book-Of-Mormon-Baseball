@@ -1,4 +1,4 @@
-import {ELS, DIFFICULTY_NAMES} from "./config.js";
+import {ELS, DIFFICULTY_NAMES, BOOK_NAMES} from "./config.js";
 import {gameState} from "./game_logic.js";
 
 const LB_tbody = document.querySelector("#leaderboard-table tbody"); 
@@ -19,16 +19,29 @@ export function initializeLBTableRows(){
 }
 
 export function updateLBTableRows(){
-  let scores = JSON.parse(localStorage.getItem("topScores")) || [];
+  let allScores = JSON.parse(localStorage.getItem("topScores"));
+  let scores = allScores[gameState.settings.lbBook][gameState.settings.lbDifficulty] || [];
 
-  let rows = document.querySelectorAll("#leaderboard-table tbody tr");
+  let rows = LB_tbody.querySelectorAll("tr");
 
-  scores.forEach((entry, i) => {
-    const d = new Date(entry.datetime);
-    rows[i].children[1].textContent = entry.score;
-    rows[i].children[2].textContent = d.toLocaleDateString();
-    rows[i].children[3].textContent = d.toLocaleTimeString();
-  }); 
+  if(scores.length === 0){
+    clearLB();
+  }else{
+    scores.forEach((entry, i) => {
+      const d = new Date(entry.datetime);
+      rows[i].children[1].textContent = entry.score;
+      rows[i].children[2].textContent = d.toLocaleDateString();
+      rows[i].children[3].textContent = d.toLocaleTimeString();
+    });
+  }
+   
+}
+
+function clearLB(){
+  let rows = LB_tbody.querySelectorAll("tr");
+  rows.forEach(row => {
+    row.children[1].textContent = row.children[2].textContent = row.children[3].textContent = '';
+  });
 }
 
 export function showGameOver(){
@@ -107,6 +120,10 @@ export function updateScoreboard(score, round, strikes){
     updateStrikeBoxes(strikes);
 }
 
-export function updateLBDifficulty(difficulty){
-  ELS.LB.difficultyLabel.textContent = DIFFICULTY_NAMES[difficulty];
+export function updateLBDisplayDifficulty(){
+  ELS.LB.difficultyLabel.textContent = DIFFICULTY_NAMES[gameState.settings.lbDifficulty];
+}
+
+export function updateLBDisplayBook(){
+  ELS.LB.bookLabel.textContent = BOOK_NAMES[gameState.settings.lbBook];
 }

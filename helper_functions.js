@@ -134,3 +134,7 @@ export function toggleAllBoxes(targetDiv, check){
     box.checked = check;
   });
 }
+
+export function handleUpdate(){
+    
+}

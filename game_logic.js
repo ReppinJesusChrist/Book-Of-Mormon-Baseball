@@ -3,6 +3,8 @@ import {stopTimer} from "./timer.js";
 import {ELS, NUM_LB_SCORES} from "./config.js";
 
 export const gameState = {
+  inRound: false,
+
   score : 0,
   strikes : 0,
   round : 0,
@@ -15,6 +17,7 @@ export const gameState = {
     numDisplayVerses: 3,
     difficulty : 'average', // easiest -> average -> hardest
     lbDifficulty : 'average',
+    lbBook : 'bofm',
     currentVolume : 'bofm',
     thresholdSetting : 'average'
   }
@@ -30,18 +33,20 @@ export function startRound(){
 }
 */
 
-export async function endGame(score){
+export async function endGame(){
   ELS.BUTTONS.newRound.disabled = true;
-  ELS.finalScore.textContent = score;
-  localStorage.setItem("Last Score", score);
+  ELS.finalScore.textContent = gameState.score;
+  localStorage.setItem("Last Score", gameState.score);
   resetBases();
   stopTimer();
-  updateHighScores(score);
+  updateHighScores(gameState.score);
   updateLBTableRows();
+  gameState.inRound = false;
 }
 
 function updateHighScores(newScore){
-  let scores = JSON.parse(localStorage.getItem("topScores")) || [];
+  let allScores = JSON.parse(localStorage.getItem("topScores")) || [];
+  let scores = allScores[gameState.settings.lbBook][gameState.settings.difficulty] || [];
 
   const newScoreObject = makeScoreObject(newScore);
 
@@ -54,7 +59,8 @@ function updateHighScores(newScore){
   // Trim to size
   scores = scores.slice(0, NUM_LB_SCORES);
 
-  localStorage.setItem("topScores", JSON.stringify(scores));
+  allScores[gameState.settings.lbBook][gameState.settings.difficulty] = scores;
+  localStorage.setItem("topScores", JSON.stringify(allScores));
 }
 
 function resetBases(bases, runners){
