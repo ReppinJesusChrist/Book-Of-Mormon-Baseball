@@ -1,6 +1,6 @@
-import {showGameOver, updateScoreboard, updateLBTableRows} from "./ui_manager.js";
-import {stopTimer} from "./timer.js";
-import {ELS, NUM_LB_SCORES} from "./config.js";
+import {showGameOver, updateScoreboard, updateLBTableRows, showVerses} from "./ui_manager.js";
+import {startTimer, stopTimer} from "./timer.js";
+import {ELS, NUM_LB_SCORES, TIMER_DURATIONS} from "./config.js";
 
 export const gameState = {
   inRound: false,
@@ -8,8 +8,14 @@ export const gameState = {
   score : 0,
   strikes : 0,
   round : 0,
+
   scriptures : null,
   includedBooks : new Set(),
+  currentSelection: null,
+  chapterIndexMap: {},
+  currGuessDistance: Infinity,
+
+
   displayScreen : 'menu',
 
   // Default Setting Values
@@ -23,15 +29,13 @@ export const gameState = {
   }
 }
 
-/*
 export function startRound(){
   showVerses();
   ++gameState.round;
-  updateScoreboard(gameState.score, gameState.round, gameState.strikes);
+  updateScoreboard();
   startTimer(handleTimeUp, TIMER_DURATIONS[gameState.settings.thresholdSetting]);
   document.getElementById("newRound").disabled = true;
 }
-*/
 
 export async function endGame(){
   ELS.BUTTONS.newRound.disabled = true;
@@ -77,13 +81,16 @@ export function getNextBase(currentBase){
   return order[nextIndex];
 }
 
-export function addStrike(score, round, strikes){
-    ++strikes;
-    updateScoreboard(score, round, strikes);
+export function addStrike(){
+  ++gameState.strikes;
+  updateScoreboard()
+  if(gameState.strikes >= 3){
+    document.getElementById('final-score').textContent = gameState.score;
     sleep(1000).then(() => {
-      showGameOver();
       endGame();
-  }); 
+      showGameOver();
+    });
+  }
 }
 
 function makeScoreObject(score){
@@ -92,6 +99,12 @@ function makeScoreObject(score){
     datetime: new Date().toISOString()
   }
   return scoreObj;
+}
+
+function handleTimeUp() {
+  addStrike();
+  stopTimer();
+  document.getElementById("newRound").disabled = false;
 }
 
 export function initializeGame(){

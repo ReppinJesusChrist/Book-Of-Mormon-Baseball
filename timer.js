@@ -23,6 +23,11 @@ export function startTimer(onTimeUp, duration) {
     }, 100);
 }
 
+export function stopTimer() {
+    stopFlashing();
+    clearInterval(timerInterval);
+}
+
 function updateTimerBar(percentRemaining, timerEl) {
   const hue = percentRemaining * 120; // 120 (green) to 0 (red)
 
@@ -46,9 +51,4 @@ function stopFlashing() {
     const containerEl = document.getElementById("timer-container");
     if (containerEl.classList.contains("warning-flash"))
         containerEl.classList.remove("warning-flash");
-}
-
-export function stopTimer() {
-    stopFlashing();
-    clearInterval(timerInterval);
 }

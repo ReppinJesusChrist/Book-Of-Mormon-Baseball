@@ -1,13 +1,13 @@
 import { startTimer, stopTimer } from "./timer.js";
 import { toggleAllBoxes, makeScriptureLink, sleep, nextFrame } from "./helper_functions.js";
-import { gameState, endGame, getNextBase, initializeGame,
-  /*startRound*/
+import { gameState, endGame, getNextBase, initializeGame, addStrike,
+  startRound
   } from "./game_logic.js";
 import {gameData, getRandomVerses, buildVerseList} from "./data_manager.js";
 import {populateIncludeExcludeOptions, populateGuessOptions, updateScoreboard,
   showGameOver, hideGameOver, initializeLBTableRows, updateLBDisplayDifficulty,
   updateLBTableRows, updateLBDisplayBook} from "./ui_manager.js";
-import {fetchScriptures} from "./data_manager.js";
+import {loadData} from "./data_manager.js";
 import {ELS, ANIMATION_TIME_MS, TIMER_DURATIONS, 
   THRESHOLD_ARRAYS, STANDARD_WORKS_FILE_NAMES, GAME_STATES, BASE_POSITIONS,
   DIFFICULTY_NAMES, BOOK_NAMES} from './config.js'
@@ -15,9 +15,6 @@ import {ELS, ANIMATION_TIME_MS, TIMER_DURATIONS,
 // let updateNeeded = true;
 
 // Variable Initiation
-let currentSelection = null;
-let chapterIndexMap = {};
-let currGuessDistance = Infinity;
 let bases = [false, false, false, false]; // Tracks whether each base is occupied
 let runners = []; // Tracks runner elements for animation
 
@@ -84,6 +81,10 @@ document.addEventListener('DOMContentLoaded', function () {
     localStorage.setItem("topScores", scores);
   };
 
+  init();
+});
+
+async function init(){
   initializeLBTableRows();
   updateLBDisplayDifficulty();
   updateLBDisplayBook();
@@ -91,65 +92,9 @@ document.addEventListener('DOMContentLoaded', function () {
 
   positionBases();
 
-  // Load verses from bom.json when the page loads
-  loadData();
-});
-
-async function loadData() {
-  try{
-    const response = await fetchScriptures(STANDARD_WORKS_FILE_NAMES[gameState.settings.currentVolume]);
-    gameState.scriptures = await response;
-
-    buildVerseList(gameState.scriptures);
-    buildChapterIndex(gameState.scriptures);
-    populateGuessOptions(gameState.scriptures);
-    populateIncludeExcludeOptions();
-    
-  } catch (err) {
-    console.error('Error loading verses: ', err);
-  }
-  
-}
-
-function showVerses() {
-  const container = document.getElementById('verses');
-  const referenceElement = document.getElementById('reference');
-  const revealButton = document.getElementById('revealReference');
-  const distanceButton = document.getElementById('revealDistance');
-
-  const resultEl = document.getElementById('result');
-  const distanceEl = document.getElementById('distance');
-
-  ELS.bookSelect.value = '';
-  ELS.chapterSelect.innerHTML = '';
-  resultEl.textContent = '';
-  distanceEl.textContent = '';
-
-  container.innerHTML = ''; // Clear previous verses
-  referenceElement.textContent = ''; // Clear previous reference
-  revealButton.textContent = 'Reveal Reference';
-
-  currGuessDistance = Infinity;
-
-  currentSelection = getRandomVerses();
-
-  // Three seperate paragraphs (one for each verse)
-  currentSelection.verses.forEach(verse => {
-    const p = document.createElement('p');
-    p.textContent = verse.text;
-    container.appendChild(p);
-  });
-}
-
-function  buildChapterIndex(scriptures) {
-  let index = 0;
-  chapterIndexMap = {};
-  for (const book in scriptures) {
-    for (const chapter in scriptures[book]) {
-      const key = `${book} ${chapter}`;
-      chapterIndexMap[key] = index++;
-    }
-  }
+  await loadData();
+  populateGuessOptions();
+  populateIncludeExcludeOptions();
 }
 
 async function advanceRunners(numBases){
@@ -181,7 +126,7 @@ async function advanceRunners(numBases){
     });
   }
   
-  updateScoreboard(gameState.score, gameState.round, gameState.strikes);
+  updateScoreboard();
 }
 
 function spawnRunner(){
@@ -228,20 +173,20 @@ function submitGuess() {
     const resultEl = document.getElementById('result');
     document.getElementById("newRound").disabled = false;
 
-    if (!currentSelection) {
+    if (!gameState.currentSelection) {
       resultEl.textContent = "No verses loaded yet.";
       return;
     }
 
 
     const guessKey = `${bookGuess} ${chapterGuess}`;
-    const answerKey = `${currentSelection.book} ${currentSelection.chapter}`;
+    const answerKey = `${gameState.currentSelection.book} ${gameState.currentSelection.chapter}`;
 
-    const guessIndex = chapterIndexMap[guessKey];
-    const answerIndex = chapterIndexMap[answerKey];
+    const guessIndex = gameState.chapterIndexMap[guessKey];
+    const answerIndex = gameState.chapterIndexMap[answerKey];
 
     const distance = Math.abs(guessIndex - answerIndex);
-    currGuessDistance = distance;
+    gameState.currGuessDistance = distance;
 
     const [homeRunThreshold, tripleThreshold, doubleThreshold, singleThreshold] = THRESHOLD_ARRAYS[gameState.settings.thresholdSetting];
 
@@ -266,20 +211,6 @@ function submitGuess() {
     document.getElementById('finalizeGuess').disabled = true;
 }
 
-function startRound(){
-  showVerses();
-  ++gameState.round;
-  updateScoreboard(gameState.score, gameState.round, gameState.strikes);
-  startTimer(handleTimeUp, TIMER_DURATIONS[gameState.settings.thresholdSetting]);
-  document.getElementById("newRound").disabled = true;
-}
-
-function handleTimeUp() {
-  addStrike();
-  stopTimer();
-  document.getElementById("newRound").disabled = false;
-}
-
 function showScreen(state){
   gameState.displayScreen = state;
   document.getElementById('menu-screen').style.display = (state === GAME_STATES.MENU) ? 'block' : 'none';
@@ -288,23 +219,11 @@ function showScreen(state){
   document.getElementById('leaderboard-screen').style.display = (state === GAME_STATES.LEADERBOARD) ? 'block' : 'none';
 }
 
-function addStrike(){
-  ++gameState.strikes;
-  updateScoreboard(gameState.score, gameState.round, gameState.strikes);
-  if(gameState.strikes >= 3){
-    document.getElementById('final-score').textContent = gameState.score;
-    sleep(1000).then(() => {
-      endGame();
-      showGameOver();
-    });
-  }
-}
-
 function startGame(){
   gameState.strikes = 0;
   gameState.score = 0;
   gameState.round = 0;
-  updateScoreboard(gameState.score, gameState.round, gameState.strikes);
+  updateScoreboard()
   showScreen(GAME_STATES.IN_GAME);
   startRound();
 }
@@ -320,16 +239,16 @@ function handleRevealDistance(){
   const refEl = document.getElementById('distance');
     console.log('Distance reveal button clicked');
     // SIMPLE REVEAL: just show once
-    if (!refEl.textContent && currGuessDistance != Infinity) {
-      if(currGuessDistance === 0) refEl.textContent = `(Exactly Correct! Great Job!)`;
-      refEl.textContent = `(Off by ${currGuessDistance} chapters)`;
+    if (!refEl.textContent && gameState.currGuessDistance != Infinity) {
+      if(gameState.currGuessDistance === 0) refEl.textContent = `(Exactly Correct! Great Job!)`;
+      refEl.textContent = `(Off by ${gameState.currGuessDistance} chapters)`;
     }
 }
 function handleRevealReference(){
   const refEl = document.getElementById('reference');
   //refEl.hidden = false;
-  if (!refEl.textContent && currentSelection) {
-    let cs = currentSelection;
+  if (!refEl.textContent && gameState.currentSelection) {
+    let cs = gameState.currentSelection;
     const url = makeScriptureLink(gameState.settings.currentVolume, cs);
     const link = document.createElement('a');
     link.href = url;
@@ -371,6 +290,8 @@ function handleMainMenuButton(){
 function handleVSelectChange(){
   gameState.settings.currentVolume = ELS.vSelect.value;
   loadData();
+  populateGuessOptions();
+  populateIncludeExcludeOptions();
 }
 function handleBookSelectChange(){
   ELS.chapterSelect.innerHTML = ''; // Clear previous options

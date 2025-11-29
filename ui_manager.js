@@ -1,5 +1,7 @@
 import {ELS, DIFFICULTY_NAMES, BOOK_NAMES} from "./config.js";
+import {getRandomVerses} from "./data_manager.js";
 import {gameState} from "./game_logic.js";
+
 
 const LB_tbody = document.querySelector("#leaderboard-table tbody"); 
 
@@ -86,8 +88,8 @@ export function populateIncludeExcludeOptions() {
     });
 }
 
-export function populateGuessOptions(scriptures) {
-  if(!scriptures){
+export function populateGuessOptions() {
+  if(!gameState.scriptures){
     console.warn("function called before scriptures were loaded");
   }
 
@@ -96,7 +98,7 @@ export function populateGuessOptions(scriptures) {
   const chapterSelect = document.getElementById('chapterSelect');
 
   // Fill book options
-  const books = Object.keys(scriptures);
+  const books = Object.keys(gameState.scriptures);
   books.forEach(book => {
     const option = document.createElement('option');
     option.value = book;
@@ -113,11 +115,11 @@ export function updateStrikeBoxes(strikes){
   }
 }
 
-export function updateScoreboard(score, round, strikes){
-    document.getElementById("score").textContent = `${score}`;
-    document.getElementById("round").textContent = `${round}`;
-    document.getElementById("strikes").textContent = `${strikes}`;
-    updateStrikeBoxes(strikes);
+export function updateScoreboard(){
+    document.getElementById("score").textContent = `${gameState.score}`;
+    document.getElementById("round").textContent = `${gameState.round}`;
+    document.getElementById("strikes").textContent = `${gameState.strikes}`;
+    updateStrikeBoxes(gameState.strikes);
 }
 
 export function updateLBDisplayDifficulty(){
@@ -126,4 +128,34 @@ export function updateLBDisplayDifficulty(){
 
 export function updateLBDisplayBook(){
   ELS.LB.bookLabel.textContent = BOOK_NAMES[gameState.settings.lbBook];
+}
+
+export function showVerses() {
+  const container = document.getElementById('verses');
+    const referenceElement = document.getElementById('reference');
+    const revealButton = document.getElementById('revealReference');
+    const distanceButton = document.getElementById('revealDistance');
+  
+    const resultEl = document.getElementById('result');
+    const distanceEl = document.getElementById('distance');
+  
+    ELS.bookSelect.value = '';
+    ELS.chapterSelect.innerHTML = '';
+    resultEl.textContent = '';
+    distanceEl.textContent = '';
+  
+    container.innerHTML = ''; // Clear previous verses
+    referenceElement.textContent = ''; // Clear previous reference
+    revealButton.textContent = 'Reveal Reference';
+  
+    gameState.currGuessDistance = Infinity;
+  
+    gameState.currentSelection = getRandomVerses();
+  
+    // Three seperate paragraphs (one for each verse)
+    gameState.currentSelection.verses.forEach(verse => {
+      const p = document.createElement('p');
+      p.textContent = verse.text;
+      container.appendChild(p);
+    });
 }
