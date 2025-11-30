@@ -135,6 +135,12 @@ export function toggleAllBoxes(targetDiv, check){
   });
 }
 
+export function waitForAllRunners(runners, duration) {
+  return new Promise(resolve => {
+    setTimeout(resolve, duration);
+  });
+}
+
 export function handleUpdate(){
     
 }

@@ -1,23 +1,26 @@
 import {showGameOver, updateScoreboard, updateLBTableRows, 
-  showVerses, showScreen
+  showVerses, showScreen, setRunnerPosition,
 } from "./ui_manager.js";
 import {startTimer, stopTimer} from "./timer.js";
-import {ELS, NUM_LB_SCORES, TIMER_DURATIONS, GAME_STATES
+import {ELS, NUM_LB_SCORES, TIMER_DURATIONS, GAME_STATES,
+  ANIMATION_TIME_MS,
 } from "./config.js";
+import {sleep, nextFrame, waitForAllRunners} from "./helper_functions.js";
 
 export const gameState = {
   inRound: false,
+  
 
   score : 0,
   strikes : 0,
   round : 0,
+  runners : [], // Tracks runner elements for animation
 
   scriptures : null,
   includedBooks : new Set(),
   currentSelection: null,
   chapterIndexMap: {},
   currGuessDistance: Infinity,
-
 
   displayScreen : 'menu',
 
@@ -92,6 +95,49 @@ export function getNextBase(currentBase){
   const index = order.indexOf(currentBase);
   let nextIndex = (index + 1);
   return order[nextIndex];
+}
+
+export function spawnRunner(){
+  const runner = document.createElement('div');
+  runner.classList.add('runner');
+  document.getElementById('diamond').appendChild(runner);
+
+  setRunnerPosition(runner, "home");
+
+  gameState.runners.push({el: runner, base: "home"});
+  return runner;
+}
+
+export async function advanceRunners(numBases){
+  if(numBases > 0){
+    spawnRunner();
+    await nextFrame();
+    await nextFrame();
+  } else {
+    return;
+  } // No runners to advance
+
+  // Move runners forward one base the correct number of times
+  for(let i = 0; i < numBases; ++i){
+    gameState.runners.forEach(runner => {
+      let newBase = getNextBase(runner.base); 
+      setRunnerPosition(runner.el, newBase);
+      runner.base = newBase;
+    });
+
+    await waitForAllRunners(gameState.runners, ANIMATION_TIME_MS);
+
+    gameState.runners = gameState.runners.filter(runner => {
+      if(runner.base === "back_home"){
+        ++gameState.score;
+        runner.el.remove();
+        return false; // Remove from runners array
+      }
+      return true; // Keep in runners array
+    });
+  }
+  
+  updateScoreboard();
 }
 
 export function addStrike(){

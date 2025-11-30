@@ -1,85 +1,82 @@
 import { startTimer, stopTimer } from "./timer.js";
 import { toggleAllBoxes, makeScriptureLink, sleep, nextFrame } from "./helper_functions.js";
 import { gameState, endGame, getNextBase, initializeGame, addStrike,
-  startRound, startGame
+  startRound, startGame, advanceRunners, spawnRunner
   } from "./game_logic.js";
 import {gameData, getRandomVerses, buildVerseList} from "./data_manager.js";
 import {populateIncludeExcludeOptions, populateGuessOptions, updateScoreboard,
   showGameOver, hideGameOver, initializeLBTableRows, updateLBDisplayDifficulty,
-  updateLBTableRows, updateLBDisplayBook, showScreen} from "./ui_manager.js";
+  updateLBTableRows, updateLBDisplayBook, showScreen, 
+} from "./ui_manager.js";
 import {loadData} from "./data_manager.js";
 import {ELS, ANIMATION_TIME_MS, TIMER_DURATIONS, 
   THRESHOLD_ARRAYS, STANDARD_WORKS_FILE_NAMES, GAME_STATES, BASE_POSITIONS,
   DIFFICULTY_NAMES, BOOK_NAMES} from './config.js'
 
-const CLICK_HANDLERS = {
-  'revealDistance': handleRevealDistance,
-  'revealReference': handleRevealReference,
-  'newRound': handleNewRound,
-  'leaderboard-button': handleLeaderboardButton,
-  'finalizeGuess': handleFinalizeGuess,
-  'settings-button': handleSettingsButton,
-  'check-all-inex': handleCheckAllInex,
-  'uncheck-all-inex': handleUncheckAllInex,
-  'hide-overlay': handleHideOverlay,
-  'game-over-menu-btn': handleGOMenuButton,
-  'go-btns-tryagain': handleGORestartButton
-}
-
-const CHANGE_HANDLERS = {
-  'settings-vselect-value': handleVSelectChange,
-  'bookSelect': handleBookSelectChange,
-
-}
 // let updateNeeded = true;
+window.addStrike = addStrike;
+window.advanceRunners = advanceRunners;
 
 // Variable Initiation
 let bases = [false, false, false, false]; // Tracks whether each base is occupied
-let runners = []; // Tracks runner elements for animation
 
 document.addEventListener('DOMContentLoaded', function () {
+  setupCSSVars();
+  setupEventListeners();
+  setupScores();
+  init(); // Async and misc. initiation functions (refactor into neater groups later?)
+});
 
+function setupCSSVars() {
   // Set CSS variables for animation time
-  document.documentElement.style.setProperty('--runner-animation-time', `${ANIMATION_TIME_MS}ms`);
-  
+  document.documentElement.style.setProperty(
+    '--runner-animation-time', `${ANIMATION_TIME_MS}ms`
+  );
+}
+function setupEventListeners(){
+  const CLICK_HANDLERS = {
+    'revealDistance': handleRevealDistance,
+    'revealReference': handleRevealReference,
+    'newRound': handleNewRound,
+    'leaderboard-button': handleLeaderboardButton,
+    'finalizeGuess': handleFinalizeGuess,
+    'settings-button': handleSettingsButton,
+    'check-all-inex': handleCheckAllInex,
+    'uncheck-all-inex': handleUncheckAllInex,
+    'go-btns-tryagain': handleGORestartButton
+  }
   for(const [id, handler] of Object.entries(CLICK_HANDLERS)){
     document.getElementById(id).addEventListener('click', handler);
   }
 
+  const CHANGE_HANDLERS = {
+    'settings-vselect-value': handleVSelectChange,
+    'bookSelect': handleBookSelectChange,
+    'threshold-value' : handleThreshValueChange,
+  }
   for(const [id, handler] of Object.entries(CHANGE_HANDLERS)){
     document.getElementById(id).addEventListener('change', handler);
   }
-  
-  ELS.LB.BTNS.bookSelect.forEach(button => {
-    button.addEventListener('click', handleLBBookButton);
-  });
 
-  document.querySelectorAll('.start-button').forEach(button => {
-    button.addEventListener('click', function(){
-      if(button.id === 'start-button'){
-        let difEl = document.getElementById('threshold-value');
-        gameState.settings.difficulty = difEl.value;
-        console.log(`Difficulty: ${gameState.settings.thresholdSetting}; Timer: ${TIMER_DURATIONS[gameState.settings.thresholdSetting]}s`);
-      }
-      startGame();
-    });
-  });
-  document.querySelectorAll('.restart-button').forEach(button => {
-    button.addEventListener('click', handleRestartButton);
-  });
-  document.querySelectorAll('.main-menu-button').forEach(button => {
-    button.addEventListener('click', handleMainMenuButton);
-  });
-  document.querySelectorAll('.lb-difficulty-option').forEach(button => {
-    button.addEventListener("click", handleLBDiffButton);
-  });
+  const MULTI_HANDLERS = [
+    {selector: '.GO-button', event: 'click', handler: handleGOButton},
+    {selector: '.start-button', event: 'click', handler: handleStartButton},
+    {selector: '.main-menu-button', event: 'click', handler: handleMainMenuButton},
+    {selector: '.lb-difficulty-option', event: 'click', handler: handleLBDiffButton},
+    {selector: '.restart-button', event: 'click', handler: handleRestartButton}
+  ];
+  for(const {selector, event, handler} of MULTI_HANDLERS) {
+    document.querySelectorAll(selector).forEach(el => 
+      el.addEventListener(event, handler)
+    );
+  }
 
   ELS.toggle.addEventListener('click', (e)=>{
     e.stopPropagation(); // Study this further to understand
     ELS.dropdown.classList.toggle('open');
   });
-
-  
+}
+function setupScores(){
   let scores = localStorage.getItem("topScores");
   if(!scores){
     const initial = {};
@@ -92,10 +89,7 @@ document.addEventListener('DOMContentLoaded', function () {
     scores = JSON.stringify(initial);
     localStorage.setItem("topScores", scores);
   };
-
-  init();
-});
-
+}
 async function init(){
   initializeLBTableRows();
   updateLBDisplayDifficulty();
@@ -109,61 +103,6 @@ async function init(){
   populateIncludeExcludeOptions();
 }
 
-async function advanceRunners(numBases){
-  if(numBases > 0){
-    spawnRunner();
-    await nextFrame();
-    await nextFrame();
-  } else {
-    return;
-  } // No runners to advance
-
-  // Move runners forward one base the correct number of times
-  for(let i = 0; i < numBases; ++i){
-    runners.forEach(runner => {
-      let newBase = getNextBase(runner.base); 
-      setRunnerPosition(runner.el, newBase);
-      runner.base = newBase;
-    });
-
-    await waitForAllRunners(runners, ANIMATION_TIME_MS);
-
-    runners = runners.filter(runner => {
-      if(runner.base === "back_home"){
-        ++gameState.score;
-        runner.el.remove();
-        return false; // Remove from runners array
-      }
-      return true; // Keep in runners array
-    });
-  }
-  
-  updateScoreboard();
-}
-
-function spawnRunner(){
-  const runner = document.createElement('div');
-  runner.classList.add('runner');
-  document.getElementById('diamond').appendChild(runner);
-
-  setRunnerPosition(runner, "home");
-
-  runners.push({el: runner, base: "home"});
-  return runner;
-}
-
-function waitForAllRunners(runners, duration) {
-  return new Promise(resolve => {
-    setTimeout(resolve, duration);
-  });
-}
-
-function setRunnerPosition(runner, base){
-  const coords = BASE_POSITIONS[base];
-  runner.style.left = coords.left + -2.5 + "%";
-  runner.style.top = coords.top + -2.5 + "%";
-  //runner.style.transform = `translate(${coords.left}%, ${coords.top}%)`; 
-}
 
 function positionBases(){
   for (const [base, pos] of Object.entries(BASE_POSITIONS)) {
@@ -175,7 +114,6 @@ function positionBases(){
     baseEl.style.transform = "translate(-50%, -50%) rotate(45deg)"; // Center and rotate
   }
 }
-
 function submitGuess() {
     document.getElementById('revealDistance').disabled = false;
     document.getElementById('revealReference').disabled = false;
@@ -223,12 +161,11 @@ function submitGuess() {
     document.getElementById('finalizeGuess').disabled = true;
 }
 
-window.addStrike = addStrike;
-window.advanceRunners = advanceRunners;
-
 // Event Listener Functions (Will be exported or regrouped soon I think)
 function handleThreshValueChange(){
-  gameState.settings.thresholdSetting = document.getElementById('threshold-value').value;
+  let difEl = document.getElementById('threshold-value');
+  gameState.settings.thresholdSetting = difEl.value;
+  gameState.settings.difficulty = difEl.value;
 }
 function handleRevealDistance(){
   const refEl = document.getElementById('distance');
@@ -301,7 +238,7 @@ function handleBookSelectChange(){
     // Enable submit button when both selections are made
     document.getElementById('finalizeGuess').disabled = !(ELS.bookSelect.value && ELS.chapterSelect.value);
 }
-function handleHideOverlay(){
+function hideGOOverlay(){
   hideGameOver();
 }
 function handleRestartButton(){
@@ -310,13 +247,15 @@ function handleRestartButton(){
   }
   startGame();
 }
+function handleStartButton(){
+  startGame();
+}
 function handleGORestartButton(){
   hideGameOver();
   startGame();
 }
-function handleGOMenuButton(){
+function handleGOButton(){
   hideGameOver();
-  showScreen(GAME_STATES.MENU);
 }
 function handleLBDiffButton(event){
   const button = event.currentTarget;

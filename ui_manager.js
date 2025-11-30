@@ -1,9 +1,19 @@
-import {ELS, DIFFICULTY_NAMES, BOOK_NAMES, GAME_STATES} from "./config.js";
+import {ELS, DIFFICULTY_NAMES, BOOK_NAMES, GAME_STATES, BASE_POSITIONS
+  
+} from "./config.js";
 import {getRandomVerses} from "./data_manager.js";
 import {gameState} from "./game_logic.js";
 
 
 const LB_tbody = document.querySelector("#leaderboard-table tbody"); 
+
+export function showScreen(state){
+  gameState.displayScreen = state;
+  document.getElementById('menu-screen').style.display = (state === GAME_STATES.MENU) ? 'block' : 'none';
+  document.getElementById('game-screen').style.display = (state === GAME_STATES.IN_GAME) ? 'block' : 'none';
+  document.getElementById('settings-screen').style.display = (state === GAME_STATES.SETTINGS) ? 'block' : 'none';
+  document.getElementById('leaderboard-screen').style.display = (state === GAME_STATES.LEADERBOARD) ? 'block' : 'none';
+}
 
 export function initializeLBTableRows(){
   for(let i = 0; i < 10; ++i){
@@ -160,10 +170,9 @@ export function showVerses() {
     });
 }
 
-export function showScreen(state){
-  gameState.displayScreen = state;
-  document.getElementById('menu-screen').style.display = (state === GAME_STATES.MENU) ? 'block' : 'none';
-  document.getElementById('game-screen').style.display = (state === GAME_STATES.IN_GAME) ? 'block' : 'none';
-  document.getElementById('settings-screen').style.display = (state === GAME_STATES.SETTINGS) ? 'block' : 'none';
-  document.getElementById('leaderboard-screen').style.display = (state === GAME_STATES.LEADERBOARD) ? 'block' : 'none';
+export function setRunnerPosition(runner, base){
+  const coords = BASE_POSITIONS[base];
+  runner.style.left = coords.left + -2.5 + "%";
+  runner.style.top = coords.top + -2.5 + "%";
+  //runner.style.transform = `translate(${coords.left}%, ${coords.top}%)`; 
 }
