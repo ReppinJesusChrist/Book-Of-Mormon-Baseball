@@ -115,13 +115,13 @@ function positionBases(){
   }
 }
 function submitGuess() {
-    document.getElementById('revealDistance').disabled = false;
-    document.getElementById('revealReference').disabled = false;
     const bookGuess = ELS.bookSelect.value;
     const chapterGuess = ELS.chapterSelect.value;
 
     const resultEl = document.getElementById('result');
     document.getElementById("newRound").disabled = false;
+    document.getElementById("revealDistance").disabled = false;
+    document.getElementById("revealReference").disabled = false;
 
     if (!gameState.currentSelection) {
       resultEl.textContent = "No verses loaded yet.";

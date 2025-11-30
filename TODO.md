@@ -85,6 +85,7 @@
     - [ ] Graph (scatterplot) of scores over time to show progress
     - [ ] Option to display more rows in Leaderboard
     - [ ] Add PoGP to D&C
+    - [ ] Add database support for multiplayer high-score tracking
 - [ ] **Misc**
   - [ ] Implement update logic to auto-handle one-time adjustments
   - [ ] Increase searchability online

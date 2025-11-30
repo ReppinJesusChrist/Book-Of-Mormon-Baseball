@@ -41,6 +41,8 @@ export function startRound(){
   updateScoreboard();
   startTimer(handleTimeUp, TIMER_DURATIONS[gameState.settings.thresholdSetting]);
   document.getElementById("newRound").disabled = true;
+  document.getElementById("revealDistance").disabled = true;
+  document.getElementById("revealReference").disabled = true;
 }
 
 export function startGame(){
