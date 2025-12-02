@@ -8,10 +8,12 @@ import {startTimer, stopTimer} from "./timer.js";
 import {sleep, nextFrame, waitForAllRunners} from "./helper_functions.js";
 import { submitScore } from "./data_manager.js";
 
+window.addStrike = addStrike;
+window.advanceRunners = advanceRunners;
+
 export const gameState = {
   inRound: false,
   
-
   score : 0,
   strikes : 0,
   round : 0,

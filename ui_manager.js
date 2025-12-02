@@ -15,7 +15,7 @@ export function showScreen(state){
   document.getElementById('leaderboard-screen').style.display = (state === GAME_STATES.LEADERBOARD) ? 'block' : 'none';
 }
 
-export function initializeLBTableRows(){
+export function initLBTableRows(){
   for(let i = 0; i < 10; ++i){
     const row = document.createElement("tr");
     row.innerHTML = 

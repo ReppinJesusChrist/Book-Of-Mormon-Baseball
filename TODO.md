@@ -104,4 +104,15 @@
 - **Sequel/Spinoff ideas**
   - [ ] Same gameplay loop with different minigames/payoffs in the right column
     - [ ] Earn in-game currency based on closeness of answer?
-  - [ ] 
+
+**Misc Info**
+Ideal Dependency Flow (no circular imports)
+config.js
+      ↓
+game_logic.js
+      ↓
+ui_manager.js
+      ↓
+handlers.js
+      ↓
+BOMB.js   (root, glue)

@@ -9,7 +9,8 @@ import {gameState} from "./game_logic.js";
 
 
 export const gameData = {
-    allVerses: []
+    allVerses: [],
+    topScores: {}
 }
 
 export async function fetchScriptures(volume){
@@ -97,4 +98,14 @@ export async function submitScore(score){
     } else {
       console.log("Score submitted to DB successfully!!! Go check it out: ", data);
     }
+}
+
+export function fetchScores(){
+  let scores;
+  if(DB_DEBUG){
+    scores = null;
+  } else{
+    scores = localStorage.getItem("topScores");
+  }
+  return scores;
 }
