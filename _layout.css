@@ -1,4 +1,8 @@
 /* 1. MAIN STRUCTURE */
+body {
+    background: var(--color-bg-light);
+}
+
 #container {
     display: flex;
     height: 100vh;

@@ -27,9 +27,11 @@
   - [X] Implement a leaderboard
   - [X]   Make a menu to select difficulty
   - [X]   Display high-scores (top 10 [X]; with times[X]) and most recent score in a table
- 
-- [ ] Flash text on screen (not an alert) when a strike is hit ("Strike 1!" etc.)
-- [ ] Add BOM styling to all elements (Background texture & color, gold letters, font, etc.)
+  
+- [X] Flash text on screen (not an alert) when a strike is hit ("Strike 1!" etc.)
+
+- [ ] **Styling**
+  - [ ] Book of Mormon themed coloring (Maybe wait for Aunt Julie's feedback first)
 
 - [ ] **UI Improvements**
   - [ ] **Settings Screen**
@@ -51,10 +53,9 @@
     - [ ] Use the system I was using in ELS to name elements instead of sorting them afterwards in JS (E.G. 'go-btns-menu')
   - [ ] **JS**
     - [X] Add inGame variable to gameState to fix bug with double counting scores
-    - [ ] Consolidate all main-menu buttons and all restart buttons using inGame
-    - [ ] Add addAllEventListeners() function to clean up initiation code?
-    - [ ] Use ELS everywhere
-    - [ ] Make seperate EL_ constant objects for buttons [X] and other elements [ ] to make referencing easier (in config.js)
+    - [X] Consolidate all main-menu buttons and all restart buttons using inGame
+    - [X] Add addAllEventListeners() function to clean up initiation code?
+    - [ ] Make seperate EL_ constant objects for buttons [X] and other elements [ ] to make referencing easier (in config.js)???
     - [ ] Run through the whole file and prayerfully record refactoring ideas and insights
     - [ ] Move from BOMB
       - [ ] To ui_manager
@@ -68,14 +69,14 @@
 - [ ] **Bugs and Features** 
   - [ ] **Bug fixes**
     - [ ] Timer doesn't work for one round after changing book of scripture in vSelect.
-    - [ ] High Score double records on strikout
-    - [ ] Timout doesn't end round
+    - [X] High Score double records on strikout
+    - [X] Timout doesn't end round
     - [X] New stylesheets don't work in official deployment (github.io)
     - [ ] Make buttons unclickable at appropriate times
-      - [ ] No reveal buttons available until guess is submitted
-      - [ ] Reveal reference ONLY after reveal distance is pressed
+      - [X] No reveal buttons available until guess is submitted
+      - [ ] Reveal reference ONLY after reveal distance is pressed?
   - [ ] **Features**
-    - [ ] Headera and footer bars
+    - [ ] Header and footer bars
     - [ ] Offer default difficulty options to make selection easy
     - [ ] Put current independent selection options on a different screen ("Custom Difficulty Level")
     - [ ] Book opening animation for leaving main-menu

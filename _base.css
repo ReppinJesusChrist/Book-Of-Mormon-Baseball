@@ -1,20 +1,27 @@
 /* 1. GLOBAL COLOR AND STYLE VARIABLES */
 :root {
     /* Define global color and style variables for site-wide consistency */
-    --color-primary-blue: #3498db;
-    --color-primary-blue-hover: #2980b9;
-    --color-primary-gold: #ddb11f;
+    /* CSS HEX */
+    --regal-navy: #003171ff;
+    --metallic-gold: #ddb11fff;
+    --raw-umber: #743903ff;
+    --slate-grey: #7c90a0ff;
+    --icy-blue: #add9f4ff;
+
+
+    --color-primary-blue: rgb(0, 59, 136);
+    --color-primary-blue-hover: rgb(0, 49, 114);
+    --color-primary-gold: #ddb11fff;
     --color-primary-gold-hover: #96750a;
-    --color-primary-brown: #743903;
+    --color-primary-brown: #743903ff;
 
-    --color-bg-light: #f8f8f8;
-    --color-bg-dark: #eeeeee;
+    --color-bg-light: #add9f4ff;
+    --color-bg-dark: rgb(149, 199, 229);
 
-    --color-dropdown-base: #bbbbbb;
-    --color-dropdown-hover: #5f5f5f;
+    --color-dropdown-base: #7c90a0ff;
+    --color-dropdown-hover: rgb(99, 120, 138);
     
     --color-timer-start: #76c7ac;
-    --color-timer-end: ;
 
     --font-serif: 'Georgia', serif;
     --font-size-base: 1.1rem;
@@ -29,6 +36,47 @@
     0% {box-shadow: 0 0 10px 2px rgba(255, 0, 0, 0.4);}
     50% {box-shadow: 0 0 10px 4px rgba(255,0,0,0.9);}
     100% {box-shadow: 0 0 10px 2px rgba(255,0,0,0.4);}
+}
+
+@keyframes strike-shake-fade {
+  0% {
+    opacity: 1;
+    transform: translate(0, 0) scale(0.8);
+  }
+  10% {
+    transform: translate(-20px, -10px) scale(1);
+  }
+  20% {
+    transform: translate(20px, 10px) scale(1);
+  }
+  30% {
+    transform: translate(-15px, 5px) scale(1);
+  }
+  40% {
+    transform: translate(15px, -5px) scale(1);
+  }
+  50% {
+    transform: translate(0, 0) scale(1);
+  }
+  100% {
+    opacity: 0;
+    transform: translate(0, 50px) scale(0.5);
+  }
+}
+
+@keyframes strike-spin-shrink {
+  0% {
+    opacity: 1;
+    transform: scale(1) rotate(0deg);
+  }
+  40% {
+    opacity: 1;
+    transform: scale(1.1) rotate(360deg);
+  }
+  100% {
+    opacity: 0;
+    transform: scale(0) rotate(720deg);
+  }
 }
 
 /*  2. TYPOGRAPHY AND DEFAULT ELEMENTS */

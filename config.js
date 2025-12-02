@@ -1,3 +1,5 @@
+export const DB_DEBUG = false;
+
 export const ANIMATION_TIME_MS = 600; // Time in ms for runner animation
 export const NUM_LB_SCORES = 10;
 
@@ -78,6 +80,10 @@ export const ELS = {
   BUTTONS: {
     hideOverlay: document.getElementById('hide-overlay'),
     newRound: document.getElementById('newRound')
+  },
+  GAME: {
+    strikeEffect: document.getElementById('strike-effect-display'),
+    strikeEffectText: document.querySelector('#strike-effect-display .strike-text'),
   },
   LB: {
     difficultyLabel: document.getElementById('lb-display-difficulty'),

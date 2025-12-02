@@ -66,7 +66,10 @@ export function hideGameOver(){
 }
 
 export function populateIncludeExcludeOptions() {
-  ELS.IESelect.innerHTML = ''; // Clear previous options
+  // Clear previous options
+  ELS.IESelect.innerHTML = '';
+  gameState.includedBooks.clear();
+  
     Object.keys(gameState.scriptures).forEach(bookName => {
       const wrapper = document.createElement('div');
       wrapper.style.display = 'block';
@@ -175,4 +178,23 @@ export function setRunnerPosition(runner, base){
   runner.style.left = coords.left + -2.5 + "%";
   runner.style.top = coords.top + -2.5 + "%";
   //runner.style.transform = `translate(${coords.left}%, ${coords.top}%)`; 
+}
+
+export function animateStrike(){
+  const sd = ELS.GAME.strikeEffectText;
+  sd.textContent = `STRIKE ${gameState.strikes}`;
+  sd.classList.remove('animate-strike');
+  void sd.offsetWidth;
+  sd.classList.add('animate-strike');
+}
+
+export function positionBases(){
+  for (const [base, pos] of Object.entries(BASE_POSITIONS)) {
+    if(base === "back_home") continue; // No element for this one
+    const baseEl = document.getElementById(base);
+    baseEl.style.position = "absolute";
+    baseEl.style.left = `${pos.left}%`;
+    baseEl.style.top = `${pos.top}%`;
+    baseEl.style.transform = "translate(-50%, -50%) rotate(45deg)"; // Center and rotate
+  }
 }

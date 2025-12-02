@@ -1,11 +1,12 @@
+import {ELS, NUM_LB_SCORES, TIMER_DURATIONS, GAME_STATES,
+  ANIMATION_TIME_MS, THRESHOLD_ARRAYS,
+} from "./config.js";
 import {showGameOver, updateScoreboard, updateLBTableRows, 
-  showVerses, showScreen, setRunnerPosition,
+  showVerses, showScreen, setRunnerPosition, animateStrike
 } from "./ui_manager.js";
 import {startTimer, stopTimer} from "./timer.js";
-import {ELS, NUM_LB_SCORES, TIMER_DURATIONS, GAME_STATES,
-  ANIMATION_TIME_MS,
-} from "./config.js";
 import {sleep, nextFrame, waitForAllRunners} from "./helper_functions.js";
+import { submitScore } from "./data_manager.js";
 
 export const gameState = {
   inRound: false,
@@ -71,6 +72,8 @@ function updateHighScores(newScore){
   let scores = allScores[gameState.settings.lbBook][gameState.settings.difficulty] || [];
 
   const newScoreObject = makeScoreObject(newScore);
+
+  submitScore(newScoreObject);
 
   // Add new score to array
   scores.push(newScoreObject);
@@ -144,7 +147,9 @@ export async function advanceRunners(numBases){
 
 export function addStrike(){
   ++gameState.strikes;
-  updateScoreboard()
+  updateScoreboard();
+  animateStrike();
+  
   if(gameState.strikes >= 3){
     document.getElementById('final-score').textContent = gameState.score;
     sleep(1000).then(() => {
@@ -168,6 +173,49 @@ function handleTimeUp() {
   document.getElementById("newRound").disabled = false;
 }
 
-export function initializeGame(){
+export function submitGuess() {
+    const bookGuess = ELS.bookSelect.value;
+    const chapterGuess = ELS.chapterSelect.value;
 
+    const resultEl = document.getElementById('result');
+    document.getElementById("newRound").disabled = false;
+    document.getElementById("revealDistance").disabled = false;
+    document.getElementById("revealReference").disabled = false;
+
+    if (!gameState.currentSelection) {
+      resultEl.textContent = "No verses loaded yet.";
+      return;
+    }
+
+
+    const guessKey = `${bookGuess} ${chapterGuess}`;
+    const answerKey = `${gameState.currentSelection.book} ${gameState.currentSelection.chapter}`;
+
+    const guessIndex = gameState.chapterIndexMap[guessKey];
+    const answerIndex = gameState.chapterIndexMap[answerKey];
+
+    const distance = Math.abs(guessIndex - answerIndex);
+    gameState.currGuessDistance = distance;
+
+    const [homeRunThreshold, tripleThreshold, doubleThreshold, singleThreshold] = THRESHOLD_ARRAYS[gameState.settings.thresholdSetting];
+
+    advanceRunners(distance <= homeRunThreshold ? 4 :
+                   distance <= tripleThreshold ? 3 :
+                   distance <= doubleThreshold ? 2 :
+                   distance <= singleThreshold ? 1 : 0);
+
+    if (distance <= homeRunThreshold){
+      resultEl.textContent = `HOME RUN!!! (Within ${homeRunThreshold} chapters).`;
+    } else if(distance <= tripleThreshold){
+      resultEl.textContent = `TRIPLE! (Within ${tripleThreshold} chapters).`;
+    } else if(distance <= doubleThreshold){
+      resultEl.textContent = `Double! (Within ${doubleThreshold} chapters). `;
+    } else if(distance <= singleThreshold){
+      resultEl.textContent = `Single! (Within ${singleThreshold} chapters). `;
+    } else {
+      resultEl.textContent = `STRIKE! (Off by at least ${singleThreshold + 1} chapters). `;
+      addStrike();
+    }
+
+    document.getElementById('finalizeGuess').disabled = true;
 }

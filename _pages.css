@@ -1,4 +1,5 @@
-#menu-screen, #game-over-screen, #settings-screen {
+#menu-screen, #game-over-screen, #settings-screen, #leaderboard-screen {
+    background: var(--color-bg-light);
     text-align: center;
     padding: 10px;
 }
@@ -60,6 +61,31 @@
   pointer-events: all;
 }
 
+#strike-effect-display {
+    position: fixed;
+    inset: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    pointer-events: none;
+    z-index: 2000;
+    text-align: center;
+}
+
+.strike-text{
+  display: inline-block;
+  white-space: nowrap;
+  font-size: 5rem;
+  font-weight: bold;
+  color: #ff0000;
+  text-shadow: 2px 2px 8px rgba(0,0,0,0.5);
+  transform-origin: center center;
+}
+
+.strike-text.animate-strike{
+    animation: strike-spin-shrink 2s forwards;
+}
+
 .overlay-content {
   background-color: white;
   color: black;
@@ -79,12 +105,4 @@
     margin: 0 auto;
     padding: 20px;
     text-align: center;
-}
-
-#right-panel {
-    background: #ffffff;
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-start;
-    align-items: center;
 }

@@ -1,5 +1,12 @@
-import {STANDARD_WORKS_FILE_NAMES} from "./config.js";
+import {STANDARD_WORKS_FILE_NAMES, DB_DEBUG} from "./config.js";
 import {gameState} from "./game_logic.js";
+
+
+  const SUPABASE_URL = "https://twyipibakfjidapvakwx.supabase.co";
+  const SUPABASE_ANON_KEY = "sb_publishable_bvxMyzc47F8KIR9a9XkMsQ_CMuYVJNJ";
+
+  const supabaseClient = DB_DEBUG ? supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY) : null;
+
 
 export const gameData = {
     allVerses: []
@@ -73,4 +80,21 @@ export function buildVerseList() {
       });
     }
   }
+}
+
+export async function submitScore(score){
+  if(!DB_DEBUG) return;
+  const { data, error } = await supabaseClient
+    .from('Simple Scores')
+    .insert([
+      {
+        score_obj: score
+      }
+    ]);
+
+    if(error) {
+      console.error("Error submitting score:", error);
+    } else {
+      console.log("Score submitted to DB successfully!!! Go check it out: ", data);
+    }
 }

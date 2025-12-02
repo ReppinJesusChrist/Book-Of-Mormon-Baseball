@@ -103,7 +103,7 @@ select:hover {
 .runner {
     width: 20px;
     height: 20px;
-    background: red;
+    background: #ff4444;
     border-radius: 50%;
     position: absolute;
     transition: left var(--runner-animation-time) ease, top var(--runner-animation-time) ease;
@@ -116,7 +116,7 @@ select:hover {
     width: 400px;
     height: 400px;
     margin-top: 0;
-    background: #7cf786;
+    background: #6fd08cff;;
 }
 
 /* Baseball base elements (first, second, third, home) */
