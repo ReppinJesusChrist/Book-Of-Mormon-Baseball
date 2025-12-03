@@ -12,15 +12,20 @@
 </head>
 
 <body>
+    <header id="header-bar">
+        Book of Mormon Baseball!!!
+    </header>
     <div id="menu-screen">
-        <h1>Book of Mormon Baseball!!!</h1>
+        <h1>Welcome to Book of Mormon Baseball!</h1>
         <button class="start-button" id="start-button">Start Game</button>
         <button id="settings-button">Settings</button>
         <button id="leaderboard-button">Statistics</button>
     </div>
     <div id="game-screen" style="display:none;">
-        <h1>Book of Mormon Baseball!!!</h1>
-        <div class="top-divider"></div>
+        <!--
+            <h1>Book of Mormon Baseball!!!</h1>
+            <div class="top-divider"></div>
+        -->
         <div id="container">
             <div id="left-panel">
                 <div id="instructions"></div>
@@ -167,6 +172,12 @@
         </div>
         <button class="main-menu-button">Back to Main Menu</button>
     </div>
+
+    <footer id="footer-bar">
+        <a href="https://www.churchofjesuschrist.org/?lang=eng">
+            Check out the Book of Mormon itself and the church that published it!
+        </a>
+    </footer>
 
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <script type="module" src="BOMB.js"></script>

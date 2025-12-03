@@ -1,6 +1,8 @@
 /* 1. MAIN STRUCTURE */
 body {
     background: var(--color-bg-light);
+    margin: 0;
+    padding: 0;
 }
 
 #container {
@@ -22,6 +24,32 @@ body {
     vertical-align: top;
     padding: 20px;
     box-sizing: border-box;
+}
+
+#header-bar, #footer-bar{
+    width: 100%;
+    background-color: var(--color-primary-blue);
+    color: var(--color-primary-gold);
+    padding: 10px;
+    text-align: center;
+    letter-spacing: 1px;
+}
+
+#header-bar{
+    border-bottom: 4px solid var(--slate-grey);
+    font-size: 3rem;
+    font-weight: bold;
+}
+
+#footer-bar{
+    border-top: 4px solid var(--slate-grey);
+    font-size: 1.2rem;
+    position: fixed;
+    bottom: 0;
+}
+
+#footer-bar a{
+    color: var(--color-primary-gold);
 }
 
 /* 2.  PANEL SPECIFIC STYLES */

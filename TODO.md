@@ -72,16 +72,9 @@
 
 
 - [ ] **Bugs and Features** 
-  - [ ] **Bug fixes**
-    - [X] Timer doesn't work for one round after changing book of scripture in vSelect.
-    - [X] High Score double records on strikout
-    - [X] Timout doesn't end round
-    - [X] New stylesheets don't work in official deployment (github.io)
-    - [ ] Make buttons unclickable at appropriate times
-      - [X] No reveal buttons available until guess is submitted
-      - [ ] Reveal reference ONLY after reveal distance is pressed?
+  - [ ] **Bugs**
+    - [ ] Styling of Home Page changes after leaving and returning
   - [ ] **Features**
-    - [ ] Header and footer bars
     - [ ] Offer default difficulty options to make selection easy
     - [ ] Put current independent selection options on a different screen ("Custom Difficulty Level")
     - [ ] Book opening animation for leaving main-menu
