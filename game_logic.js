@@ -30,8 +30,8 @@ export const gameState = {
   // Default Setting Values
   settings: {
     numDisplayVerses: 3,
-    difficulty : 'average', // easiest -> average -> hardest
-    lbDifficulty : 'average',
+    difficulty : 'harder', // easiest -> average -> hardest
+    lbDifficulty : 'harder',
     lbBook : 'bofm',
     currentVolume : 'bofm',
     thresholdSetting : 'average'
@@ -180,9 +180,11 @@ export function submitGuess() {
     const chapterGuess = ELS.chapterSelect.value;
 
     const resultEl = document.getElementById('result');
-    document.getElementById("newRound").disabled = false;
-    document.getElementById("revealDistance").disabled = false;
-    document.getElementById("revealReference").disabled = false;
+    ELS.GAME.BTNS.newRound.disabled = false;
+    ELS.GAME.BTNS.revealDistance.disabled = false;
+
+    // I may reenable this, but I'm trying out having it removed for now.
+    // document.getElementById("revealReference").disabled = false;
 
     if (!gameState.currentSelection) {
       resultEl.textContent = "No verses loaded yet.";

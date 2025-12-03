@@ -84,6 +84,13 @@ export const ELS = {
   GAME: {
     strikeEffect: document.getElementById('strike-effect-display'),
     strikeEffectText: document.querySelector('#strike-effect-display .strike-text'),
+    distanceReveal: document.getElementById('distance'),
+    referenceReveal: document.getElementById('reference'),
+    BTNS: {
+      revealDistance: document.getElementById('revealDistance'),
+      revealReference: document.getElementById('revealReference'),
+      newRound: document.getElementById('newRound'),
+    }
   },
   LB: {
     difficultyLabel: document.getElementById('lb-display-difficulty'),

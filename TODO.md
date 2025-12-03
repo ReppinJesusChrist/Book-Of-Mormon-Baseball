@@ -27,8 +27,13 @@
   - [X] Implement a leaderboard
   - [X]   Make a menu to select difficulty
   - [X]   Display high-scores (top 10 [X]; with times[X]) and most recent score in a table
-  
-- [X] Flash text on screen (not an alert) when a strike is hit ("Strike 1!" etc.)
+  - [X] Flash text on screen (not an alert) when a strike is hit ("Strike 1!" etc.)
+
+
+
+- [ ] **Quick**
+  - [ ] Apply ELS everywhere
+  - [ ] Functionify code from eventHandlers
 
 - [ ] **Styling**
   - [ ] Book of Mormon themed coloring (Maybe wait for Aunt Julie's feedback first)
@@ -68,7 +73,7 @@
 
 - [ ] **Bugs and Features** 
   - [ ] **Bug fixes**
-    - [ ] Timer doesn't work for one round after changing book of scripture in vSelect.
+    - [X] Timer doesn't work for one round after changing book of scripture in vSelect.
     - [X] High Score double records on strikout
     - [X] Timout doesn't end round
     - [X] New stylesheets don't work in official deployment (github.io)
@@ -88,6 +93,7 @@
     - [ ] Add PoGP to D&C
     - [ ] Add database support for multiplayer high-score tracking
 - [ ] **Misc**
+  - [ ] Walk through all auto-recommendations in dev-tools and research them. Fix if reasonable.
   - [ ] Implement update logic to auto-handle one-time adjustments
   - [ ] Increase searchability online
     - [X] Add favicon.ico

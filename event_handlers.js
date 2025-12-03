@@ -19,18 +19,20 @@ export function handleThreshValueChange(){
 }
 
 export function handleRevealDistance(){
-  const refEl = document.getElementById('distance');
-    console.log('Distance reveal button clicked');
-    // SIMPLE REVEAL: just show once
-    if (!refEl.textContent && gameState.currGuessDistance != Infinity) {
-      if(gameState.currGuessDistance === 0) refEl.textContent = `(Exactly Correct! Great Job!)`;
-      refEl.textContent = `(Off by ${gameState.currGuessDistance} chapters)`;
-    }
+  const refEl = ELS.GAME.distanceReveal;
+
+  ELS.GAME.BTNS.revealReference.disabled = false;
+  // SIMPLE REVEAL: just show once
+  if (!refEl.textContent && gameState.currGuessDistance != Infinity) {
+    if(gameState.currGuessDistance === 0) refEl.textContent = `(Exactly Correct! Great Job!)`;
+    refEl.textContent = `(Off by ${gameState.currGuessDistance} chapters)`;
+  }
 }
 
 export function handleRevealReference(){
-  const refEl = document.getElementById('reference');
+  const refEl = ELS.GAME.referenceReveal;
   //refEl.hidden = false;
+  
   if (!refEl.textContent && gameState.currentSelection) {
     let cs = gameState.currentSelection;
     const url = makeScriptureLink(gameState.settings.currentVolume, cs);
@@ -57,7 +59,7 @@ export function handleFinalizeGuess(){
 }
 
 export function handleSettingsButton(){
-    showScreen(GAME_STATES.SETTINGS);
+  showScreen(GAME_STATES.SETTINGS);
 }
 
 export function handleCheckAllInex(){

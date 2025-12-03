@@ -1,4 +1,4 @@
-import {ANIMATION_TIME_MS, ELS} from "./config.js";
+import {ANIMATION_TIME_MS, ELS, BOOK_NAMES, DIFFICULTY_NAMES} from "./config.js";
 import {fetchScores, loadData} from "./data_manager.js";
 import * as Handlers from "./event_handlers.js";
 import {populateIncludeExcludeOptions, populateGuessOptions, initLBTableRows,

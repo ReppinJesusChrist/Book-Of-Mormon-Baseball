@@ -7,8 +7,7 @@ document.addEventListener('DOMContentLoaded', async function () {
   initCSSVars();
   initEventListeners();
   initScores();
-
   await initData();
-    
+  
   initEls();
 });
