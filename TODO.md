@@ -75,6 +75,7 @@
   - [ ] **Bugs**
     - [ ] Styling of Home Page changes after leaving and returning
   - [ ] **Features**
+    - [ ] Add nav-bar to header
     - [ ] Offer default difficulty options to make selection easy
     - [ ] Put current independent selection options on a different screen ("Custom Difficulty Level")
     - [ ] Book opening animation for leaving main-menu

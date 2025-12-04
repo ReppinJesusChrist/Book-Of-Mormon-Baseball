@@ -1,24 +1,30 @@
 /* 1. MAIN STRUCTURE */
+html, body {
+    height: 100%;
+    overflow: hidden;
+}
+
 body {
     background: var(--color-bg-light);
     margin: 0;
-    padding: 0;
+}
+
+#main-content {
+    height: calc(100vh - var(--header-height) -
+        var(--footer-height));
+    display: flex;
+    flex-direction: column;
 }
 
 #container {
     display: flex;
-    height: 100vh;
-}
-
-.top-divider {
-    width: 100%;
-    height: 4px;
-    background-color: #7c90a0ff;
-    margin: 0 0 10px 0;
+    height: 100%;
+    overflow: hidden;
 }
 
 #left-panel,
 #right-panel {
+    height: 100vh;
     flex: 1;
     display: inline-block;
     vertical-align: top;
@@ -28,20 +34,26 @@ body {
 
 #header-bar, #footer-bar{
     width: 100%;
+    align-items: center;
+    justify-content: center;
+
     background-color: var(--color-primary-blue);
     color: var(--color-primary-gold);
-    padding: 10px;
     text-align: center;
     letter-spacing: 1px;
 }
 
 #header-bar{
+    height: var(--header-height);
+    padding: 0 10px; /* No vertical, 10px horizontal */
     border-bottom: 4px solid var(--slate-grey);
     font-size: 3rem;
     font-weight: bold;
 }
 
 #footer-bar{
+    height: var(--footer-height);
+    padding: 0 10px; /* No vertical, 10px horizontal */
     border-top: 4px solid var(--slate-grey);
     font-size: 1.2rem;
     position: fixed;

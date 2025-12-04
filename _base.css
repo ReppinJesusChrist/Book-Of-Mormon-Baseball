@@ -23,13 +23,18 @@
     
     --color-timer-start: #76c7ac;
 
+    /*  Fonts   */
     --font-serif: 'Georgia', serif;
     --font-size-base: 1.1rem;
     --font-size-large: 1.6rem;
 
+    /*  Element Sizes */
     --border-radius-lg: 10px;
-
     --strike-box-size: 80px;
+    --header-height: 50px;
+    --footer-height: 20px;
+
+
 }
 
 @keyframes flash-red {
