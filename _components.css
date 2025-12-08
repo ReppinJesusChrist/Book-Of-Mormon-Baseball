@@ -13,7 +13,7 @@ select:hover {
 }
 
 #chapter-select {
-  margin-bottom: 40px; /* give space for dropdown expansion */
+    margin-bottom: 40px; /* give space for dropdown expansion */
 }
 
 /*  Custom Dropdowns */
@@ -24,33 +24,115 @@ select:hover {
     max-width: fit-content;
 }
 
-#include-exclude-toggle {
-    /*  Makes it look like a dropdown */
+/*  Makes it look like a dropdown */
+.custom-dropdown button{
     padding: 12px 18px;
+    border: none;
+    cursor: pointer;
     background-color: var(--color-dropdown-base);
+    color: var(--color-font-primary);
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.09); /* Subtle shadow */
     min-width: 200px;
+    transition: background-color 0.25s ease, box-shadow 0.25s ease;
 }
 
-#include-exclude-toggle:hover {
+.custom-dropdown button:hover,
+.custom-dropdown button:active {
+    background-color: var(--color-dropdown-hover);
+    transform: none !important;
+}
+
+.custom-dropdown button:hover + .dropdown-content{
     background-color: var(--color-dropdown-hover);
 }
 
 .dropdown-content {
-    display : none;
+    display : block;
     position: absolute;
+    max-height: 35vh;
+    width: 100%;
+    margin-top: 4px;
+    padding: 8px; 
+
     background: var(--color-dropdown-base);
     border: 1px solid #ccc;
     border-radius: 0px;
-    padding: 8px;
-    margin-top: 4px;
-    width: 100%;
-    max-height: 200px;
+    
     overflow-y: auto;
+    scrollbar-width: none;
+
     z-index: 10;
+    text-align: left;
+
+    opacity: 0;
+    transform: scaleY(0);
+    transform-origin: top;
+    transition: 
+        opacity 0.5s ease, 
+        transform 0.5s ease;
+}
+
+.dropdown-content::-webkit-scrollbar {
+    width: 0;
+    height: 0;
 }
 
 .custom-dropdown.open .dropdown-content {
-    display: block;
+    opacity: 1;
+    transform: scaleY(1);
+}
+
+.custom-option {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 6px 4px;
+    cursor: pointer;
+    border-radius: 4px;
+    flex-direction: row;
+}
+
+.custom-option:hover {
+    background-color: var(--color-dropdown-hover);
+}
+
+.custom-option input[type="checkbox"] {
+    appearance: none;
+    width: 18px;
+    height: 18px;
+    
+    flex-shrink: 0;
+
+    border: 2px solid var(--color-check-border);
+    border-radius: 4px;
+    background: var(--color-check-bg);
+    display: grid;
+    place-items: center;
+    cursor: pointer;
+}
+
+.custom-option input[type="checkbox"]::after {
+    content: "";
+    width: 10px;
+    height: 10px;
+    transform: scale(0);
+    transition: transform 0.15s ease-out;
+    clip-path: polygon(14% 44%, 0% 65%, 50% 100%, 100% 0%, 82% 0%, 45% 62%);
+    background: var(--color-checkmark);
+}
+
+.custom-option input[type="checkbox"]:checked {
+    background-color: var(--color-check-bg-checked);
+    border-color: var(--color-check-bg-checked);
+}
+
+.custom-option input[type="checkbox"]:checked::after{
+    transform: scale(1);
+}
+
+.custom-option span {
+    font-weight: bold;
+    font-size: 15px;
 }
 
 /*      =======================================     */

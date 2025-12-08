@@ -32,21 +32,19 @@
 
 
 - [ ] **Quick**
-  - [ ] Apply ELS everywhere
   - [ ] Functionify code from eventHandlers
 
 - [ ] **Styling**
   - [ ] Book of Mormon themed coloring (Maybe wait for Aunt Julie's feedback first)
 
 - [ ] **UI Improvements**
+  - [ ] **General**
+    - [ ] Adjust all elements to fit on a single, non-scrolling screen
   - [ ] **Settings Screen**
-    - [ ] Add spacing between elements
     - [ ] Add multiple tabs for space management
     - [ ] Match styling of multi-check dropdown with other dropdowns
   - [ ] **Leaderboard Screen**
     - [ ] Add display button formatting
-      - [ ] Ladder?
-      - [ ] Dropdowns?
   - [ ] **Game Screen**
     - [ ] Set fixed size verse display with auto-scrolling as needed
   - [ ] **Main Menu**
@@ -55,20 +53,13 @@
 
 - [ ] **Refactoring**
   - [ ] **HTML**
-    - [ ] Use the system I was using in ELS to name elements instead of sorting them afterwards in JS (E.G. 'go-btns-menu')
+    - [ ] Use the system I was using in ELS to name elements instead of sorting them afterwards in JS (E.G. 'go-btns-menu')???
   - [ ] **JS**
     - [X] Add inGame variable to gameState to fix bug with double counting scores
     - [X] Consolidate all main-menu buttons and all restart buttons using inGame
     - [X] Add addAllEventListeners() function to clean up initiation code?
-    - [ ] Make seperate EL_ constant objects for buttons [X] and other elements [ ] to make referencing easier (in config.js)???
     - [ ] Run through the whole file and prayerfully record refactoring ideas and insights
-    - [ ] Move from BOMB
-      - [ ] To ui_manager
-        - [ ]
-      - [ ] To game_logic
-        - [ ] advanceRunners
   - [ ] **CSS**
-    - [ ] Pass the code by AI to ask for general style/CSS refactoring advice 
 
 
 - [ ] **Bugs and Features** 
@@ -77,15 +68,21 @@
   - [ ] **Features**
     - [ ] Add nav-bar to header
     - [ ] Offer default difficulty options to make selection easy
-    - [ ] Put current independent selection options on a different screen ("Custom Difficulty Level")
+    - [ ] Implement Custom Difficulty
+      - [ ] Put current independent time and range selection options on a different screen
+      - [ ] Wire it in to score tracking
     - [ ] Book opening animation for leaving main-menu
     - [ ] Self-drawn runners (build your own team)
     - [ ] Matrix for difficulty selection
       - [ ] Add tool-tip for range details (hover to view)
-    - [ ] Graph (scatterplot) of scores over time to show progress
+    - [ ] Separate Statistics from Leaderboard
+      - [ ] Graph (scatterplot) of scores over time to show progress
+      - [ ] Track strikes to aid with study
     - [ ] Option to display more rows in Leaderboard
     - [ ] Add PoGP to D&C
     - [ ] Add database support for multiplayer high-score tracking
+    - [ ] Add custom study patterns
+      - [ ] Option for user imports according to a pattern?
 - [ ] **Misc**
   - [ ] Walk through all auto-recommendations in dev-tools and research them. Fix if reasonable.
   - [ ] Implement update logic to auto-handle one-time adjustments

@@ -54,9 +54,26 @@ export function initEventListeners(){
     );
   }
 
-  ELS.toggle.addEventListener('click', (e)=>{
-    e.stopPropagation(); // Study this further to understand
-    ELS.dropdown.classList.toggle('open');
+  initAllCustomDropdowns();
+}
+
+function initAllCustomDropdowns() {
+  document.querySelectorAll(".CDD-toggle").forEach(toggler => {
+    const dropdownEl = toggler.closest(".custom-dropdown");
+    attachCustomDropdown(toggler, dropdownEl);
+  });
+}
+
+function attachCustomDropdown(toggleEl, dropdownEl){
+  toggleEl.addEventListener("click", (e) => {
+    e.stopPropagation();
+
+    document.querySelectorAll(".custom-dropdown.open")
+      .forEach(ddown => {
+        if(ddown !== dropdownEl) ddown.classList.remove("open");
+      })
+
+    dropdownEl.classList.toggle("open");
   });
 }
 

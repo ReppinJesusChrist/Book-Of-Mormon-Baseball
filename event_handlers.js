@@ -13,7 +13,7 @@ import {loadData} from "./data_manager.js";
 
 // Event Listener Functions (Will be exported or regrouped soon I think)
 export function handleThreshValueChange(){
-  let difEl = document.getElementById('threshold-value');
+  let difEl = ELS.SET.DROPS.difEl;
   gameState.settings.thresholdSetting = difEl.value;
   gameState.settings.difficulty = difEl.value;
 }
@@ -63,14 +63,14 @@ export function handleSettingsButton(){
 }
 
 export function handleCheckAllInex(){
-  let targetDiv = document.getElementById("include-exclude-values");
-  toggleAllBoxes(targetDiv, true);
+  let inEx = ELS.SET.DROPS.inEx;
+  toggleAllBoxes(inEx, true);
   populateIncludeExcludeOptions();
 }
 
 export function handleUncheckAllInex(){
-  let targetDiv = document.getElementById("include-exclude-values");
-  toggleAllBoxes(targetDiv, false);
+  let inEx = ELS.SET.DROPS.inEx;
+  toggleAllBoxes(inEx, false);
   gameState.includedBooks.clear();
 }
 
@@ -99,12 +99,14 @@ export function handleBookSelectChange(){
     });
 
     // Enable submit button when both selections are made
-    document.getElementById('finalizeGuess').disabled = !(ELS.bookSelect.value && ELS.chapterSelect.value);
+    ELS.GAME.BTNS.submit.disabled = !(ELS.bookSelect.value && ELS.chapterSelect.value);
 }
 
 export function hideGOOverlay(){
   hideGameOver();
 }
+
+// Button handlers
 
 export function handleRestartButton(){
   if(gameState.inRound) {

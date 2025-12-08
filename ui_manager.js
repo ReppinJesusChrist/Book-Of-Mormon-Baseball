@@ -9,10 +9,10 @@ const LB_tbody = document.querySelector("#leaderboard-table tbody");
 
 export function showScreen(state){
   gameState.displayScreen = state;
-  document.getElementById('menu-screen').style.display = (state === GAME_STATES.MENU) ? 'block' : 'none';
-  document.getElementById('game-screen').style.display = (state === GAME_STATES.IN_GAME) ? 'block' : 'none';
-  document.getElementById('settings-screen').style.display = (state === GAME_STATES.SETTINGS) ? 'block' : 'none';
-  document.getElementById('leaderboard-screen').style.display = (state === GAME_STATES.LEADERBOARD) ? 'block' : 'none';
+  ELS.MENU.screen.style.display = (state === GAME_STATES.MENU) ? 'block' : 'none';
+  ELS.GAME.screen.style.display = (state === GAME_STATES.IN_GAME) ? 'block' : 'none';
+  ELS.SET.screen.style.display = (state === GAME_STATES.SETTINGS) ? 'block' : 'none';
+  ELS.LB.screen.style.display = (state === GAME_STATES.LEADERBOARD) ? 'block' : 'none';
 }
 
 export function initLBTableRows(){
@@ -65,7 +65,7 @@ export function hideGameOver(){
   ELS.overlay.classList.remove('visible');
 }
 
-export function populateIncludeExcludeOptions() {
+export function populateIncludeExcludeOptions_old() {
   // Clear previous options
   ELS.IESelect.innerHTML = '';
   gameState.includedBooks.clear();
@@ -101,14 +101,54 @@ export function populateIncludeExcludeOptions() {
     });
 }
 
+export function populateIncludeExcludeOptions() {
+  // Clear previous options
+  ELS.IESelect.innerHTML = '';
+  gameState.includedBooks.clear();
+  
+  Object.keys(gameState.scriptures).forEach(bookName => {
+    const wrapper = document.createElement('label');
+    wrapper.classList.add("custom-option");
+
+    const checkbox = document.createElement('input');
+    const labelSpan = document.createElement('span');
+    checkbox.type = 'checkbox';
+    checkbox.id = `inex-${bookName}`;
+    checkbox.value = bookName;
+    checkbox.checked = true; // Default to include all books
+
+    labelSpan.classList.add("custom-label");
+    labelSpan.textContent = bookName;
+
+    gameState.includedBooks.add(bookName); // Update set to reflect ^^^
+
+    const label = document.createElement('label');
+    label.setAttribute('for', `inex-${bookName}`);
+    label.textContent = bookName;
+
+    checkbox.addEventListener('change', () => {
+      if(checkbox.checked){
+        gameState.includedBooks.add(bookName);
+      } else {
+        gameState.includedBooks.delete(bookName);
+      }
+      console.log(`Included books:`, gameState.includedBooks);
+    });
+
+    wrapper.appendChild(checkbox);
+    wrapper.appendChild(labelSpan);
+    ELS.IESelect.appendChild(wrapper);
+  });
+}
+
 export function populateGuessOptions() {
   if(!gameState.scriptures){
     console.warn("function called before scriptures were loaded");
   }
 
-  const bookSelect = document.getElementById('bookSelect');
+  const bookSelect = ELS.SET.DROPS.bookSelect;
   bookSelect.innerHTML = ''; // Clear previous options
-  const chapterSelect = document.getElementById('chapterSelect');
+  const chapterSelect = ELS.SET.DROPS.chapSelect;
 
   // Fill book options
   const books = Object.keys(gameState.scriptures);
@@ -129,9 +169,9 @@ export function updateStrikeBoxes(strikes){
 }
 
 export function updateScoreboard(){
-    document.getElementById("score").textContent = `${gameState.score}`;
-    document.getElementById("round").textContent = `${gameState.round}`;
-    document.getElementById("strikes").textContent = `${gameState.strikes}`;
+    ELS.GAME.SB.score.textContent = `${gameState.score}`;
+    ELS.GAME.SB.round.textContent = `${gameState.round}`;
+    ELS.GAME.SB.strikes.textContent = `${gameState.strikes}`;
     updateStrikeBoxes(gameState.strikes);
 }
 
@@ -144,33 +184,33 @@ export function updateLBDisplayBook(){
 }
 
 export function showVerses() {
-  const container = document.getElementById('verses');
-    const referenceElement = document.getElementById('reference');
-    const revealButton = document.getElementById('revealReference');
-    const distanceButton = document.getElementById('revealDistance');
-  
-    const resultEl = document.getElementById('result');
-    const distanceEl = document.getElementById('distance');
-  
-    ELS.bookSelect.value = '';
-    ELS.chapterSelect.innerHTML = '';
-    resultEl.textContent = '';
-    distanceEl.textContent = '';
-  
-    container.innerHTML = ''; // Clear previous verses
-    referenceElement.textContent = ''; // Clear previous reference
-    revealButton.textContent = 'Reveal Reference';
-  
-    gameState.currGuessDistance = Infinity;
-  
-    gameState.currentSelection = getRandomVerses();
-  
-    // Three seperate paragraphs (one for each verse)
-    gameState.currentSelection.verses.forEach(verse => {
-      const p = document.createElement('p');
-      p.textContent = verse.text;
-      container.appendChild(p);
-    });
+  const container = ELS.GAME.TXT.verseBox;
+  const referenceEl = ELS.GAME.TXT.refReveal;
+  const refRevealBtn = ELS.GAME.BTNS.revealReference;
+  const distRevealBtn = ELS.GAME.BTNS.revealDistance;
+
+  const resultEl = ELS.GAME.TXT.result;
+  const distanceEl = ELS.GAME.TXT.distReveal;
+
+  ELS.bookSelect.value = '';
+  ELS.chapterSelect.innerHTML = '';
+  resultEl.textContent = '';
+  distanceEl.textContent = '';
+
+  container.innerHTML = ''; // Clear previous verses
+  referenceEl.textContent = ''; // Clear previous reference
+  refRevealBtn.textContent = 'Reveal Reference';
+
+  gameState.currGuessDistance = Infinity;
+
+  gameState.currentSelection = getRandomVerses();
+
+  // Three seperate paragraphs (one for each verse)
+  gameState.currentSelection.verses.forEach(verse => {
+    const p = document.createElement('p');
+    p.textContent = verse.text;
+    container.appendChild(p);
+  });
 }
 
 export function setRunnerPosition(runner, base){

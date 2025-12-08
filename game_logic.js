@@ -43,9 +43,9 @@ export function startRound(){
   ++gameState.round;
   updateScoreboard();
   startTimer(handleTimeUp, TIMER_DURATIONS[gameState.settings.thresholdSetting]);
-  document.getElementById("newRound").disabled = true;
-  document.getElementById("revealDistance").disabled = true;
-  document.getElementById("revealReference").disabled = true;
+  ELS.GAME.BTNS.newRound.disabled = true;
+  ELS.GAME.BTNS.revealDistance.disabled = true;
+  ELS.GAME.BTNS.revealReference.disabled = true;
 }
 
 export function startGame(){
@@ -107,7 +107,7 @@ export function getNextBase(currentBase){
 export function spawnRunner(){
   const runner = document.createElement('div');
   runner.classList.add('runner');
-  document.getElementById('diamond').appendChild(runner);
+  ELS.GAME.diamond.appendChild(runner);
 
   setRunnerPosition(runner, "home");
 
@@ -153,7 +153,7 @@ export function addStrike(){
   animateStrike();
   
   if(gameState.strikes >= 3){
-    document.getElementById('final-score').textContent = gameState.score;
+    ELS.GO.TXT.finalScore.textContent = gameState.score;
     sleep(1000).then(() => {
       endGame();
       showGameOver();
@@ -172,19 +172,16 @@ function makeScoreObject(score){
 function handleTimeUp() {
   addStrike();
   stopTimer();
-  document.getElementById("newRound").disabled = false;
+  ELS.GAME.BTNS.newRound.disabled = false;
 }
 
 export function submitGuess() {
     const bookGuess = ELS.bookSelect.value;
     const chapterGuess = ELS.chapterSelect.value;
 
-    const resultEl = document.getElementById('result');
+    const resultEl = ELS.GAME.TXT.result;
     ELS.GAME.BTNS.newRound.disabled = false;
     ELS.GAME.BTNS.revealDistance.disabled = false;
-
-    // I may reenable this, but I'm trying out having it removed for now.
-    // document.getElementById("revealReference").disabled = false;
 
     if (!gameState.currentSelection) {
       resultEl.textContent = "No verses loaded yet.";
@@ -221,5 +218,5 @@ export function submitGuess() {
       addStrike();
     }
 
-    document.getElementById('finalizeGuess').disabled = true;
+    ELS.GAME.BTNS.submit.disabled = true;
 }

@@ -81,7 +81,23 @@ export const ELS = {
     hideOverlay: document.getElementById('hide-overlay'),
     newRound: document.getElementById('newRound')
   },
+  MENU: {
+    screen: document.getElementById('menu-screen'),
+  },
   GAME: {
+    screen: document.getElementById('game-screen'),
+
+    TXT: {
+      verseBox: document.getElementById('verses'),
+      result: document.getElementById('result'),
+      distReveal: document.getElementById('distance'),
+      refReveal: document.getElementById('reference'),
+    },
+    SB: {   // Scoreboard
+      score: document.getElementById("score"),
+      round: document.getElementById("round"),
+      strikes: document.getElementById("strikes"),
+    },
     strikeEffect: document.getElementById('strike-effect-display'),
     strikeEffectText: document.querySelector('#strike-effect-display .strike-text'),
     distanceReveal: document.getElementById('distance'),
@@ -90,26 +106,45 @@ export const ELS = {
       revealDistance: document.getElementById('revealDistance'),
       revealReference: document.getElementById('revealReference'),
       newRound: document.getElementById('newRound'),
-    }
+      submit: document.getElementById('finalizeGuess'),
+    },
+    diamond: document.getElementById('diamond'),
   },
   LB: {
+    screen: document.getElementById('leaderboard-screen'),
     difficultyLabel: document.getElementById('lb-display-difficulty'),
     bookLabel: document.getElementById('lb-display-book'),
     difLadder: document.getElementById('difficultyLadder'),
     BTNS: {
-      bookSelect: document.querySelectorAll('.lb-book-option')
-    }
+      bookSelect: document.querySelectorAll('.lb-book-option'),
+    },
   },
   GO: {
+    screen: document.getElementById('game-over-overlay'),
+
     BTNS: {
       menu: document.getElementById('game-over-menu-btn'),
-      restart: document.getElementById('go-btns-tryagain')
+      restart: document.getElementById('go-btns-tryagain'),
+    },
+    TXT: {
+      finalScore: document.getElementById('final-score'),
+    }
+  },
+  SET: {
+    screen: document.getElementById('settings-screen'),
+
+    DROPS: {
+      difEl: document.getElementById('threshold-value'),
+      inEx: document.getElementById("include-exclude-values"),
+      bookSelect: document.getElementById('bookSelect'),
+      chapSelect: document.getElementById('chapterSelect'),
+      inExToggle: document.getElementById('include-exclude-toggle'),
+      inExDropdown: document.getElementById('include-exclude-dropdown'),
     }
   },
   vSelect: document.getElementById('settings-vselect-value'),
-  toggle: document.getElementById('include-exclude-toggle'),
   IESelect: document.getElementById('include-exclude-values'),
-  dropdown: document.getElementById('include-exclude-dropdown'),
+  
   bookSelect: document.getElementById('bookSelect'),
   chapterSelect: document.getElementById('chapterSelect'),
   overlay: document.getElementById('game-over-overlay'),
