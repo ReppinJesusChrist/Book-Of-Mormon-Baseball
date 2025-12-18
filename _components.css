@@ -60,7 +60,7 @@ select:hover {
 
     background: var(--color-dropdown-base);
     border: 1px solid #ccc;
-    border-radius: 0px;
+    border-radius: var(--border-radius-lg);
     
     overflow-y: auto;
     scrollbar-width: none;

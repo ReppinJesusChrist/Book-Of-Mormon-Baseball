@@ -62,6 +62,14 @@ function initAllCustomDropdowns() {
     const dropdownEl = toggler.closest(".custom-dropdown");
     attachCustomDropdown(toggler, dropdownEl);
   });
+
+  document.addEventListener("click", (e) => {
+    if(!e.target.closest(".custom-dropdown")) {
+      document.querySelectorAll(".custom-dropdown.open").forEach(ddown => {
+        ddown.classList.remove("open");
+      });
+    }
+  });
 }
 
 function attachCustomDropdown(toggleEl, dropdownEl){
@@ -74,6 +82,14 @@ function attachCustomDropdown(toggleEl, dropdownEl){
       })
 
     dropdownEl.classList.toggle("open");
+  });
+
+  dropdownEl.addEventListener("click", (e) => {
+    const option = e.target.closest(".custom-option");
+
+    if( option && dropdownEl.classList.contains("single-select")) {
+      dropdownEl.classList.remove("open");
+    }
   });
 }
 

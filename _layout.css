@@ -78,6 +78,8 @@ body {
     text-align: center;
     white-space: nowrap;
     margin: 0 auto; /* I don't understand this */
+    cursor: pointer;
+    user-select: none; /* xkcd's worst nightmare */
 }
 
 #footer-bar{
