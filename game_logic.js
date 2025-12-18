@@ -31,11 +31,10 @@ export const gameState = {
   // Default Setting Values
   settings: {
     numDisplayVerses: 3,
-    difficulty : 'harder', // easiest -> average -> hardest
-    lbDifficulty : 'harder',
+    difficulty : 'hard', // easiest -> average -> hardest
+    lbDifficulty : 'hard',
     lbBook : 'bofm',
     currentVolume : 'bofm',
-    thresholdSetting : 'average'
   }
 }
 
@@ -43,7 +42,7 @@ export function startRound(){
   showVerses();
   ++gameState.round;
   updateScoreboard();
-  startTimer(handleTimeUp, TIMER_DURATIONS[gameState.settings.thresholdSetting]);
+  startTimer(handleTimeUp, TIMER_DURATIONS[gameState.settings.difficulty]);
   ELS.GAME.BTNS.newRound.disabled = true;
   ELS.GAME.BTNS.revealDistance.disabled = true;
   ELS.GAME.BTNS.revealReference.disabled = true;
@@ -199,7 +198,7 @@ export function submitGuess() {
     const distance = Math.abs(guessIndex - answerIndex);
     gameState.currGuessDistance = distance;
 
-    const [homeRunThreshold, tripleThreshold, doubleThreshold, singleThreshold] = THRESHOLD_ARRAYS[gameState.settings.thresholdSetting];
+    const [homeRunThreshold, tripleThreshold, doubleThreshold, singleThreshold] = THRESHOLD_ARRAYS[gameState.settings.difficulty];
 
     advanceRunners(distance <= homeRunThreshold ? 4 :
                    distance <= tripleThreshold ? 3 :

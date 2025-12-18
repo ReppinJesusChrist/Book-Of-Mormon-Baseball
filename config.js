@@ -1,4 +1,5 @@
 export const DB_DEBUG = false;
+export const VERSION = 1; // Will be used in the future for updates. Not used right now.
 
 export const ANIMATION_TIME_MS = 600; // Time in ms for runner animation
 export const NUM_LB_SCORES = 10;

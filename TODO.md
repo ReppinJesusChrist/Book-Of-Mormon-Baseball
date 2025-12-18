@@ -43,6 +43,9 @@
   - [ ] **Settings Screen**
     - [ ] Add multiple tabs for space management
     - [ ] Match styling of multi-check dropdown with other dropdowns
+    - [ ] Fix difficulty dropdown
+      - [ ] Make display info MUCH shorter
+      - [ ] Show the detailed info in other ways (hover, or info button. Maybe both?)
   - [ ] **Leaderboard Screen**
     - [ ] Add display button formatting
   - [ ] **Game Screen**
