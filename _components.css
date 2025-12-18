@@ -36,6 +36,10 @@ select:hover {
     transition: background-color 0.25s ease, box-shadow 0.25s ease;
 }
 
+.custom-dropdown .alt-color{
+    background-color: var(--color-dropdown-base);
+}
+
 .custom-dropdown button:hover,
 .custom-dropdown button:active {
     background-color: var(--color-dropdown-hover);
@@ -133,6 +137,10 @@ select:hover {
 .custom-option span {
     font-weight: bold;
     font-size: 15px;
+}
+
+#nav-toggle {
+    min-width: 50px;
 }
 
 /*      =======================================     */

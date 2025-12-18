@@ -2,6 +2,7 @@
 html, body {
     height: 100%;
     overflow: hidden;
+    min-width: 520px;
 }
 
 body {
@@ -52,24 +53,31 @@ body {
 /*  Header  */
 #header-bar{
     display: flex;
-    justify-content: space-between;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
     height: var(--header-height);
-    padding: 0 16px; /* No vertical, 10px horizontal */
+    padding: 0 16px; /* No vertical, small horizontal */
     border-bottom: 4px solid var(--slate-grey);
-    font-size: 3rem;
-    font-weight: bold;
     position: relative;
+    
+    font-weight: bold;
+    
 }
 
 #header-bar .header-left{
+    position: absolute;
+    left: 16px;
     display: flex;
     align-items: center;
-    justify-content: flex-start;
-    flex: 0 0 auto;
+    flex: 0 1 auto;
 }
 
 #header-title {
-    position: absolute;
+    font-size: clamp(1.5rem, 4vw, 3.5rem);
+    text-align: center;
+    white-space: nowrap;
+    margin: 0 auto; /* I don't understand this */
 }
 
 #footer-bar{

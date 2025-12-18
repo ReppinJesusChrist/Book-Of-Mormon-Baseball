@@ -31,7 +31,7 @@
     }
 
     #header-bar {
-        font-size: 1.8rem;
+        font-size: clamp(1.2rem, 6vw, 2rem);
     }
 
     .strike-box {
