@@ -8,11 +8,24 @@
     <link rel="stylesheet" href="_base.css" /> 
     <link rel="stylesheet" href="_layout.css" /> 
     <link rel="stylesheet" href="_pages.css" /> 
-    <link rel="stylesheet" href="_components.css" /> 
+    <link rel="stylesheet" href="_components.css" />
+    <link rel="stylesheet" href="_mobile.css" /> 
 </head>
 
 <body>
     <header id="header-bar">
+        <div class="header-left">
+            <div class="nav-dropdown">
+                <button class="nav-toggle">☰</button>
+                <div class="nav-menu">
+                    <div class="nav-item" data-target="menu"></div>
+                    <div class="nav-item" data-target="settings"></div>
+                    <div class="nav-item" data-target="leaderboard"></div>
+                    <div class="nav-item" data-target="statistics"></div>
+                </div>
+            </div>
+        </div>
+
         <div id="header-title">Book of Mormon Baseball!!!</div>
     </header>
     <div id="main-content">

@@ -18,6 +18,7 @@ export const gameState = {
   strikes : 0,
   round : 0,
   runners : [], // Tracks runner elements for animation
+  bases : [], // Tracks which bases are occupied. Not currently used.
 
   scriptures : null,
   includedBooks : new Set(),
@@ -62,7 +63,7 @@ export async function endGame(){
   ELS.BUTTONS.newRound.disabled = true;
   ELS.finalScore.textContent = gameState.score;
   localStorage.setItem("Last Score", gameState.score);
-  resetBases();
+  resetBases(gameState.bases, gameState.runners);
   stopTimer();
   updateHighScores(gameState.score);
   updateLBTableRows();

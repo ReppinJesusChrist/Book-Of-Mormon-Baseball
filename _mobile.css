@@ -1,0 +1,41 @@
+@media (max-width: 700px) {
+    #container {
+        flex-direction: column;
+    }
+
+    #left-panel,
+    #right-panel {
+        width: 100%;
+        height: auto;
+        padding: 10px;
+    }
+
+    #diamond {
+        width: 250px;
+        height: 250px;
+    }
+
+    .base {
+        width: 40px;
+        height: 40px;
+    }
+
+    .runner {
+        width: 14px;
+        height: 14px;
+    }
+
+    button{
+        font-size: 1.1rem;
+        padding: 12px 18px;
+    }
+
+    #header-bar {
+        font-size: 1.8rem;
+    }
+
+    .strike-box {
+        width: var(--size-strbox-mob);
+        height: var(--size-strbox-mob);
+    }
+}

@@ -48,7 +48,8 @@
   - [ ] **Game Screen**
     - [ ] Set fixed size verse display with auto-scrolling as needed
   - [ ] **Main Menu**
-    - [ ] Center vertically
+    - [ ] Center vertically (even after out-and-back)
+    - [ ] Buttons all same size
 
 
 - [ ] **Refactoring**

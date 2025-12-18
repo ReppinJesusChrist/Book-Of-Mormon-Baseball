@@ -70,11 +70,11 @@ export const GAME_STATES = {
   LEADERBOARD: 'leaderboard'
 }
 export const BASE_POSITIONS = {
-  home:  { left: 50,  top: 90 },
-  first: { left: 90, top: 50  },
-  second:{ left: 50,  top: 10   },
-  third: { left: 10,   top: 50  },
-  back_home: { left: 50,  top: 90 } // Back to home for scoring
+  home:  { left: 50,  top: 85 },
+  first: { left: 85, top: 50  },
+  second:{ left: 50,  top: 15   },
+  third: { left: 15,   top: 50  },
+  back_home: { left: 50,  top: 85 } // Back to home for scoring
 };
 export const ELS = {
   BUTTONS: {

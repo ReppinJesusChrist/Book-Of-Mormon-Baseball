@@ -1,7 +1,9 @@
 /* 1. GLOBAL COLOR AND STYLE VARIABLES */
 :root {
     /* Define global color and style variables for site-wide consistency */
-    /* CSS HEX */
+    
+    
+    /*  General Color Schemes  */
     --regal-navy: #003171ff;
     --metallic-gold: #ddb11fff;
     --raw-umber: #743903ff;
@@ -18,9 +20,14 @@
     --color-bg-light: #add9f4ff;
     --color-bg-dark: rgb(149, 199, 229);
 
+
+    /*  Specific Colors  */
     --color-dropdown-base: #7c90a0ff;
     --color-dropdown-hover: rgb(99, 120, 138);
     
+    --color-header-text: var(--color-primary-gold);
+    --color-header-bg: var(--color-primary-blue);
+
     --color-timer-start: #76c7ac;
 
     --color-check-border: black;
@@ -35,13 +42,20 @@
 
     --color-font-primary: white;
 
-    /*  Element Sizes */
     --border-radius-lg: 10px;
-    --strike-box-size: 80px;
-    --header-height: 50px;
+
+    --header-height: 70px;
     --footer-height: 20px;
 
+    /*  Element Sizes - Full Size  */
+    --strike-box-size: 80px;
+    --size-base: 50px;
+    --size-runner: 25px;
 
+    /*  Element Sizes - Small/Mobile  */
+    --size-strbox-mob: 30px;
+    --size-base-mob: 40px;
+    --size-runner-mob: 25px;
 }
 
 @keyframes flash-red {

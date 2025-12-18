@@ -183,8 +183,8 @@ select:hover {
 }
 
 .runner {
-    width: 20px;
-    height: 20px;
+    width: var(--size-runner);
+    height: var(--size-runner);
     background: #ff4444;
     border-radius: 50%;
     position: absolute;
@@ -195,16 +195,18 @@ select:hover {
 #diamond {
     position: relative;
     top: 0;
-    width: 400px;
-    height: 400px;
+    width: 80vw;
+    height: 80vw;
+    max-width: 400px;
+    max-height: 400px;
     margin-top: 0;
     background: #6fd08cff;;
 }
 
 /* Baseball base elements (first, second, third, home) */
 .base {
-    width: 40px;
-    height: 40px;
+    width: var(--size-base);
+    height: var(--size-base);
     background: #ffcf88;
     border: 2px solid #000;
     position: absolute;
