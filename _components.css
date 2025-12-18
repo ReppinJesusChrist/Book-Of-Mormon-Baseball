@@ -54,7 +54,7 @@ select:hover {
     display : block;
     position: absolute;
     max-height: 35vh;
-    width: 100%;
+    min-width: max-content;
     margin-top: 4px;
     padding: 8px; 
 
@@ -141,6 +141,13 @@ select:hover {
 
 #nav-toggle {
     min-width: 50px;
+}
+
+.nav-item {
+    font-family: var(--font-serif);
+    font-size: var(--font-size-base);
+    color: var(--color-font-primary);
+    white-space: nowrap;
 }
 
 /*      =======================================     */

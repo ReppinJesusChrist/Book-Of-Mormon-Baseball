@@ -50,6 +50,9 @@ export function handleNewRound(){
 }
 
 export function handleLeaderboardButton(){
+  if(gameState.inRound) {
+    endGame();
+  }
   showScreen(GAME_STATES.LEADERBOARD);
 }
 
@@ -59,6 +62,9 @@ export function handleFinalizeGuess(){
 }
 
 export function handleSettingsButton(){
+  if(gameState.inRound) {
+    endGame();
+  }
   showScreen(GAME_STATES.SETTINGS);
 }
 

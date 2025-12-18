@@ -10,9 +10,7 @@ const CLICK_HANDLERS = {
   'revealDistance': Handlers.handleRevealDistance,
   'revealReference': Handlers.handleRevealReference,
   'newRound': Handlers.handleNewRound,
-  'leaderboard-button': Handlers.handleLeaderboardButton,
   'finalizeGuess': Handlers.handleFinalizeGuess,
-  'settings-button': Handlers.handleSettingsButton,
   'check-all-inex': Handlers.handleCheckAllInex,
   'uncheck-all-inex': Handlers.handleUncheckAllInex,
   'go-btns-tryagain': Handlers.handleGORestartButton
@@ -28,6 +26,8 @@ const MULTI_HANDLERS = [
   {selector: '.GO-button', event: 'click', handler: Handlers.handleGOButton},
   {selector: '.start-button', event: 'click', handler: Handlers.handleStartButton},
   {selector: '.main-menu-button', event: 'click', handler: Handlers.handleMainMenuButton},
+  {selector: '.settings-button', event: 'click', handler: Handlers.handleSettingsButton},
+  {selector: '.lb-button', event: 'click', handler: Handlers.handleLeaderboardButton},
   {selector: '.lb-difficulty-option', event: 'click', handler: Handlers.handleLBDiffButton},
   {selector: '.restart-button', event: 'click', handler: Handlers.handleRestartButton}
 ];
