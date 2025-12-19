@@ -1,0 +1,15 @@
+{
+    "title": "Book of Mormon Isaiah",
+    "volumes": {
+        "bofm": {
+            "books": {
+                "1 Nephi": ["20-21"],
+                "2 Nephi": ["6-8",  "12-24",  27],
+                "Mosiah" : [14],
+                "3 Nephi": ["21-22"]
+            }
+            
+        } 
+    }
+     
+}

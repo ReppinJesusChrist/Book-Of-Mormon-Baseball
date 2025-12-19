@@ -28,7 +28,7 @@ export const gameState = {
 
   displayScreen : 'menu',
 
-  // Default Setting Values
+  // Initialization is for default setting values
   settings: {
     numDisplayVerses: 3,
     difficulty : 'hard', // easiest -> average -> hardest
