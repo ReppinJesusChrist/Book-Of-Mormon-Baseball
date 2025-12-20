@@ -97,7 +97,7 @@ export async function handleVSelectChange(){
 
 export function handleBookSelectChange(){
   ELS.chapterSelect.innerHTML = ''; // Clear previous options
-    const chapters = Object.keys(gameState.scriptures[ELS.bookSelect.value]);
+    const chapters = Object.keys(gameState.scriptures[ELS.GAME.DROPS.bookSelect.value]);
     chapters.forEach(chapter => {
       const option = document.createElement('option');
       option.value = chapter;
@@ -106,7 +106,7 @@ export function handleBookSelectChange(){
     });
 
     // Enable submit button when both selections are made
-    ELS.GAME.BTNS.submit.disabled = !(ELS.bookSelect.value && ELS.chapterSelect.value);
+    ELS.GAME.BTNS.submit.disabled = !(ELS.GAME.DROPS.bookSelect.value && ELS.chapterSelect.value);
 }
 
 export function hideGOOverlay(){

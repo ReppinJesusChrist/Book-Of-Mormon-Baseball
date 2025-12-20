@@ -17,7 +17,7 @@ select:hover {
 }
 
 /*  Custom Dropdowns */
-.custom-dropdown {
+.dropdown {
     position: relative;
     display: inline-block;
     width: 100%;
@@ -25,7 +25,7 @@ select:hover {
 }
 
 /*  Makes it look like a dropdown */
-.custom-dropdown button{
+.dropdown button{
     padding: 12px 18px;
     border: none;
     cursor: pointer;
@@ -36,17 +36,17 @@ select:hover {
     transition: background-color 0.25s ease, box-shadow 0.25s ease;
 }
 
-.custom-dropdown .alt-color{
+.dropdown .alt-color{
     background-color: var(--color-dropdown-base);
 }
 
-.custom-dropdown button:hover,
-.custom-dropdown button:active {
+.dropdown button:hover,
+.dropdown button:active {
     background-color: var(--color-dropdown-hover);
     transform: none !important;
 }
 
-.custom-dropdown button:hover + .dropdown-content{
+.dropdown button:hover + .dropdown-content{
     background-color: var(--color-dropdown-hover);
 }
 
@@ -81,7 +81,7 @@ select:hover {
     height: 0;
 }
 
-.custom-dropdown.open .dropdown-content {
+.dropdown.open .dropdown-content {
     opacity: 1;
     transform: scaleY(1);
 }

@@ -178,7 +178,7 @@ function handleTimeUp() {
 }
 
 export function submitGuess() {
-    const bookGuess = ELS.bookSelect.value;
+    const bookGuess = ELS.GAME.DROPS.bookSelect.value;
     const chapterGuess = ELS.chapterSelect.value;
 
     const resultEl = ELS.GAME.TXT.result;

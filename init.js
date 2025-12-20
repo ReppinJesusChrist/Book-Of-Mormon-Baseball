@@ -58,14 +58,14 @@ export function initEventListeners(){
 }
 
 function initAllCustomDropdowns() {
-  document.querySelectorAll(".CDD-toggle").forEach(toggler => {
-    const dropdownEl = toggler.closest(".custom-dropdown");
+  document.querySelectorAll(".dropdown-trigger").forEach(toggler => {
+    const dropdownEl = toggler.closest(".dropdown");
     attachCustomDropdown(toggler, dropdownEl);
   });
 
   document.addEventListener("click", (e) => {
-    if(!e.target.closest(".custom-dropdown")) {
-      document.querySelectorAll(".custom-dropdown.open").forEach(ddown => {
+    if(!e.target.closest(".dropdown")) {
+      document.querySelectorAll(".dropdown.open").forEach(ddown => {
         ddown.classList.remove("open");
       });
     }
@@ -76,7 +76,7 @@ function attachCustomDropdown(toggleEl, dropdownEl){
   toggleEl.addEventListener("click", (e) => {
     e.stopPropagation();
 
-    document.querySelectorAll(".custom-dropdown.open")
+    document.querySelectorAll(".dropdown.open")
       .forEach(ddown => {
         if(ddown !== dropdownEl) ddown.classList.remove("open");
       })

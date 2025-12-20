@@ -15,8 +15,8 @@
 <body>
     <header id="header-bar">
         <div class="header-left">
-            <div class="custom-dropdown single-select">
-                <button id="nav-toggle" class="CDD-toggle">☰</button>
+            <div class="dropdown single-select">
+                <button id="nav-toggle" class="dropdown-trigger">☰</button>
                 <div id="nav-menu" class="dropdown-content">
                     <div class="nav-item custom-option main-menu-button" data-target="menu">Main Menu</div>
                     <div class="nav-item custom-option settings-button" data-target="settings">Settings</div>
@@ -36,10 +36,6 @@
         <button id="leaderboard-button" class="lb-button">Leaderboard</button>
         </div>
         <div id="game-screen" style="display:none;">
-            <!--
-                <h1>Book of Mormon Baseball!!!</h1>
-                <div class="top-divider"></div>
-            -->
             <div id="container">
                 <div id="left-panel">
                     <div id="instructions"></div>
@@ -48,7 +44,16 @@
                     <div id="timer-container">
                         <div id="timer-bar"></div>    
                     </div>
-                    <div class="controls" id="guess-section">               
+                    <div class="controls" id="guess-section">
+                        <div class="dropdown single-select">
+                            <button class="dropdown-trigger" id="book-select-trigger">Book:</button>
+                            <div class="dropdown-content" id="book-select">
+                                <div class="nav-item custom-option main-menu-button" data-target="menu">Main Menu</div>
+                                <div class="nav-item custom-option settings-button" data-target="settings">Settings</div>
+                                <div class="nav-item custom-option lb-button" data-target="leaderboard">Leaderboard</div>
+                                <div class="nav-item custom-option" data-target="statistics">Statistics</div>
+                            </div>
+                        </div>               
                         <label for="bookSelect">Book:</label>
                         <select id="bookSelect"></select>
 
@@ -116,8 +121,8 @@
                     <option value="custom">Custom Study Plan</option>
                 </select>
                 <label for="include-exclude-dropdown-label">Select Books/Subsections to include</label>
-                <div class="custom-dropdown multi-select">
-                    <button type="button" class="CDD-toggle">Show/Hide book options</button>
+                <div class="dropdown multi-select">
+                    <button type="button" class="dropdown-trigger">Show/Hide book options</button>
                     <div id="include-exclude-values" class="dropdown-content"></div>
                 </div>
                     <!-- Options will be populated dynamically based on selected volume -->

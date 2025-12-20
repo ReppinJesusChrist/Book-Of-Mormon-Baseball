@@ -146,9 +146,9 @@ export function populateGuessOptions() {
     console.warn("function called before scriptures were loaded");
   }
 
-  const bookSelect = ELS.SET.DROPS.bookSelect;
+  const bookSelect = ELS.GAME.DROPS.bookSelect;
   bookSelect.innerHTML = ''; // Clear previous options
-  const chapterSelect = ELS.SET.DROPS.chapSelect;
+  const chapterSelect = ELS.GAME.DROPS.chapSelect;
 
   // Fill book options
   const books = Object.keys(gameState.scriptures);
@@ -192,8 +192,8 @@ export function showVerses() {
   const resultEl = ELS.GAME.TXT.result;
   const distanceEl = ELS.GAME.TXT.distReveal;
 
-  ELS.bookSelect.value = '';
-  ELS.chapterSelect.innerHTML = '';
+  ELS.GAME.DROPS.bookSelect.value = '';
+  ELS.GAME.DROPS.chapterSelect.innerHTML = '';
   resultEl.textContent = '';
   distanceEl.textContent = '';
 
