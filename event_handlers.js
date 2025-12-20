@@ -89,6 +89,7 @@ export function handleMainMenuButton(){
 
 export async function handleVSelectChange(){
   gameState.settings.currentVolume = ELS.vSelect.value;
+  gameState.settings.lbVolume = ELS.vSelect.value;
   await loadData();
   populateGuessOptions();
   populateIncludeExcludeOptions();

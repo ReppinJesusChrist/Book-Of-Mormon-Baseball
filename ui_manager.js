@@ -32,7 +32,7 @@ export function initLBTableRows(){
 
 export function updateLBTableRows(){
   let allScores = JSON.parse(localStorage.getItem("topScores"));
-  let scores = allScores[gameState.settings.lbBook][gameState.settings.lbDifficulty] || [];
+  let scores = allScores[gameState.settings.lbVolume][gameState.settings.lbDifficulty] || [];
 
   let rows = LB_tbody.querySelectorAll("tr");
 
@@ -180,7 +180,7 @@ export function updateLBDisplayDifficulty(){
 }
 
 export function updateLBDisplayBook(){
-  ELS.LB.bookLabel.textContent = BOOK_NAMES[gameState.settings.lbBook];
+  ELS.LB.bookLabel.textContent = BOOK_NAMES[gameState.settings.lbVolume];
 }
 
 export function showVerses() {

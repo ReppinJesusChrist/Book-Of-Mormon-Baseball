@@ -33,8 +33,10 @@ export const gameState = {
     numDisplayVerses: 3,
     difficulty : 'hard', // easiest -> average -> hardest
     lbDifficulty : 'hard',
-    lbBook : 'bofm',
+    lbVolume : 'bofm',
+
     currentVolume : 'bofm',
+    customStudyPlan: 'bofm_isaiah'
   }
 }
 
@@ -71,7 +73,7 @@ export async function endGame(){
 
 function updateHighScores(newScore){
   let allScores = JSON.parse(localStorage.getItem("topScores")) || [];
-  let scores = allScores[gameState.settings.lbBook][gameState.settings.difficulty] || [];
+  let scores = allScores[gameState.settings.currentVolume][gameState.settings.difficulty] || [];
 
   const newScoreObject = makeScoreObject(newScore);
 
@@ -86,7 +88,7 @@ function updateHighScores(newScore){
   // Trim to size
   scores = scores.slice(0, NUM_LB_SCORES);
 
-  allScores[gameState.settings.lbBook][gameState.settings.difficulty] = scores;
+  allScores[gameState.settings.currentVolume][gameState.settings.difficulty] = scores;
   localStorage.setItem("topScores", JSON.stringify(allScores));
 }
 

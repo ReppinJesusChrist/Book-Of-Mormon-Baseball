@@ -1,11 +1,13 @@
-import {STANDARD_WORKS_FILE_NAMES, DB_DEBUG} from "./config.js";
+import {STANDARD_WORKS_FILE_NAMES, CUSTOM_STUDY_FILE_NAMES, DB_DEBUG} from "./config.js";
 import {gameState} from "./game_logic.js";
 
 
   const SUPABASE_URL = "https://twyipibakfjidapvakwx.supabase.co";
   const SUPABASE_ANON_KEY = "sb_publishable_bvxMyzc47F8KIR9a9XkMsQ_CMuYVJNJ";
 
-  const supabaseClient = DB_DEBUG ? supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY) : null;
+  const supabaseClient = DB_DEBUG ? supabase.createClient(
+    SUPABASE_URL, SUPABASE_ANON_KEY
+  ) : null;
 
 
 export const gameData = {
@@ -20,9 +22,20 @@ export async function fetchScriptures(volume){
 
 export async function loadData() {
   try{
-    const response = await fetchScriptures(STANDARD_WORKS_FILE_NAMES[gameState.settings.currentVolume]);
-    gameState.scriptures = await response;
+    const volume = gameState.settings.currentVolume;
+    let response;
+    if(volume === "custom"){
+      response = await fetchScriptures(
+        // Custom files must be subsets of single volumes right now or UI breaks
+        CUSTOM_STUDY_FILE_NAMES[gameState.settings.customStudyPlan]
+      );
+    } else {
+      response = await fetchScriptures(
+        STANDARD_WORKS_FILE_NAMES[gameState.settings.currentVolume]
+      );
+    }
 
+    gameState.scriptures = await response;
     buildVerseList();
     buildChapterIndex();    
   } catch (err) {

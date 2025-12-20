@@ -64,6 +64,11 @@ export const STANDARD_WORKS_FILE_NAMES = {
   dc: 'data/dc.json',
   gc: 'data/gc.json'
 };
+
+export const CUSTOM_STUDY_FILE_NAMES = {
+  bofm_isaiah: 'data/bofm_isaiah.json',
+}
+
 export const GAME_STATES = {
   MENU: 'menu',
   IN_GAME: 'in_game',
