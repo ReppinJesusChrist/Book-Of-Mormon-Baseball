@@ -144,3 +144,22 @@ export function waitForAllRunners(runners, duration) {
 export function handleUpdate(){
     
 }
+
+export function setCustomDropdownValue(dropdown, value){
+  const newValue = value;
+  const oldValue = dropdown.value;
+
+  if(oldValue === newValue) return;
+
+  dropdown._settingValue = true;
+
+  console.log(`dropdown value set to: ${newValue}`);
+
+  dropdown.dataset.value = newValue;
+
+  dropdown.dispatchEvent(
+    new Event("change", {bubbles: true})
+  );
+
+  dropdown._settingValue = false;
+}

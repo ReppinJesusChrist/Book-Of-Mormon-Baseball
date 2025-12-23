@@ -4,7 +4,7 @@ import * as Handlers from "./event_handlers.js";
 import {populateIncludeExcludeOptions, populateGuessOptions, initLBTableRows,
   updateLBDisplayDifficulty, updateLBTableRows, updateLBDisplayBook, positionBases,
 } from "./ui_manager.js";
-
+import {setCustomDropdownValue} from "./helper_functions.js";
 
 const CLICK_HANDLERS = {
   'revealDistance': Handlers.handleRevealDistance,
@@ -18,7 +18,7 @@ const CLICK_HANDLERS = {
 
 const CHANGE_HANDLERS = {
   'settings-vselect-value': Handlers.handleVSelectChange,
-  'bookSelect': Handlers.handleBookSelectChange,
+  'book-dropdown': Handlers.handleBookSelectChange,
   'threshold-value' : Handlers.handleThreshValueChange,
 }
 
@@ -69,6 +69,30 @@ function initAllCustomDropdowns() {
         ddown.classList.remove("open");
       });
     }
+  });
+
+  document.addEventListener("click", (e) => {
+    const option = e.target.closest(".custom-option");
+    if(!option) return;
+    if(!("value" in option.dataset)) return;
+
+    const dropdown = option.closest(".dropdown");
+    setCustomDropdownValue(dropdown, option.dataset.value);
+    dropdown.classList.remove("open");
+  });
+
+  document.querySelectorAll(".dropdown").forEach( ddown => {
+    if(Object.getOwnPropertyDescriptor(ddown, "value")) return;
+
+    Object.defineProperty(ddown, "value", {
+      get() {
+        return this.dataset.value;
+      },
+      set(val) {
+        if(this._settingValue) return;
+        setCustomDropdownValue(this, val);
+      }
+    });
   });
 }
 

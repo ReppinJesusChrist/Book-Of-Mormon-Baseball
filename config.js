@@ -115,7 +115,8 @@ export const ELS = {
       submit: document.getElementById('finalizeGuess'),
     },
     DROPS: {
-      bookSelect: document.getElementById('bookSelect'),
+      bookDropdown: document.getElementById('book-dropdown'),
+      bookSelect: document.getElementById('book-select'),
       chapterSelect: document.getElementById('chapterSelect'),
     },
     diamond: document.getElementById('diamond'),
@@ -149,11 +150,10 @@ export const ELS = {
       chapSelect: document.getElementById('chapterSelect'),
       inExToggle: document.getElementById('include-exclude-toggle'),
       inExDropdown: document.getElementById('include-exclude-dropdown'),
-      IESelect: document.getElementById('book-select'),
+      IESelect: document.getElementById('include-exclude-values'),
     }
   },
   vSelect: document.getElementById('settings-vselect-value'),
-  IESelect: document.getElementById('include-exclude-values'),
   
   chapterSelect: document.getElementById('chapterSelect'),
   overlay: document.getElementById('game-over-overlay'),

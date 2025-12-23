@@ -1,8 +1,8 @@
 import {ELS, DIFFICULTY_NAMES, BOOK_NAMES, GAME_STATES, BASE_POSITIONS
-  
 } from "./config.js";
 import {getRandomVerses} from "./data_manager.js";
 import {gameState} from "./game_logic.js";
+import {setCustomDropdownValue} from "./helper_functions.js";
 
 
 const LB_tbody = document.querySelector("#leaderboard-table tbody"); 
@@ -65,45 +65,9 @@ export function hideGameOver(){
   ELS.overlay.classList.remove('visible');
 }
 
-export function populateIncludeExcludeOptions_old() {
-  // Clear previous options
-  ELS.IESelect.innerHTML = '';
-  gameState.includedBooks.clear();
-  
-    Object.keys(gameState.scriptures).forEach(bookName => {
-      const wrapper = document.createElement('div');
-      wrapper.style.display = 'block';
-
-      const checkbox = document.createElement('input');
-      checkbox.type = 'checkbox';
-      checkbox.id = `inex-${bookName}`;
-      checkbox.value = bookName;
-      checkbox.textContent = bookName;
-      checkbox.checked = true; // Default to include all books
-      gameState.includedBooks.add(bookName); // Update set to reflect ^^^
-
-      const label = document.createElement('label');
-      label.setAttribute('for', `inex-${bookName}`);
-      label.textContent = bookName;
-
-      checkbox.addEventListener('change', () => {
-        if(checkbox.checked){
-          gameState.includedBooks.add(bookName);
-        } else {
-          gameState.includedBooks.delete(bookName);
-        }
-        console.log(`Included books:`, gameState.includedBooks);
-      });
-
-      wrapper.appendChild(checkbox);
-      wrapper.appendChild(label);
-      ELS.IESelect.appendChild(wrapper);
-    });
-}
-
 export function populateIncludeExcludeOptions() {
   // Clear previous options
-  ELS.IESelect.innerHTML = '';
+  ELS.SET.DROPS.IESelect.innerHTML = '';
   gameState.includedBooks.clear();
   
   Object.keys(gameState.scriptures).forEach(bookName => {
@@ -137,7 +101,7 @@ export function populateIncludeExcludeOptions() {
 
     wrapper.appendChild(checkbox);
     wrapper.appendChild(labelSpan);
-    ELS.IESelect.appendChild(wrapper);
+    ELS.SET.DROPS.IESelect.appendChild(wrapper);
   });
 }
 
@@ -146,19 +110,59 @@ export function populateGuessOptions() {
     console.warn("function called before scriptures were loaded");
   }
 
-  const bookSelect = ELS.GAME.DROPS.bookSelect;
-  bookSelect.innerHTML = ''; // Clear previous options
-  const chapterSelect = ELS.GAME.DROPS.chapSelect;
-
   // Fill book options
   const books = Object.keys(gameState.scriptures);
+
+  const bookSelectNew = ELS.GAME.DROPS.bookSelect;
+  // Clear previous options
+  bookSelectNew.innerHTML = '';
+
   books.forEach(book => {
-    const option = document.createElement('option');
-    option.value = book;
-    option.textContent = book;
-    bookSelect.appendChild(option);
-    bookSelect.value = ''; // Default to no selection
+    const bookOption = document.createElement('div');
+    bookOption.classList.add('custom-option');
+    bookOption.textContent = book;
+    bookOption.dataset.value = book;
+    bookSelectNew.appendChild(bookOption);
+    //<div class="nav-item custom-option main-menu-button" data-target="menu">Main Menu</div>
+
   });
+  /**
+  
+  Object.keys(gameState.scriptures).forEach(bookName => {
+    const wrapper = document.createElement('label');
+    wrapper.classList.add("custom-option");
+
+    const checkbox = document.createElement('input');
+    const labelSpan = document.createElement('span');
+    checkbox.type = 'checkbox';
+    checkbox.id = `inex-${bookName}`;
+    checkbox.value = bookName;
+    checkbox.checked = true; // Default to include all books
+
+    labelSpan.classList.add("custom-label");
+    labelSpan.textContent = bookName;
+
+    gameState.includedBooks.add(bookName); // Update set to reflect ^^^
+
+    const label = document.createElement('label');
+    label.setAttribute('for', `inex-${bookName}`);
+    label.textContent = bookName;
+
+    checkbox.addEventListener('change', () => {
+      if(checkbox.checked){
+        gameState.includedBooks.add(bookName);
+      } else {
+        gameState.includedBooks.delete(bookName);
+      }
+      console.log(`Included books:`, gameState.includedBooks);
+    });
+
+    wrapper.appendChild(checkbox);
+    wrapper.appendChild(labelSpan);
+    ELS.SET.DROPS.IESelect.appendChild(wrapper);
+  });
+   */
+  
 }
 
 export function updateStrikeBoxes(strikes){

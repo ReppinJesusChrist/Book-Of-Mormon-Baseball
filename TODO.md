@@ -40,6 +40,8 @@
 - [ ] **UI Improvements**
   - [ ] **General**
     - [ ] Adjust all elements to fit on a single, non-scrolling screen
+    - [ ] Custom Dropdowns
+      - [ ] Sync width between content and buttons
   - [ ] **Settings Screen**
     - [ ] Add multiple tabs for space management
     - [ ] Match styling of multi-check dropdown with other dropdowns
@@ -50,6 +52,7 @@
     - [ ] Add display button formatting
   - [ ] **Game Screen**
     - [ ] Set fixed size verse display with auto-scrolling as needed
+    - [ ] Diamond and Leaderboard side-by-side (at bottom of screen), not vertical
   - [ ] **Main Menu**
     - [ ] Center vertically (even after out-and-back)
     - [ ] Buttons all same size
@@ -59,16 +62,19 @@
   - [ ] **HTML**
     - [ ] Use the system I was using in ELS to name elements instead of sorting them afterwards in JS (E.G. 'go-btns-menu')???
   - [ ] **JS**
-    - [X] Add inGame variable to gameState to fix bug with double counting scores
-    - [X] Consolidate all main-menu buttons and all restart buttons using inGame
-    - [X] Add addAllEventListeners() function to clean up initiation code?
     - [ ] Run through the whole file and prayerfully record refactoring ideas and insights
   - [ ] **CSS**
+  - [ ] **Combo**
+    - [ ] Convert all native selects to custom .dropdowns
 
 
 - [ ] **Bugs and Features** 
   - [ ] **Bugs**
     - [ ] Styling of Home Page changes after leaving and returning
+    - [ ] Custom Dropdowns
+      - [ ] Make Custom book dropdown display name of selected book when choice is made (right now it always says "Book:")
+    - [ ] Custom Study Plans
+      - [ ] Fix ranges/distances to include entire BOM, not just chapters included in plan.
   - [ ] **Features**
     - [ ] Add nav-bar to header
     - [ ] Offer default difficulty options to make selection easy
