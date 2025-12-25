@@ -116,8 +116,11 @@ export const ELS = {
     },
     DROPS: {
       bookDropdown: document.getElementById('book-dropdown'),
+      bookSelectTrigger: document.getElementById('book-select-trigger'),
       bookSelect: document.getElementById('book-select'),
-      chapterSelect: document.getElementById('chapterSelect'),
+      chapterDropdown: document.getElementById('game-chapter-dropdown'),
+      chapterSelectTrigger: document.getElementById('game-chapter-select-trigger'),
+      chapterSelect: document.getElementById('game-chapter-select'),
     },
     diamond: document.getElementById('diamond'),
   },
@@ -155,7 +158,6 @@ export const ELS = {
   },
   vSelect: document.getElementById('settings-vselect-value'),
   
-  chapterSelect: document.getElementById('chapterSelect'),
   overlay: document.getElementById('game-over-overlay'),
   finalScore: document.getElementById('final-score'),
 }

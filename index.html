@@ -15,7 +15,7 @@
 <body>
     <header id="header-bar">
         <div class="header-left">
-            <div class="dropdown single-select">
+            <div class="dropdown single-select nav-dropdown">
                 <button id="nav-toggle" class="dropdown-trigger">☰</button>
                 <div id="nav-menu" class="dropdown-content">
                     <div class="nav-item custom-option main-menu-button" data-target="menu">Main Menu</div>
@@ -46,13 +46,15 @@
                     </div>
                     <div class="controls" id="guess-section">
                         <div class="dropdown single-select" id="book-dropdown">
-                            <button class="dropdown-trigger" id="book-select-trigger">Book:</button>
+                            <button class="dropdown-trigger" id="book-select-trigger">Select Book: </button>
                             <div class="dropdown-content" id="book-select"></div>
                         </div>
 
-                        <label for="chapterSelect">Chapter:</label>
-                        <select id="chapterSelect"></select>
-
+                        <div class="dropdown single-select narrow" id="game-chapter-dropdown">
+                            <button class="dropdown-trigger" id="game-chapter-select-trigger">Chap:</button>
+                            <div class="dropdown-content" id="game-chapter-select"></div>
+                        </div>
+                    
                         <button id="finalizeGuess" disabled="true">Guess</button>
                     </div>
 

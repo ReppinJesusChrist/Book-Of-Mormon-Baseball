@@ -55,7 +55,13 @@ select:hover {
     display : block;
     position: absolute;
     max-height: 35vh;
-    min-width: max-content;
+
+    box-sizing: border-box;
+
+    width: 100%;
+    min-width: 100%;
+    max-width: max-content;
+    
     margin-top: 4px;
     padding: 8px; 
 
@@ -67,7 +73,7 @@ select:hover {
     scrollbar-width: none;
 
     z-index: 10;
-    text-align: left;
+    text-align: center;
 
     opacity: 0;
     transform: scaleY(0);
@@ -75,6 +81,16 @@ select:hover {
     transition: 
         opacity 0.5s ease, 
         transform 0.5s ease;
+}
+
+.dropdown.narrow .dropdown-trigger{
+    min-width: var(--width-dropdown-narrow);
+    width: var(--width-dropdown-narrow);
+}
+
+.nav-dropdown .dropdown-content{
+    width: max-content;
+    min-width: max-content;
 }
 
 .dropdown-content::-webkit-scrollbar {

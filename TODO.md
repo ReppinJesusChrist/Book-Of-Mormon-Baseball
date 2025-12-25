@@ -29,10 +29,18 @@
   - [X]   Display high-scores (top 10 [X]; with times[X]) and most recent score in a table
   - [X] Flash text on screen (not an alert) when a strike is hit ("Strike 1!" etc.)
 
+- [ ] **Session Queue**
+  - [ ]  Finish migrating book-select
+  - [ ]  Push
 
-
-- [ ] **Quick**
-  - [ ] Functionify code from eventHandlers
+- [ ] **Major Projects**
+  - [ ] Mobile Formatting
+  - [ ] Database tracking
+  - [ ] Custom study plans debugging/polish
+  - [ ] Statistics/Analytics
+  - [ ] Achievements
+  - [ ] Better artwork
+  - [ ] Better gameplay loop (currency/vanities, progress over time, unlockable runners/themes)
 
 - [ ] **Styling**
   - [ ] Book of Mormon themed coloring (Maybe wait for Aunt Julie's feedback first)
@@ -52,7 +60,10 @@
     - [ ] Add display button formatting
   - [ ] **Game Screen**
     - [ ] Set fixed size verse display with auto-scrolling as needed
+    - [ ] Adjustable verse text-size slider
     - [ ] Diamond and Leaderboard side-by-side (at bottom of screen), not vertical
+    - [ ] Auto-reveal distance, reference requires button press. (remove distance button)
+
   - [ ] **Main Menu**
     - [ ] Center vertically (even after out-and-back)
     - [ ] Buttons all same size

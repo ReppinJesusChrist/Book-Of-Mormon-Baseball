@@ -97,23 +97,41 @@ export async function handleVSelectChange(){
 
 export function handleBookSelectChange(){
   const book = ELS.GAME.DROPS.bookDropdown.value;
+  if(!book) return;
+
+  const bookTrigger = ELS.GAME.DROPS.bookSelectTrigger;
+
+  const chapSelect = ELS.GAME.DROPS.chapterSelect;
 
   console.log("Book selected: ", book);
 
+  bookTrigger.innerHTML = book;
+  ELS.GAME.DROPS.chapterSelect.innerHTML = '';
 
-  ELS.chapterSelect.innerHTML = ''; // Clear previous options
     const chapters = Object.keys(
       gameState.scriptures[book]
     );
-    chapters.forEach(chapter => {
-      const option = document.createElement('option');
-      option.value = chapter;
-      option.textContent = chapter;
-      ELS.chapterSelect.appendChild(option);
-    });
 
-    // Enable submit button when both selections are made
-    ELS.GAME.BTNS.submit.disabled = !(ELS.GAME.DROPS.bookDropdown.value && ELS.chapterSelect.value);
+    chapters.forEach(chapter => {
+      const chapOption = document.createElement('div');
+      chapOption.classList.add('custom-option');
+      chapOption.textContent = chapter;
+      chapOption.dataset.value = chapter;
+      chapSelect.appendChild(chapOption);
+    }); 
+  // ELS.GAME.DROPS.chapterDropdown.value = "1";   
+}
+
+export function handleChapterSelectChange(){
+  const chapNumber = ELS.GAME.DROPS.chapterDropdown.value;
+  if(!chapNumber) return;
+
+  const chapDropTrigger = ELS.GAME.DROPS.chapterSelectTrigger;
+
+  chapDropTrigger.innerHTML = chapNumber;
+
+  // Enable submit button when both selections are made
+  ELS.GAME.BTNS.submit.disabled = !(ELS.GAME.DROPS.bookDropdown.value && ELS.GAME.DROPS.chapterDropdown.value);
 }
 
 export function hideGOOverlay(){

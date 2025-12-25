@@ -19,6 +19,7 @@ const CLICK_HANDLERS = {
 const CHANGE_HANDLERS = {
   'settings-vselect-value': Handlers.handleVSelectChange,
   'book-dropdown': Handlers.handleBookSelectChange,
+  'game-chapter-dropdown': Handlers.handleChapterSelectChange,
   'threshold-value' : Handlers.handleThreshValueChange,
 }
 

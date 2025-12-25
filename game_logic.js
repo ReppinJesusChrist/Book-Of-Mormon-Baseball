@@ -48,6 +48,16 @@ export function startRound(){
   ELS.GAME.BTNS.newRound.disabled = true;
   ELS.GAME.BTNS.revealDistance.disabled = true;
   ELS.GAME.BTNS.revealReference.disabled = true;
+
+  ELS.GAME.DROPS.bookDropdown.value = "";
+  ELS.GAME.DROPS.chapterDropdown.value = "";
+
+  ELS.GAME.DROPS.bookSelectTrigger.innerHTML = "Select Book";
+  ELS.GAME.DROPS.chapterSelectTrigger.innerHTML = "Chapter";
+}
+
+function resetElsBetweenRounds(){
+
 }
 
 export function startGame(){
@@ -179,7 +189,7 @@ function handleTimeUp() {
 
 export function submitGuess() {
     const bookGuess = ELS.GAME.DROPS.bookDropdown.value;
-    const chapterGuess = ELS.chapterSelect.value;
+    const chapterGuess = ELS.GAME.DROPS.chapterDropdown.value;
 
     const resultEl = ELS.GAME.TXT.result;
     ELS.GAME.BTNS.newRound.disabled = false;

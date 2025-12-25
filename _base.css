@@ -49,6 +49,8 @@
     --footer-height: 20px;
 
     /*  Element Sizes - Full Size  */
+    --width-dropdopwn-narrow: 70px;
+
     --strike-box-size: 80px;
     --size-base: 50px;
     --size-runner: 25px;

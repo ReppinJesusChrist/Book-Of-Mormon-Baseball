@@ -125,44 +125,7 @@ export function populateGuessOptions() {
     bookSelectNew.appendChild(bookOption);
     //<div class="nav-item custom-option main-menu-button" data-target="menu">Main Menu</div>
 
-  });
-  /**
-  
-  Object.keys(gameState.scriptures).forEach(bookName => {
-    const wrapper = document.createElement('label');
-    wrapper.classList.add("custom-option");
-
-    const checkbox = document.createElement('input');
-    const labelSpan = document.createElement('span');
-    checkbox.type = 'checkbox';
-    checkbox.id = `inex-${bookName}`;
-    checkbox.value = bookName;
-    checkbox.checked = true; // Default to include all books
-
-    labelSpan.classList.add("custom-label");
-    labelSpan.textContent = bookName;
-
-    gameState.includedBooks.add(bookName); // Update set to reflect ^^^
-
-    const label = document.createElement('label');
-    label.setAttribute('for', `inex-${bookName}`);
-    label.textContent = bookName;
-
-    checkbox.addEventListener('change', () => {
-      if(checkbox.checked){
-        gameState.includedBooks.add(bookName);
-      } else {
-        gameState.includedBooks.delete(bookName);
-      }
-      console.log(`Included books:`, gameState.includedBooks);
-    });
-
-    wrapper.appendChild(checkbox);
-    wrapper.appendChild(labelSpan);
-    ELS.SET.DROPS.IESelect.appendChild(wrapper);
-  });
-   */
-  
+  });  
 }
 
 export function updateStrikeBoxes(strikes){
@@ -197,7 +160,6 @@ export function showVerses() {
   const distanceEl = ELS.GAME.TXT.distReveal;
 
   ELS.GAME.DROPS.bookSelect.value = '';
-  ELS.GAME.DROPS.chapterSelect.innerHTML = '';
   resultEl.textContent = '';
   distanceEl.textContent = '';
 
