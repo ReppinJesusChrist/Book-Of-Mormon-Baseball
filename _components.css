@@ -110,7 +110,7 @@ select:hover {
     display: flex;
     align-items: center;
     gap: 8px;
-    padding:  var(--height-button) 4px;
+    padding:  calc(var(--height-button) * 0.6) 4px;
     cursor: pointer;
     border-radius: 4px;
     flex-direction: row;
