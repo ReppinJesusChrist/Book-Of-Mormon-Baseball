@@ -10,6 +10,10 @@
         padding: 10px;
     }
 
+    #verse-display-container {
+        height: var(--height-verse-box-mob);
+    }
+
     #diamond {
         width: 250px;
         height: 250px;
@@ -25,9 +29,11 @@
         height: 14px;
     }
 
-    button{
+    button, 
+    .dropdown button
+    {
         font-size: 1.1rem;
-        padding: 12px 18px;
+        padding: var(--height-button) clamp(var(--width-button-mob), 3vw, var(--width-button));
     }
 
     #header-bar {
@@ -38,4 +44,12 @@
         width: var(--size-strbox-mob);
         height: var(--size-strbox-mob);
     }
+
+    #game-main-menu-btn {
+        display: none;
+    }
+
+    #left-panel .controls {
+    margin: 10px 0px;
+}
 }

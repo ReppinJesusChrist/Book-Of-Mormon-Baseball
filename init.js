@@ -106,6 +106,7 @@ function attachCustomDropdown(toggleEl, dropdownEl){
       })
 
     dropdownEl.classList.toggle("open");
+    dropdownEl.scrollTop = 0;
   });
 
   dropdownEl.addEventListener("click", (e) => {

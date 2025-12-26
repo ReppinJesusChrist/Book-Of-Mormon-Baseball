@@ -27,7 +27,7 @@ select:hover {
 
 /*  Makes it look like a dropdown */
 .dropdown button{
-    padding: 12px 18px;
+    padding: var(--height-button) var(--width-button);
     border: none;
     cursor: pointer;
     background-color: var(--color-dropdown-base);
@@ -54,7 +54,10 @@ select:hover {
 .dropdown-content {
     display : block;
     position: absolute;
-    max-height: 35vh;
+    max-height: var(--height-max-dropdown);
+
+    font-size: var(--font-size-med);
+    font-weight: bold;
 
     box-sizing: border-box;
 
@@ -107,7 +110,7 @@ select:hover {
     display: flex;
     align-items: center;
     gap: 8px;
-    padding: 6px 4px;
+    padding:  var(--height-button) 4px;
     cursor: pointer;
     border-radius: 4px;
     flex-direction: row;
@@ -157,7 +160,9 @@ select:hover {
 }
 
 #nav-toggle {
-    min-width: 50px;
+    min-width: var(--header-height);
+    min-height: var(--header-height);
+    padding:0px;
 }
 
 .nav-item {
@@ -170,6 +175,15 @@ select:hover {
 /*      =======================================     */
 /*      2. SCOREBOARD, LEADERBOARD & GAME ELEMENTS  */
 /*      =======================================     */
+
+/* Text Box */
+#verses p {
+    margin-block: 0.5em;
+}
+
+#verses p:first-child {
+    margin-block-start: 0;
+}
 
 #leaderboard-table {
     width: 100%;
@@ -227,10 +241,10 @@ select:hover {
 #diamond {
     position: relative;
     top: 0;
-    width: 80vw;
-    height: 80vw;
-    max-width: 400px;
-    max-height: 400px;
+    width: 40vw;
+    height: 40vw;
+    max-width: 600px;
+    max-height: 600px;
     margin-top: 0;
     background: #6fd08cff;;
 }

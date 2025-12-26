@@ -95,7 +95,7 @@ export const ELS = {
 
     TXT: {
       verseBox: document.getElementById('verses'),
-      result: document.getElementById('result'),
+      result: document.getElementById('game-result-reveal-span'),
       refReveal: document.getElementById('game-ref-reveal-span'),
     },
     SB: {   // Scoreboard

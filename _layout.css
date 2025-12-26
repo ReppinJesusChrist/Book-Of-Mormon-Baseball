@@ -2,7 +2,7 @@
 html, body {
     height: 100%;
     overflow: hidden;
-    min-width: 520px;
+    min-width: 500px;
 }
 
 body {
@@ -67,7 +67,7 @@ body {
 
 #header-bar .header-left{
     position: absolute;
-    left: 16px;
+    left: 0px;
     display: flex;
     align-items: center;
     flex: 0 1 auto;
@@ -113,13 +113,33 @@ body {
     align-items: center;
 }
 
+#verse-display-container {
+    height: var(--height-verse-container);
+    max-height: var(--height-verse-container);
+    min-width: 100%;
+    overflow-y: auto;
+    overflow-x: hidden;
+
+    padding: 7px;
+    box-sizing: border-box;
+
+    border: 2px solid black;
+    border-radius: var(--border-radius-med);
+
+    background: var(--color-primary-gold);
+}
+
+#verses {
+    font-size: var(--font-size-med);
+}
+
 /*  3. TIMER AND CONTROLS (Positioning) */
 #timer-container {
     min-height: 20px;
     width: 100%;
-    height: 20px;
+    height: 30px;
     background: var(--color-bg-light);
-    border: 1px solid #000000;
+    border: 2px solid #000000;
     margin: 10px auto;
     position: relative;
     overflow: hidden;
@@ -144,7 +164,7 @@ body {
     flex-wrap: wrap;
     justify-content: center;
     gap: 10px;
-    margin: 20px 0px;
+    margin: 10px 0px;
 }
 
 #lb-container {

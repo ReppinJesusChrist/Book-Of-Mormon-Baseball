@@ -63,6 +63,8 @@
     - [ ] Adjustable verse text-size slider
     - [ ] Diamond and Leaderboard side-by-side (at bottom of screen), not vertical
     - [ ] Auto-reveal distance, reference requires button press. (remove distance button)
+    - [ ] auto scroll to top when verses load
+    - [ ] Add bottom fade to indicate scrollability
 
   - [ ] **Main Menu**
     - [ ] Center vertically (even after out-and-back)

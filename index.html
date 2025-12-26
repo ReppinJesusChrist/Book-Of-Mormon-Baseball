@@ -38,9 +38,9 @@
         <div id="game-screen" style="display:none;">
             <div id="container">
                 <div id="left-panel">
-                    <div id="instructions"></div>
-                    <div id="verses"></div>
-
+                    <div id="verse-display-container">
+                        <div id="verses"></div>
+                    </div>
                     <div id="timer-container">
                         <div id="timer-bar"></div>    
                     </div>
@@ -58,34 +58,35 @@
                         <button id="finalizeGuess" disabled="true">Guess</button>
                     </div>
 
-                    <div id="result" aria-live="polite"></div>
-                    <div id="reference" aria-live="polite">Reference: <span id="game-ref-reveal-span"></span> </div>
+                    <!--Formatting uses span now even though it's unused, so I can add labels to each later-->
+                    <div id="result" aria-live="polite"><span id="game-result-reveal-span"></span></div>
+                    <div id="reference" aria-live="polite"><span id="game-ref-reveal-span"></span> </div>
 
                     <div class="controls">
                         <button id="revealReference" disabled>Reveal Reference</button>
                         <button id="newRound" disabled>New Round</button>
                     </div>
 
-                    <button class="restart-button" id="restart-button">Restart Game</button>
-                    <button class="main-menu-button">Main Menu</button>
+                    <button class="restart-button hidden" id="restart-button">Restart Game</button>
+                    <button class="main-menu-button" id="game-main-menu-btn">Main Menu</button>
                 </div>
             <div id="right-panel">
-            <div id="diamond">
-                <div class="base" id="home"></div>
-                <div class="base" id="first"></div>
-                <div class="base" id="second"></div>
-                <div class="base" id="third"></div>
-            </div>
-            <div id="strike-boxes">
-                <div class="strike-box" id="strike-box-1"></div>
-                <div class="strike-box" id="strike-box-2"></div>
-                <div class="strike-box" id="strike-box-3"></div>
-            </div>
-            <div id = "scoreboard">
-                <h2 id="roundDisplay">Round: <span id="round">__</span></h2>
-                <h2 id="scoreDisplay">Score: <span id="score">__</span></h2>
-                <div id="strikes-display">Strikes: <span id="strikes">__</span></div>
-            </div>
+                <div id="diamond">
+                    <div class="base" id="home"></div>
+                    <div class="base" id="first"></div>
+                    <div class="base" id="second"></div>
+                    <div class="base" id="third"></div>
+                </div>
+                <div id = "scoreboard">
+                    <div id="strike-boxes">
+                        <div class="strike-box" id="strike-box-1"></div>
+                        <div class="strike-box" id="strike-box-2"></div>
+                        <div class="strike-box" id="strike-box-3"></div>
+                    </div>
+                    <h2 id="roundDisplay">Round: <span id="round">__</span></h2>
+                    <h2 id="scoreDisplay">Score: <span id="score">__</span></h2>
+                    <div id="strikes-display">Strikes: <span id="strikes">__</span></div>
+                </div>
             </div>
         </div>
         </div>

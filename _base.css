@@ -44,18 +44,31 @@
     --color-font-primary: white;
 
     --border-radius-lg: 10px;
+    --border-radius-med: 6px;
 
     --header-height: 70px;
     --footer-height: 20px;
 
-    /*  Element Sizes - Full Size  */
+    /* Layout sizes - Full Monitor*/
+    --height-verse-container: 35vh;
+    --height-max-dropdown: 30vh;
+
+    /*  Element Sizes - Small/Mobile  */
+    --height-verse-box-mob: 30vh;
+
+    /*  Element Sizes - Full Monitor  */
     --width-dropdopwn-narrow: 70px;
+
+    --width-button: 50px;
+    --height-button: 25px;
 
     --strike-box-size: 80px;
     --size-base: 50px;
     --size-runner: 25px;
 
     /*  Element Sizes - Small/Mobile  */
+    --width-button-mob: 28px;
+
     --size-strbox-mob: 30px;
     --size-base-mob: 40px;
     --size-runner-mob: 25px;
@@ -136,7 +149,7 @@ select,
 }
 
 button {
-    padding: 14px 22px;
+    padding: var(--height-button) var(--width-button);
     font-size: 1.2rem;
     font-weight: 500;
     background-color: var(--color-primary-blue);
