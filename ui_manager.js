@@ -162,6 +162,7 @@ export function showVerses() {
   container.innerHTML = ''; // Clear previous verses
   referenceEl.textContent = ''; // Clear previous reference
   refRevealBtn.textContent = 'Reveal Reference';
+  container.scrollTop = 0;
 
   gameState.currGuessDistance = Infinity;
 

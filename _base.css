@@ -68,6 +68,7 @@
 
     /*  Element Sizes - Small/Mobile  */
     --width-button-mob: 28px;
+    --height-button-mob: 10px;
 
     --size-strbox-mob: 30px;
     --size-base-mob: 7dvw;

@@ -32,6 +32,14 @@
         max-height: fit-content;
     }
 
+    .controls {
+        gap: 3px;
+    }
+
+    #timer-container {
+        margin: 3px;
+    }
+
     #scoreboard {
         min-width: 0;
     }
@@ -57,7 +65,8 @@
     .dropdown button
     {
         font-size: 1.1rem;
-        padding: var(--height-button) clamp(var(--width-button-mob), 3vw, var(--width-button));
+        padding: clamp(var(--height-button-mob), 2.4dvh, var(--height-button)) clamp(var(--width-button-mob), 3vw, var(--width-button));
+        margin: 3px;
     }
 
     #header-bar {
@@ -74,6 +83,6 @@
     }
 
     #left-panel .controls {
-    margin: 10px 0px;
-}
+    margin: 3px 0px;
+    }
 }

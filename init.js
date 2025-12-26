@@ -105,8 +105,12 @@ function attachCustomDropdown(toggleEl, dropdownEl){
         if(ddown !== dropdownEl) ddown.classList.remove("open");
       })
 
-    dropdownEl.classList.toggle("open");
-    dropdownEl.scrollTop = 0;
+    const options = dropdownEl.querySelector(".dropdown-content")
+    const isOpen = dropdownEl.classList.toggle("open");
+
+    if(isOpen && options){
+      options.scrollTop = 0;
+    } 
   });
 
   dropdownEl.addEventListener("click", (e) => {
