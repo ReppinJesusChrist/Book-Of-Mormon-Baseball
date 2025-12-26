@@ -101,7 +101,6 @@ export const ELS = {
     SB: {   // Scoreboard
       score: document.getElementById("score"),
       round: document.getElementById("round"),
-      strikes: document.getElementById("strikes"),
     },
     strikeEffect: document.getElementById('strike-effect-display'),
     strikeEffectText: document.querySelector('#strike-effect-display .strike-text'),

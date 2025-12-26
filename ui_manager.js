@@ -138,7 +138,6 @@ export function updateStrikeBoxes(strikes){
 export function updateScoreboard(){
     ELS.GAME.SB.score.textContent = `${gameState.score}`;
     ELS.GAME.SB.round.textContent = `${gameState.round}`;
-    ELS.GAME.SB.strikes.textContent = `${gameState.strikes}`;
     updateStrikeBoxes(gameState.strikes);
 }
 
