@@ -46,7 +46,6 @@ export function startRound(){
   updateScoreboard();
   startTimer(handleTimeUp, TIMER_DURATIONS[gameState.settings.difficulty]);
   ELS.GAME.BTNS.newRound.disabled = true;
-  ELS.GAME.BTNS.revealDistance.disabled = true;
   ELS.GAME.BTNS.revealReference.disabled = true;
 
   ELS.GAME.DROPS.bookDropdown.value = "";
