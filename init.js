@@ -7,7 +7,6 @@ import {populateIncludeExcludeOptions, populateGuessOptions, initLBTableRows,
 import {setCustomDropdownValue} from "./helper_functions.js";
 
 const CLICK_HANDLERS = {
-  'revealDistance': Handlers.handleRevealDistance,
   'revealReference': Handlers.handleRevealReference,
   'newRound': Handlers.handleNewRound,
   'finalizeGuess': Handlers.handleFinalizeGuess,

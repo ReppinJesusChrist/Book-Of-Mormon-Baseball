@@ -96,8 +96,7 @@ export const ELS = {
     TXT: {
       verseBox: document.getElementById('verses'),
       result: document.getElementById('result'),
-      distReveal: document.getElementById('distance'),
-      refReveal: document.getElementById('reference'),
+      refReveal: document.getElementById('game-ref-reveal-span'),
     },
     SB: {   // Scoreboard
       score: document.getElementById("score"),
@@ -106,8 +105,6 @@ export const ELS = {
     },
     strikeEffect: document.getElementById('strike-effect-display'),
     strikeEffectText: document.querySelector('#strike-effect-display .strike-text'),
-    distanceReveal: document.getElementById('distance'),
-    referenceReveal: document.getElementById('reference'),
     BTNS: {
       revealDistance: document.getElementById('revealDistance'),
       revealReference: document.getElementById('revealReference'),

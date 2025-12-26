@@ -154,14 +154,11 @@ export function showVerses() {
   const container = ELS.GAME.TXT.verseBox;
   const referenceEl = ELS.GAME.TXT.refReveal;
   const refRevealBtn = ELS.GAME.BTNS.revealReference;
-  const distRevealBtn = ELS.GAME.BTNS.revealDistance;
 
   const resultEl = ELS.GAME.TXT.result;
-  const distanceEl = ELS.GAME.TXT.distReveal;
 
   ELS.GAME.DROPS.bookSelect.value = '';
   resultEl.textContent = '';
-  distanceEl.textContent = '';
 
   container.innerHTML = ''; // Clear previous verses
   referenceEl.textContent = ''; // Clear previous reference

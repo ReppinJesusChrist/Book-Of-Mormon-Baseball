@@ -18,19 +18,8 @@ export function handleThreshValueChange(){
   gameState.settings.difficulty = difEl.value;
 }
 
-export function handleRevealDistance(){
-  const refEl = ELS.GAME.distanceReveal;
-
-  ELS.GAME.BTNS.revealReference.disabled = false;
-  // SIMPLE REVEAL: just show once
-  if (!refEl.textContent && gameState.currGuessDistance != Infinity) {
-    if(gameState.currGuessDistance === 0) refEl.textContent = `(Exactly Correct! Great Job!)`;
-    refEl.textContent = `(Off by ${gameState.currGuessDistance} chapters)`;
-  }
-}
-
 export function handleRevealReference(){
-  const refEl = ELS.GAME.referenceReveal;
+  const refEl = ELS.GAME.TXT.refReveal;
   //refEl.hidden = false;
   
   if (!refEl.textContent && gameState.currentSelection) {

@@ -193,7 +193,7 @@ export function submitGuess() {
 
     const resultEl = ELS.GAME.TXT.result;
     ELS.GAME.BTNS.newRound.disabled = false;
-    ELS.GAME.BTNS.revealDistance.disabled = false;
+      ELS.GAME.BTNS.revealReference.disabled = false;
 
     if (!gameState.currentSelection) {
       resultEl.textContent = "No verses loaded yet.";
@@ -218,15 +218,16 @@ export function submitGuess() {
                    distance <= singleThreshold ? 1 : 0);
 
     if (distance <= homeRunThreshold){
-      resultEl.textContent = `HOME RUN!!! (Within ${homeRunThreshold} chapters).`;
+      if(distance === 0) resultEl.textContent = 'HOME RUN! Exactly Correct; Fantastic Job!!!';
+      else resultEl.textContent = `HOME RUN!!! (Only off by ${distance} chapters).`;
     } else if(distance <= tripleThreshold){
-      resultEl.textContent = `TRIPLE! (Within ${tripleThreshold} chapters).`;
+      resultEl.textContent = `TRIPLE!! (Off by ${distance} chapters).`;
     } else if(distance <= doubleThreshold){
-      resultEl.textContent = `Double! (Within ${doubleThreshold} chapters). `;
+      resultEl.textContent = `Double! (Off by ${distance} chapters). `;
     } else if(distance <= singleThreshold){
-      resultEl.textContent = `Single! (Within ${singleThreshold} chapters). `;
+      resultEl.textContent = `Single (Off by ${distance} chapters). `;
     } else {
-      resultEl.textContent = `STRIKE! (Off by at least ${singleThreshold + 1} chapters). `;
+      resultEl.textContent = `STRIKE! (Off by ${distance} chapters). `;
       addStrike();
     }
 
