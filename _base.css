@@ -63,14 +63,14 @@
     --height-button: 25px;
 
     --strike-box-size: 80px;
-    --size-base: 50px;
+    --size-base: 7vw;
     --size-runner: 25px;
 
     /*  Element Sizes - Small/Mobile  */
     --width-button-mob: 28px;
 
     --size-strbox-mob: 30px;
-    --size-base-mob: 40px;
+    --size-base-mob: 7dvw;
     --size-runner-mob: 25px;
 }
 

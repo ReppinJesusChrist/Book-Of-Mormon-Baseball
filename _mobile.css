@@ -1,4 +1,15 @@
-@media (max-width: 700px) {
+@media (max-width: 700px) {    
+    html, body {
+        min-width: 0px;
+        overflow: auto;
+    }
+
+    #main-content {
+        height: auto;
+        min-height: calc(100dvh - var(--header-height) -
+            var(--footer-height));
+    }
+    
     #container {
         flex-direction: column;
     }
@@ -7,6 +18,7 @@
     #right-panel {
         width: 100%;
         height: auto;
+        min-height: 0;
         padding: 10px;
     }
 
@@ -14,6 +26,14 @@
         flex-direction: row;
         justify-content: space-evenly;
         align-items: center;
+        gap: 8px;
+
+        min-width: 0;
+        max-height: fit-content;
+    }
+
+    #scoreboard {
+        min-width: 0;
     }
 
     #verse-display-container {
@@ -21,13 +41,11 @@
     }
 
     #diamond {
-        width: 250px;
-        height: 250px;
+        width: 40dvw;
     }
 
     .base {
-        width: 40px;
-        height: 40px;
+        width: 7dvw;
     }
 
     .runner {

@@ -1,8 +1,8 @@
 /* 1. MAIN STRUCTURE */
 html, body {
+    min-width: 500px;
     height: 100%;
     overflow: hidden;
-    min-width: 500px;
 }
 
 body {
@@ -111,6 +111,11 @@ body {
     flex-direction: column;
     justify-content: flex-start;
     align-items: center;
+}
+
+#scoreboard {
+    font-size: clamp(0.8rem, 5vw, 4rem);
+    font-weight: bold;
 }
 
 #verse-display-container {

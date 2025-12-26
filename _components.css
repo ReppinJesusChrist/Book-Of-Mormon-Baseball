@@ -241,8 +241,8 @@ select:hover {
 #diamond {
     position: relative;
     top: 0;
-    width: 40vw;
-    height: 40vw;
+    width: clamp(100px, 40vw, 450px);
+    aspect-ratio: 1 / 1;
     max-width: 600px;
     max-height: 600px;
     margin-top: 0;
@@ -251,8 +251,9 @@ select:hover {
 
 /* Baseball base elements (first, second, third, home) */
 .base {
-    width: var(--size-base);
-    height: var(--size-base);
+    width: clamp(20px, var(--size-base), 75px);
+    aspect-ratio: 1 / 1;
+
     background: #ffcf88;
     border: 2px solid #000;
     position: absolute;
