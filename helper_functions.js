@@ -153,8 +153,6 @@ export function setCustomDropdownValue(dropdown, value){
 
   dropdown._settingValue = true;
 
-  console.log(`dropdown value set to: ${newValue}`);
-
   dropdown.dataset.value = newValue;
 
   dropdown.dispatchEvent(
