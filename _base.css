@@ -54,7 +54,7 @@
     --height-max-dropdown: 30vh;
 
     /*  Element Sizes - Small/Mobile  */
-    --height-verse-box-mob: 30vh;
+    --height-verse-box-mob: 30dvh;
 
     /*  Element Sizes - Full Monitor  */
     --width-dropdopwn-narrow: 70px;
@@ -68,6 +68,7 @@
 
     /*  Element Sizes - Small/Mobile  */
     --width-button-mob: 28px;
+    --height-button-mob: 10px;
 
     --size-strbox-mob: 30px;
     --size-base-mob: 7dvw;

@@ -241,7 +241,7 @@ select:hover {
 #diamond {
     position: relative;
     top: 0;
-    width: clamp(100px, 40vw, 450px);
+    width: clamp(100px, 40vw, 400px);
     aspect-ratio: 1 / 1;
     max-width: 600px;
     max-height: 600px;

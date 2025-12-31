@@ -51,13 +51,10 @@
                             <button class="dropdown-trigger" id="book-select-trigger">Select Book: </button>
                             <div class="dropdown-content" id="book-select"></div>
                         </div>
-
                         <div class="dropdown single-select narrow" id="game-chapter-dropdown">
                             <button class="dropdown-trigger" id="game-chapter-select-trigger">Chap:</button>
                             <div class="dropdown-content" id="game-chapter-select"></div>
                         </div>
-                    
-                        <button id="finalizeGuess" disabled="true">Guess</button>
                     </div>
 
                     <!--Formatting uses span now even though it's unused, so I can add labels to each later-->
@@ -65,21 +62,23 @@
                     <div id="reference" aria-live="polite"><span id="game-ref-reveal-span"></span> </div>
 
                     <div class="controls">
-                        <button id="revealReference" disabled>Reveal Reference</button>
+                        <div id="submit-reveal-button-slot">
+                            <button id="finalizeGuess" disabled="true">Guess</button>
+                            <button id="revealReference" disabled>Reveal Reference</button>
+                        </div>
                         <button id="newRound" disabled>New Round</button>
                     </div>
 
                     <button class="restart-button hidden" id="restart-button">Restart Game</button>
-                    <button class="main-menu-button" id="game-main-menu-btn">Main Menu</button>
                 </div>
-            <div id="right-panel">
-                <div id="diamond">
-                    <div class="base" id="home"></div>
-                    <div class="base" id="first"></div>
-                    <div class="base" id="second"></div>
-                    <div class="base" id="third"></div>
-                </div>
-                <div id = "scoreboard">
+                <div id="right-panel">
+                    <div id="diamond">
+                        <div class="base" id="home"></div>
+                        <div class="base" id="first"></div>
+                        <div class="base" id="second"></div>
+                        <div class="base" id="third"></div>
+                    </div>
+                    <div id = "scoreboard">
                     <div id="strike-boxes">
                         <div class="strike-box" id="strike-box-1"></div>
                         <div class="strike-box" id="strike-box-2"></div>
@@ -87,10 +86,9 @@
                     </div>
                     <div id="roundDisplay">Round: <span id="round">__</span></div>
                     <div id="scoreDisplay">Score: <span id="score">__</span></div>
-                    <div id="strikes-display">Strikes: <span id="strikes">__</span></div>
+                </div>
                 </div>
             </div>
-        </div>
         </div>
         <div id="game-over-overlay" class="hidden">
             <div class="overlay-content">

@@ -138,7 +138,6 @@ export function updateStrikeBoxes(strikes){
 export function updateScoreboard(){
     ELS.GAME.SB.score.textContent = `${gameState.score}`;
     ELS.GAME.SB.round.textContent = `${gameState.round}`;
-    ELS.GAME.SB.strikes.textContent = `${gameState.strikes}`;
     updateStrikeBoxes(gameState.strikes);
 }
 
@@ -163,6 +162,7 @@ export function showVerses() {
   container.innerHTML = ''; // Clear previous verses
   referenceEl.textContent = ''; // Clear previous reference
   refRevealBtn.textContent = 'Reveal Reference';
+  container.scrollTop = 0;
 
   gameState.currGuessDistance = Infinity;
 
