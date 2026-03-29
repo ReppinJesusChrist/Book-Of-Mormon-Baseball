@@ -24,20 +24,26 @@
                     <div class="nav-item custom-option settings-button" data-target="settings">Settings</div>
                     <div class="nav-item custom-option lb-button" data-target="leaderboard">Leaderboard</div>
                     <div class="nav-item custom-option" data-target="statistics">Statistics</div>
+                    <div class="nav-item custom-option achievements-page-button" data-target="achievements">Achievements</div>
+                    <div class="nav-item custom-option store-page-button" data-target="store">BomBucks Store</div>
                 </div>
             </div>
         </div>
-
         <div id="header-title" class="main-menu-button">Book of Mormon Baseball!!!</div>
+        <div class = "header-right">
+            <div id="BBDisplay">BomBucks: <span id="bomBucksValue"></span></div>
+        </div>
     </header>
     <div id="main-content">
-        <div id="menu-screen">
-        <h1>Welcome to Book of Mormon Baseball!</h1>
-        <button class="start-button" id="start-button">Start Game</button>
-        <button id="settings-button" class="settings-button">Settings</button>
-        <button id="leaderboard-button" class="lb-button">Leaderboard</button>
+        <div class="screen" id="menu-screen">
+            <h1>Welcome to Book of Mormon Baseball!</h1>
+            <button class="start-button" id="start-button">Start Game</button>
+            <button id="settings-button" class="settings-button">Settings</button>
+            <button id="leaderboard-button" class="lb-button">Leaderboard</button>
+            <button class="store-page-button" id="main-menu-store-button">BomBucks Store **NOT YET IMPLEMENTED**</button>
+            <button class="achievements-page-button" id="main-menu-achievement-button">Achievements **NOT YET IMPLEMENTED**</button>
         </div>
-        <div id="game-screen" style="display:none;">
+        <div class="screen" id="game-screen" style="display:none;">
             <div id="container">
                 <div id="left-panel">
                     <div id="verse-display-container">
@@ -49,7 +55,10 @@
                     <div class="controls" id="guess-section">
                         <div class="dropdown single-select" id="book-dropdown">
                             <button class="dropdown-trigger" id="book-select-trigger">Select Book: </button>
-                            <div class="dropdown-content" id="book-select"></div>
+                            <div class="dropdown-content" id="book-select">
+                                <div class="column left"></div>
+                                <div class="column right"></div>
+                            </div>
                         </div>
                         <div class="dropdown single-select narrow" id="game-chapter-dropdown">
                             <button class="dropdown-trigger" id="game-chapter-select-trigger">Chap:</button>
@@ -90,20 +99,33 @@
                 </div>
             </div>
         </div>
-        <div id="game-over-overlay" class="hidden">
+        <div class="overlay" id="game-over-overlay" class="hidden">
             <div class="overlay-content">
             <h2>Game Over</h2>
             <p>Your final score is: <span id="final-score">__</span></p>
+            <p>You earned: <span id="go-currency-earned-display"></span> BOM-bucks.</p>
             <button class="start-button GO-button" id="go-btns-tryagain">Play Again?</button>
             <button class="main-menu-button GO-button" id="game-over-menu-btn">Back to Main Menu</button>
             <button class="GO-button" id="hide-overlay">Back to Game Screen</button>
             </div>
         </div>
-        <div id="strike-effect-display" aria-hidden="true">
+        <div class="overlay" id="strike-effect-display" aria-hidden="true">
             <span class="strike-text"></span>
         </div>
-        <div id="settings-screen" style="display:none;">
+        <div class="screen" id="settings-screen" style="display:none;">
             <h2>Settings</h2>
+            <label for="volume-dropdown-label">Select Volume:</label>
+            <div class="dropdown single-select">
+                <button type="button" class="dropdown-trigger">Select Volume:</button>
+                <div id="settings-volume-dropdown-values" class="dropdown-content">
+                    <div class="custom-option" value="ot">Old Testament</div>
+                    <div class="custom-option" value="nt">New Testament</div>
+                    <div class="custom-option" value="bofm">Book of Mormon</div>
+                    <div class="custom-option" value="dc">Doctrine & Covenants</div>
+                    <div class="custom-option" value="gc">General Conference</div>
+                    <div class="custom-option" value="custom">Custom Study Plan</div>
+                </div>
+            </div>
             <div id="settings-book-volume-selection">
                 <label for="volume-select-dropdown-label">Select Volume:</label>
                 <select id="settings-vselect-value">
@@ -123,40 +145,34 @@
                 <button id="check-all-inex">Select All</button>
                 <button id="uncheck-all-inex">Deselect All</button>
             </div>
-            <!--<div id="difficulty-selection">
-                <label for="difficulty-dropdown-label">Select Difficulty:</label>
-                <select id="difficulty-value">
-                    <option value="unlimited">No Time Limit</option>
-                    <option value="leisurely">Leisurely (3mins)</option>
-                    <option value="relaxed">Relaxed (1min)</option>
-                    <option value="easy" selected>Easy (30s)</option>
-                    <option value="medium">Medium (20s)</option>
-                    <option value="hard">Hard (10s)</option>
-                </select>
-            </div>-->
             <div id="threshold-selection">
+                <div class="tutorial" id="threshold-label-explanation">((Single, Double, Triple, Homerun) represent Max guess distance for that difficulty)</div>
                 <label for="threshold-dropdown-label">Select Difficulty:</label>
                 <select id="threshold-value">
-                    <option value="easiest">Hit the side of Noah's ark (Single: 250 chapters, Double: 100 chapters, Triple: 50 chapters, Home Run: 25 chapters)</option>
-                    <option value="easier">Hit the side of a barn (Single: 100 chapters, Double: 50 chapters, Triple: 25 chapters, Home Run: 12 chapters)</option>
-                    <option value="easy">Love thy neighbor (Single: 50 chapters, Double: 25 chapters, Triple: 12 chapters, Home Run: 7 chapters)</option>
-                    <option value="average">Follow the star (Single: 25 chapters, Double: 12 chapters, Triple: 7 chapters, Home Run: 4 chapters)</option>
-                    <option value="hard" selected>Enter at the gate (Single: 12 chapters, Double: 7 chapters, Triple: 4 chapters, Home Run: 2 chapters)</option>
-                    <option value="harder">Hold the iron rod (Single: 7 chapters, Double: 4 chapters, Triple: 2 chapters, Home Run: 1 chapters)</option>
-                    <option value="hardest">Find the piece of silver (Single: 4 chapters, Double: 2 chapters, Triple: 1 chapter, Home Run: Dead-on)</option>
+                    <option value="easiest">Hit the side of Noah's ark (250 chapters, 100 chapters, 50 chapters, 25 chapters)</option>
+                    <option value="easier">Hit the side of a barn (100 chapters, 50 chapters, 25 chapters, 12 chapters)</option>
+                    <option value="easy">Love thy neighbor (50 chapters, 25 chapters, 12 chapters, 7 chapters)</option>
+                    <option value="average">Follow the star (25 chapters, 12 chapters, 7 chapters, 3 chapters)</option>
+                    <option value="hard" selected>Enter at the gate (12 chapters, 7 chapters, 3 chapters, 1 chapter)</option>
+                    <option value="harder">Hold the iron rod (7 chapters, 3 chapters, 1 chapter, Exact Match)</option>
+                    <option value="hardest">Find the piece of silver (3 chapters, 1 chapter, Exact Match, N/A)</option>
+                    <option value="bePerfect">Be Ye Therefore Perfect **WARNING, VERY HARD** (1 chapter, Exact Match, N/A, N/A)</option>
                 </select>
             </div>
             <button class="main-menu-button">Back to Menu</button>
         </div>
-        <div id="leaderboard-screen" style="display:none;">
+        <div class="screen" id="leaderboard-screen" style="display:none;">
             <div id="lb-container">
                 <div id="lb-book-ladder">
                     <button class="lb-book-option" data-diff="bofm">Book of Mormon</button>
+                    <!--
                     <button class="lb-book-option" data-diff="ot">Old Testament</button>
                     <button class="lb-book-option" data-diff="nt">New Testament</button>
                     <button class="lb-book-option" data-diff="dc">Doctrine and Covenants</button>
                     <button class="lb-book-option" data-diff="gc">General Conference</button>
                     <button class="lb-book-option" data-diff="custom">Custom Study Plan</button>
+                    -->
+                    
                 </div>
                 <div id="lb-difficulty-ladder">
                     <button class="lb-difficulty-option" data-diff="easiest">Hit Noah's ark</button>
@@ -166,6 +182,7 @@
                     <button class="lb-difficulty-option" data-diff="hard">Enter at the Gate</button>
                     <button class="lb-difficulty-option" data-diff="harder">Hold to the rod</button>
                     <button class="lb-difficulty-option" data-diff="hardest">Find the piece of silver</button>
+                    <button class="lb-difficulty-option" data-diff="bePerfect">Be ye therefore perfect</button>
                     <button class="lb-difficulty-option" data-diff="custom">Custom Difficulty</button>
                 </div>
                 <section id="leaderboard">
@@ -180,12 +197,17 @@
                             </tr>
                         </thead>
                         <tbody>
-
                         </tbody>
                     </table>
                 </section>
             </div>
             <button class="main-menu-button">Back to Main Menu</button>
+        </div>
+        <div class="screen" id="achievements-screen" style="display:none;">
+            <h1>Achievements</h1>
+        </div>
+        <div class="screen" id="store-screen" style="display:none;">
+            <h1>BOM Bucks Store</h1>
         </div>
     </div>
     <footer id="footer-bar">

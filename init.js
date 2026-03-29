@@ -1,9 +1,10 @@
-import {ANIMATION_TIME_MS, ELS, BOOK_NAMES, DIFFICULTY_NAMES} from "./config.js";
+import {ANIMATION_TIME_MS,BOOK_NAMES, DIFFICULTY_NAMES} from "./config.js";
+import {ELS} from "./ELS.js";
 import {fetchScores, loadData} from "./data_manager.js";
 import * as Handlers from "./event_handlers.js";
 import {populateIncludeExcludeOptions, populateGuessOptions, initLBTableRows,
   updateLBDisplayDifficulty, updateLBTableRows, updateLBDisplayBook, positionBases,
-} from "./ui_manager.js";
+  updateBbucksDisplay} from "./ui_manager.js";
 import {setCustomDropdownValue} from "./helper_functions.js";
 
 const CLICK_HANDLERS = {
@@ -29,7 +30,9 @@ const MULTI_HANDLERS = [
   {selector: '.settings-button', event: 'click', handler: Handlers.handleSettingsButton},
   {selector: '.lb-button', event: 'click', handler: Handlers.handleLeaderboardButton},
   {selector: '.lb-difficulty-option', event: 'click', handler: Handlers.handleLBDiffButton},
-  {selector: '.restart-button', event: 'click', handler: Handlers.handleRestartButton}
+  {selector: '.restart-button', event: 'click', handler: Handlers.handleRestartButton},
+  {selector: '.achievements-page-button', event: 'click', handler: Handlers.handleAchPageButton},
+  {selector: '.store-page-button', event: 'click', handler: Handlers.handleStorePageButton},
 ];
 
 export function initCSSVars() {
@@ -144,6 +147,7 @@ export async function initData(){
 export async function initEls(){
   updateLBDisplayDifficulty();
   updateLBDisplayBook();
+  updateBbucksDisplay();
 
   initLBTableRows();
   updateLBTableRows();

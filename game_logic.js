@@ -1,12 +1,14 @@
-import {ELS, NUM_LB_SCORES, TIMER_DURATIONS, GAME_STATES,
-  ANIMATION_TIME_MS, THRESHOLD_ARRAYS,
+import {NUM_LB_SCORES, TIMER_DURATIONS, GAME_STATES,
+  ANIMATION_TIME_MS, THRESHOLD_ARRAYS, SCORING_MATRIX, 
+  SCORE_TO_SI_MATRIX, DIFFICULTY_NAMES
 } from "./config.js";
+import {ELS} from "./ELS.js";
 import {showGameOver, updateScoreboard, updateLBTableRows, 
-  showVerses, showScreen, setRunnerPosition, animateStrike
-} from "./ui_manager.js";
+  showVerses, showScreen, setRunnerPosition, animateStrike,
+  updateBbucksDisplay} from "./ui_manager.js";
 import {startTimer, stopTimer} from "./timer.js";
 import {sleep, nextFrame, waitForAllRunners} from "./helper_functions.js";
-import { submitScore } from "./data_manager.js";
+import { submitScore, addBomBucks } from "./data_manager.js";
 
 window.addStrike = addStrike;
 window.advanceRunners = advanceRunners;
@@ -37,6 +39,10 @@ export const gameState = {
 
     currentVolume : 'bofm',
     customStudyPlan: 'bofm_isaiah'
+  },
+
+  playerData: {
+    bomBucks: 0
   }
 }
 
@@ -45,8 +51,12 @@ export function startRound(){
   ++gameState.round;
   updateScoreboard();
   startTimer(handleTimeUp, TIMER_DURATIONS[gameState.settings.difficulty]);
+
   ELS.GAME.BTNS.newRound.disabled = true;
   ELS.GAME.BTNS.revealReference.disabled = true;
+
+  ELS.GAME.DROPS.bookDropdown.classList.remove("disabled");
+  ELS.GAME.DROPS.chapterDropdown.classList.remove("disabled");
 
   ELS.GAME.DROPS.bookDropdown.value = "";
   ELS.GAME.DROPS.chapterDropdown.value = "";
@@ -75,9 +85,46 @@ export async function endGame(){
   localStorage.setItem("Last Score", gameState.score);
   resetBases(gameState.bases, gameState.runners);
   stopTimer();
+
+  const bBucksEarned = calculateBbucksEarned();
+  ELS.GO.TXT.bomBucks.innerText = bBucksEarned;
+  addBomBucks(bBucksEarned);
+  updateBbucksDisplay();
+
   updateHighScores(gameState.score);
   updateLBTableRows();
   gameState.inRound = false;
+}
+
+function calculateBbucksEarned(){
+  let finalScore = gameState.score;
+  let DI = convertDifficultyToIndicator(gameState.settings.difficulty); //Difficulty Indicator
+  let SI = convertScoreToIndicator(finalScore); //Score Indicator
+  const BBMult = SCORING_MATRIX[SI][DI];
+  const BBEarned = BBMult * finalScore;
+  console.log("Calculate Bbucks called. DI:" + DI + ", SI:" + SI +
+    "\nOverall Score: " + BBEarned
+  );
+  return BBEarned;
+}
+
+function convertScoreToIndicator(score){
+  let indicator = 0;
+  let thresholds = SCORE_TO_SI_MATRIX;
+  for(const t of thresholds) {
+    if(score >= t.minScore){
+      indicator = t.SI_Value;
+    }else{
+      break;
+    }
+  }
+  return indicator;
+}
+
+function convertDifficultyToIndicator(difficulty){
+  console.log("convert to DI called. Difficulty: " + difficulty);
+  const keys = Object.keys(DIFFICULTY_NAMES);
+  return keys.indexOf(difficulty);
 }
 
 function updateHighScores(newScore){
@@ -102,7 +149,6 @@ function updateHighScores(newScore){
 }
 
 function resetBases(bases, runners){
-  console.log("Bases Reset");
   bases = [false, false, false, false];
   if(runners) runners.length = 0;
   document.querySelectorAll('#diamond .runner').forEach(r=>r.remove());
@@ -183,7 +229,15 @@ function makeScoreObject(score){
 function handleTimeUp() {
   addStrike();
   stopTimer();
+
+  ELS.GAME.DROPS.bookDropdown.classList.add("disabled");
+  ELS.GAME.DROPS.chapterDropdown.classList.add("disabled");
+  ELS.GAME.DROPS.bookDropdown.classList.remove("open");
+  ELS.GAME.DROPS.chapterDropdown.classList.remove("open");
+
   ELS.GAME.BTNS.newRound.disabled = false;
+  ELS.GAME.BTNS.revealReference.disabled = false;
+  ELS.GAME.BTNS.submit.disabled = true;
 }
 
 export function submitGuess() {
@@ -231,4 +285,6 @@ export function submitGuess() {
     }
 
     ELS.GAME.BTNS.submit.disabled = true;
+    ELS.GAME.DROPS.bookDropdown.classList.add("disabled");
+    ELS.GAME.DROPS.chapterDropdown.classList.add("disabled");
 }

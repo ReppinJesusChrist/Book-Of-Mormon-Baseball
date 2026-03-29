@@ -1,4 +1,5 @@
-import {ELS, GAME_STATES, } from './config.js'
+import {GAME_STATES} from './config.js';
+import {ELS} from "./ELS.js";
 import { gameState, endGame, startRound, 
   startGame, advanceRunners, submitGuess,
   } from "./game_logic.js";
@@ -39,10 +40,7 @@ export function handleNewRound(){
 }
 
 export function handleLeaderboardButton(){
-  if(gameState.inRound) {
-    endGame();
-  }
-  showScreen(GAME_STATES.LEADERBOARD);
+  showNongameScreen(GAME_STATES.LEADERBOARD);
 }
 
 export function handleFinalizeGuess(){
@@ -51,10 +49,7 @@ export function handleFinalizeGuess(){
 }
 
 export function handleSettingsButton(){
-  if(gameState.inRound) {
-    endGame();
-  }
-  showScreen(GAME_STATES.SETTINGS);
+  showNongameScreen(GAME_STATES.SETTINGS);
 }
 
 export function handleCheckAllInex(){
@@ -70,10 +65,29 @@ export function handleUncheckAllInex(){
 }
 
 export function handleMainMenuButton(){
+  showNongameScreen(GAME_STATES.MENU); 
+}
+
+export function handleAchPageButton(){
+  showNongameScreen(GAME_STATES.ACHIEVEMENTS); 
+}
+
+export function handleStorePageButton(){
+  showNongameScreen(GAME_STATES.STORE); 
+}
+
+/** 
+ * Takes a screen and displays it after ending the game if necessary.
+ * 
+ * I made this to reduce code duplication, because there are a lot of
+ * buttons that need to conditionally end the game before changing the
+ * currently displayed screen 
+ */
+function showNongameScreen(targetScreen){
   if(gameState.inRound){
     endGame();
   }
-  showScreen(GAME_STATES.MENU); 
+  showScreen(targetScreen);
 }
 
 export async function handleVSelectChange(){
@@ -92,8 +106,6 @@ export function handleBookSelectChange(){
 
   const chapSelect = ELS.GAME.DROPS.chapterSelect;
 
-  console.log("Book selected: ", book);
-
   bookTrigger.innerHTML = book;
   ELS.GAME.DROPS.chapterSelect.innerHTML = '';
 
@@ -108,7 +120,8 @@ export function handleBookSelectChange(){
       chapOption.dataset.value = chapter;
       chapSelect.appendChild(chapOption);
     }); 
-  // ELS.GAME.DROPS.chapterDropdown.value = "1";   
+
+  ELS.GAME.DROPS.chapterDropdown.value = "1";   
 }
 
 export function handleChapterSelectChange(){

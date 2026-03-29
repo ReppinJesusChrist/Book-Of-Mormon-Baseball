@@ -1,6 +1,7 @@
-import {ELS, DIFFICULTY_NAMES, BOOK_NAMES, GAME_STATES, BASE_POSITIONS
-} from "./config.js";
-import {getRandomVerses} from "./data_manager.js";
+import {DIFFICULTY_NAMES, BOOK_NAMES, GAME_STATES, BASE_POSITIONS,
+SCREENS} from "./config.js";
+import {ELS} from "./ELS.js";
+import {getRandomVerses, loadPlayerData} from "./data_manager.js";
 import {gameState} from "./game_logic.js";
 import {setCustomDropdownValue} from "./helper_functions.js";
 
@@ -9,10 +10,13 @@ const LB_tbody = document.querySelector("#leaderboard-table tbody");
 
 export function showScreen(state){
   gameState.displayScreen = state;
-  ELS.MENU.screen.style.display = (state === GAME_STATES.MENU) ? 'block' : 'none';
+  
+  ELS.MENU.screen.style.display = (state === GAME_STATES.MENU) ? 'flex' : 'none';
   ELS.GAME.screen.style.display = (state === GAME_STATES.IN_GAME) ? 'block' : 'none';
   ELS.SET.screen.style.display = (state === GAME_STATES.SETTINGS) ? 'block' : 'none';
   ELS.LB.screen.style.display = (state === GAME_STATES.LEADERBOARD) ? 'block' : 'none';
+  ELS.ACHIEVEMENTS.screen.style.display = (state ===  GAME_STATES.ACHIEVEMENTS) ? 'block' : 'none';
+  ELS.STORE.screen.style.display = (state ===  GAME_STATES.STORE) ? 'block' : 'none';
 }
 
 export function initLBTableRows(){
@@ -112,20 +116,29 @@ export function populateGuessOptions() {
 
   // Fill book options
   const books = Object.keys(gameState.scriptures);
+  const numBooks = books.length;
 
   const bookSelectNew = ELS.GAME.DROPS.bookSelect;
-  // Clear previous options
-  bookSelectNew.innerHTML = '';
+  const leftColumn = bookSelectNew.querySelector(".left");
+  const rightColumn = bookSelectNew.querySelector(".right");
 
-  books.forEach(book => {
+  // Clear previous options
+  leftColumn.innerHTML = '';
+  rightColumn.innerHTML  = '';
+
+  for(let i = 0; i < numBooks; ++i){
+    let book = books[i];
     const bookOption = document.createElement('div');
     bookOption.classList.add('custom-option');
     bookOption.textContent = book;
     bookOption.dataset.value = book;
-    bookSelectNew.appendChild(bookOption);
-    //<div class="nav-item custom-option main-menu-button" data-target="menu">Main Menu</div>
-
-  });  
+    if(i <= Math.floor(numBooks/2)){
+      leftColumn.appendChild(bookOption);
+    } else {
+      rightColumn.appendChild(bookOption);
+    }
+    
+  }
 }
 
 export function updateStrikeBoxes(strikes){
@@ -139,6 +152,13 @@ export function updateScoreboard(){
     ELS.GAME.SB.score.textContent = `${gameState.score}`;
     ELS.GAME.SB.round.textContent = `${gameState.round}`;
     updateStrikeBoxes(gameState.strikes);
+}
+
+export function updateBbucksDisplay(){
+  const playerData = loadPlayerData();
+  const currBbucks = playerData.bomBucks;
+  ELS.HEADER.bBucksDisplay.innerHTML = "";
+  ELS.HEADER.bBucksDisplay.innerHTML = currBbucks;
 }
 
 export function updateLBDisplayDifficulty(){

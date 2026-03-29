@@ -4,21 +4,10 @@ export const VERSION = 1; // Will be used in the future for updates. Not used ri
 export const ANIMATION_TIME_MS = 600; // Time in ms for runner animation
 export const NUM_LB_SCORES = 10;
 
-/**
- * Use for possible future update to difficulty selection
-export const TIMER_OPTIONS = {
-  unlimited: Infinity,
-  relaxed: 60,
-  default: 30,
-  hard: 15
-};
-export const THRESHOLD_OPTIONS = {
-  otest:    [25, 50, 100, 250],
-  wider:    [7, 12, 25, 50],
-  average:  [2, 4, 7, 12],
-  pinhead:  [0, 1, 2, 4]
+export const SCREENS = {
+  // Implement later as part of refactoring
 }
-*/
+
 export const BOOK_NAMES = {
   bofm: 'Book of Mormon',
   nt: 'New Testament',
@@ -28,6 +17,7 @@ export const BOOK_NAMES = {
 }
 
 export const DIFFICULTY_NAMES ={
+  custom: 'Custom',
   easiest: 'Hit Noah\'s ark',
   easier: 'Hit the side of the stable',
   easy: 'Love thy neighbor',
@@ -35,28 +25,51 @@ export const DIFFICULTY_NAMES ={
   hard: 'Enter at the gate',
   harder: 'Hold to the iron rod',
   hardest: 'Find the piece of silver',
-  custom: 'Custom'
+  bePerfect: 'Be ye therefore perfect'
 }
 
+// Timer durations for different difficulties
 export const TIMER_DURATIONS = {
-  easiest: Infinity,
-  easier: Infinity,
-  easy: 180,
-  average: 60,
-  hard: 30,
-  harder: 20,
-  hardest: 10
-}; // Timer durations for different difficulties
+  easiest: 180,
+  easier: 90,
+  easy: 60,
+  average: 30,
+  hard: 20,
+  harder: 15,
+  hardest: 10,
+  bePerfect: 7
+};
 
+/* 
+ * Distance thresholds for different difficulties.
+ * [Home Run, Triple, Double, Single]
+ * A '-1' means it is impossible to get that type of hit.
+ */ 
 export const THRESHOLD_ARRAYS = {
   easiest: [25, 50, 100, 250],
   easier: [12, 25, 50, 100],
   easy: [7, 12, 25, 50],
-  average: [4, 7, 12, 25],
-  hard: [2, 4, 7, 12],
-  harder: [1, 2, 4, 7],
-  hardest: [0, 1, 2, 4]
+  average: [3, 7, 12, 25],
+  hard: [1, 3, 7, 12],
+  harder: [0, 1, 3, 7],
+  hardest: [-1, 0, 1, 3],
+  bePerfect: [-1, -1, 0, 1]
 }
+
+/*
+ * How many verses to display for each difficulty
+ */
+export const VERSE_NUMS = {
+  easiest:   5,
+  easier:    4,
+  easy:      3,
+  average:   3,
+  hard:      3,
+  harder:    2,
+  hardest:   2,
+  bePerfect: 1
+}
+
 export const STANDARD_WORKS_FILE_NAMES = {
   bofm: 'data/bofm.json',
   ot: 'data/ot.json',
@@ -73,7 +86,9 @@ export const GAME_STATES = {
   MENU: 'menu',
   IN_GAME: 'in_game',
   SETTINGS: 'settings',
-  LEADERBOARD: 'leaderboard'
+  LEADERBOARD: 'leaderboard',
+  ACHIEVEMENTS: 'achievements',
+  STORE: 'store'
 }
 export const BASE_POSITIONS = {
   home:  { left: 50,  top: 85 },
@@ -82,79 +97,45 @@ export const BASE_POSITIONS = {
   third: { left: 15,   top: 50  },
   back_home: { left: 50,  top: 85 } // Back to home for scoring
 };
-export const ELS = {
-  BUTTONS: {
-    hideOverlay: document.getElementById('hide-overlay'),
-    newRound: document.getElementById('newRound')
-  },
-  MENU: {
-    screen: document.getElementById('menu-screen'),
-  },
-  GAME: {
-    screen: document.getElementById('game-screen'),
 
-    TXT: {
-      verseBox: document.getElementById('verses'),
-      result: document.getElementById('game-result-reveal-span'),
-      refReveal: document.getElementById('game-ref-reveal-span'),
-    },
-    SB: {   // Scoreboard
-      score: document.getElementById("score"),
-      round: document.getElementById("round"),
-    },
-    strikeEffect: document.getElementById('strike-effect-display'),
-    strikeEffectText: document.querySelector('#strike-effect-display .strike-text'),
-    BTNS: {
-      revealDistance: document.getElementById('revealDistance'),
-      revealReference: document.getElementById('revealReference'),
-      newRound: document.getElementById('newRound'),
-      submit: document.getElementById('finalizeGuess'),
-    },
-    DROPS: {
-      bookDropdown: document.getElementById('book-dropdown'),
-      bookSelectTrigger: document.getElementById('book-select-trigger'),
-      bookSelect: document.getElementById('book-select'),
-      chapterDropdown: document.getElementById('game-chapter-dropdown'),
-      chapterSelectTrigger: document.getElementById('game-chapter-select-trigger'),
-      chapterSelect: document.getElementById('game-chapter-select'),
-    },
-    diamond: document.getElementById('diamond'),
-  },
-  LB: {
-    screen: document.getElementById('leaderboard-screen'),
-    difficultyLabel: document.getElementById('lb-display-difficulty'),
-    bookLabel: document.getElementById('lb-display-book'),
-    difLadder: document.getElementById('difficultyLadder'),
-    BTNS: {
-      bookSelect: document.querySelectorAll('.lb-book-option'),
-    },
-  },
-  GO: {
-    screen: document.getElementById('game-over-overlay'),
+// Rows represent score thresholds, cols represent difficulty levels:
+// EST = Easiest, ESR = Easier, ESY = Easy, DEF = Default
+// HRD = Hard, HDR = Harder, HST = Hardest, BYTP = Be ye therefore perfect
+export const SCORING_MATRIX = [
+  // --------------  CST    EST,    ESR,    ESY,    DEF,   HRD,    HDR,   HST,   BYTP                 
+  /*0 Points*/      [0,     0,      0,      0,      0,     0,      0,     0,     0],
+  /*1-2 Points*/    [0,     1.00,   1.50,   2,      3,     5,      8,     13,    21],
+  /*3-6 Points*/    [0,     1.10,   2.00,   3,      5,     8,      13,    20,    42],
+  /*7-11 Points*/   [0,     1.20,   2.50,   4,      7,     11,     18,    27,    84],
+  /*12-17 Points*/  [0,     1.30,   3.00,   5,      9,     14,     23,    34,    168],
+  /*18-26 Points*/  [0,     1.40,   3.50,   6,      11,    17,     28,    41,    336],
+  /*27-49 Points*/  [0,     1.50,   4.00,   7,      13,    20,     33,    48,    672],
+  /*50+ Points*/    [0,     1.70,   5.00,   9,      15,    27,     38,    55,    1344],
+];
 
-    BTNS: {
-      menu: document.getElementById('game-over-menu-btn'),
-      restart: document.getElementById('go-btns-tryagain'),
-    },
-    TXT: {
-      finalScore: document.getElementById('final-score'),
-    }
-  },
-  SET: {
-    screen: document.getElementById('settings-screen'),
+export const SCORE_TO_SI_MATRIX = [
+  { minScore: 0, SI_Value: 0 },
+  { minScore: 1, SI_Value: 1 },
+  { minScore: 3, SI_Value: 2 },
+  { minScore: 7, SI_Value: 3 },
+  { minScore: 12, SI_Value: 4 },
+  { minScore: 18, SI_Value: 5 },
+  { minScore: 27, SI_Value: 6 },
+  { minScore: 50, SI_Value: 7 },
+];
 
-    DROPS: {
-      difEl: document.getElementById('threshold-value'),
-      inEx: document.getElementById("include-exclude-values"),
-      chapSelect: document.getElementById('chapterSelect'),
-      inExToggle: document.getElementById('include-exclude-toggle'),
-      inExDropdown: document.getElementById('include-exclude-dropdown'),
-      IESelect: document.getElementById('include-exclude-values'),
-    }
-  },
-  vSelect: document.getElementById('settings-vselect-value'),
-  
-  overlay: document.getElementById('game-over-overlay'),
-  finalScore: document.getElementById('final-score'),
+export const DIFF_TO_DI_MATRIX = [
+  {easiest: 0},
+  {easier: 1},
+  {easy: 2},
+  {average: 3},
+  {hard: 4},
+  {harder: 5},
+  {hardest: 6},
+  {bePerfect: 7}
+];
+
+export const ACHIEVEMENTS = {
+
 }
 

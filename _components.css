@@ -18,11 +18,13 @@ select:hover {
 
 /*  Custom Dropdowns */
 .dropdown {
-    position: relative;
-    display: inline-block;
     width: 100%;
     max-width: fit-content;
     font-size: var(--font-size-med);
+}
+
+.dropdown.disabled {
+    opacity: 0.5;
 }
 
 /*  Makes it look like a dropdown */
@@ -35,6 +37,15 @@ select:hover {
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.09); /* Subtle shadow */
     min-width: 200px;
     transition: background-color 0.25s ease, box-shadow 0.25s ease;
+
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.dropdown.disabled button {
+    pointer-events: none;
+    cursor: not-allowed;
 }
 
 .dropdown .alt-color{
@@ -84,6 +95,8 @@ select:hover {
     transition: 
         opacity 0.5s ease, 
         transform 0.5s ease;
+
+    pointer-events: none;
 }
 
 .dropdown.narrow .dropdown-trigger{
@@ -104,6 +117,7 @@ select:hover {
 .dropdown.open .dropdown-content {
     opacity: 1;
     transform: scaleY(1);
+    pointer-events: auto;
 }
 
 .custom-option {
@@ -157,6 +171,91 @@ select:hover {
 .custom-option span {
     font-weight: bold;
     font-size: 15px;
+}
+
+/* Book Dropdown Override (to reduce scrolling when selecting a book during gameplay */
+
+#guess-section {
+    display: flex;
+    width:100%;
+    padding: 5px 5px;
+}
+
+#guess-section .dropdown {
+    width: auto;
+}
+
+#book-dropdown, 
+#game-chapter-dropdown {
+    min-width: 0;
+    max-width: none;
+}
+
+#book-dropdown {
+    flex: 3;
+}
+
+#game-chapter-dropdown {
+    position: relative;
+    flex: 2;
+}
+
+#book-dropdown .dropdown-content {
+    max-height: 31vh;
+
+    min-width: unset;
+    max-width: unset;
+    width: clamp(440px, 48vw, 700px);
+
+    left: 1vw;
+
+    display: flex;
+    gap: 7px;
+}
+
+#book-dropdown .column {
+    flex: 1;
+}
+
+#book-dropdown .custom-option {
+    justify-content: center;
+    padding: 10px;
+}
+
+/*  Chapter Dropdown Override (Gospel Library style)  */
+
+#game-chapter-dropdown .dropdown-content {
+    max-height: 31vh;
+
+    width: 48vw;
+    min-width: calc(450px - 2vw);
+    max-width: 48vw;
+    
+    right: -1vw;
+
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(40px, 1fr));
+    gap: 3px;
+}
+
+#game-chapter-dropdown.open .dropdown-content {
+    opacity: 1;
+}
+
+#game-chapter-dropdown .custom-option {
+    justify-content: center;
+    padding: 8px 0;
+    border-radius: 6px;
+
+    font-weight: bold;
+
+    aspect-ratio: 1 / 1;
+
+    background: var(--color-dropdown-base);
+}
+
+#game-chapter-dropdown .custom-option:hover {
+    background: var(--color-dropdown-hover);
 }
 
 #nav-toggle {

@@ -1,4 +1,4 @@
-import {STANDARD_WORKS_FILE_NAMES, CUSTOM_STUDY_FILE_NAMES, DB_DEBUG} from "./config.js";
+import {STANDARD_WORKS_FILE_NAMES, CUSTOM_STUDY_FILE_NAMES, DB_DEBUG, VERSE_NUMS} from "./config.js";
 import {gameState} from "./game_logic.js";
 
 
@@ -9,15 +9,53 @@ import {gameState} from "./game_logic.js";
     SUPABASE_URL, SUPABASE_ANON_KEY
   ) : null;
 
-
-export const gameData = {
-    allVerses: [],
-    topScores: {}
+const STORAGE_KEYS = {
+  playerData: "playerData",
 }
 
+export const gameData = {
+  allVerses: [],
+  topScores: {}
+}
+
+const defaultPlayerData = {
+  bomBucks: 0
+}
+
+let playerData = loadPlayerData();
+
+export function loadPlayerData(){
+  const saved = localStorage.getItem(STORAGE_KEYS.playerData);
+  return saved ? JSON.parse(saved) : { ...defaultPlayerData};
+}
+
+export function savePlayerData(){
+  localStorage.setItem(STORAGE_KEYS.playerData, JSON.stringify(playerData));
+}
+
+export function addBomBucks(numBucks) {
+  let currBucks = parseInt(playerData.bomBucks);
+  currBucks += numBucks;
+
+  playerData.bomBucks = currBucks;
+
+  savePlayerData();
+}
+
+export function setBomBucks(amount){
+  playerData.bomBucks = amount;
+  savePlayerData();
+}
+
+export function getBomBucks(){
+  return playerData.bomBucks;
+}
+
+
+
 export async function fetchScriptures(volume){
-    const response = await fetch(volume);
-    return await response.json();
+  const response = await fetch(volume);
+  return await response.json();
 }
 
 export async function loadData() {
@@ -45,10 +83,11 @@ export async function loadData() {
 }
 
 export function getRandomVerses() {
-  const maxStartIndex = gameData.allVerses.length - gameState.settings.numDisplayVerses;
+  const numDisplayVerses = VERSE_NUMS[gameState.settings.difficulty]
+  const maxStartIndex = gameData.allVerses.length - numDisplayVerses;
   const startIndex = Math.floor(Math.random() * (maxStartIndex + 1));
 
-  const selectedVerses = gameData.allVerses.slice(startIndex, startIndex + gameState.settings.numDisplayVerses);
+  const selectedVerses = gameData.allVerses.slice(startIndex, startIndex + numDisplayVerses);
 
   const firstVerse = selectedVerses[0];
   const lastVerse = selectedVerses[selectedVerses.length - 1];

@@ -1,6 +1,5 @@
 /* 1. MAIN STRUCTURE */
 html, body {
-    min-width: 500px;
     height: 100%;
     overflow: hidden;
 }
@@ -42,6 +41,8 @@ body {
 }
 
 #header-bar, #footer-bar{
+    box-sizing: border-box;
+
     width: 100%;
     align-items: center;
     background-color: var(--color-primary-blue);
@@ -53,9 +54,9 @@ body {
 /*  Header  */
 #header-bar{
     display: flex;
-    flex-direction: row;
     align-items: center;
-    justify-content: center;
+    justify-content: space-between;
+
     height: var(--header-height);
     padding: 0 16px; /* No vertical, small horizontal */
     border-bottom: 4px solid var(--slate-grey);
@@ -66,20 +67,33 @@ body {
 }
 
 #header-bar .header-left{
-    position: absolute;
+    position: static;
     left: 0px;
     display: flex;
     align-items: center;
     flex: 0 1 auto;
 }
 
+#header-bar .header-right{
+    position: static;
+    right: 0px;
+}
+
+#BBDisplay{
+    margin: 0;
+    padding-right: 4px;
+}
+
 #header-title {
+    flex: 1;
     font-size: clamp(1.5rem, 4vw, 3.5rem);
     text-align: center;
     white-space: nowrap;
-    margin: 0 auto; /* I don't understand this */
     cursor: pointer;
     user-select: none; /* xkcd's worst nightmare */
+
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 #footer-bar{
@@ -166,10 +180,17 @@ body {
 
 .controls {
     display: flex;
-    flex-wrap: wrap;
+    flex-wrap: none;
     justify-content: center;
     gap: 10px;
     margin: 10px 0px;
+}
+
+#guess-section {
+    display:flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
 }
 
 #lb-container {

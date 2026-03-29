@@ -25,13 +25,33 @@
   - [X] Add Main Menu button to game over screen
   - [X] For each difficulty level
   - [X] Implement a leaderboard
-  - [X]   Make a menu to select difficulty
-  - [X]   Display high-scores (top 10 [X]; with times[X]) and most recent score in a table
+    - [X] Make a menu to select difficulty
+    - [X]   Display high-scores (top 10 [X]; with times[X]) and most recent score in a table
   - [X] Flash text on screen (not an alert) when a strike is hit ("Strike 1!" etc.)
 
 - [ ] **Session Queue**
-  - [ ]  Finish migrating book-select
-  - [ ]  Push
+  - [ ] Wire buttons for store and achievements pages
+  - [ ] Make chapter dropdowns auto-select chapter one when book is selected
+
+- [ ] **Weekly Goal (3/30/26 - 4/5/26)**
+  - [ ] Achievements
+    - [ ] Create basic system
+      - [ ] Store requirements in config.js for basic set of achievements
+        - [ ] Score X on [difficulty]
+        - [ ] Earn X BomBucks in one round
+        - [ ] Earn X BomBucks total
+      - [ ] Check for accomplishment at appropriate times
+      - [ ] Display them on the Achievements page
+      - [ ] Mark them as completed on Ach. page when completed
+    - [ ] Create an overlay for when an achievement is completed
+  - [ ] Store
+    - [ ] Add options to the store to buy different colors of runners
+    - [ ] Allow switching colors in the store for now (different screen later?)
+  - [ ] Bug/formatting fixes
+    - [ ] Finish migrating settings dropdowns completely to custom ddowns and remove old ones
+    - [ ] Fix custom ddowns to show selected option instead of default text
+    - [ ] Make settings screen presentable enought to push
+  - [ ] PUSH TO GITHUB SITE!!! 
 
 - [ ] **Major Projects**
   - [ ] Mobile Formatting
@@ -67,7 +87,7 @@
     - [ ] Add bottom fade to indicate scrollability
 
   - [ ] **Main Menu**
-    - [ ] Center vertically (even after out-and-back)
+    - [X] Center vertically (even after out-and-back)
     - [ ] Buttons all same size
 
 
@@ -76,18 +96,26 @@
     - [ ] Use the system I was using in ELS to name elements instead of sorting them afterwards in JS (E.G. 'go-btns-menu')???
   - [ ] **JS**
     - [ ] Run through the whole file and prayerfully record refactoring ideas and insights
+    - [X] Move ELS into its own file (JSON instead of .js maybe?)
+    - [X] Adjust all references to ELS to use the new file instead of the old reference from config.js
   - [ ] **CSS**
   - [ ] **Combo**
     - [ ] Convert all native selects to custom .dropdowns
+    - [ ] Auto-populate setting-volume-dropdown-options on startup based on a const list to make adding new/custom options easier in the future
+    - [ ] Update page button class names to include "-page" to increase consistency and allow for page specific styling in the future
 
 
 - [ ] **Bugs and Features** 
   - [ ] **Bugs**
-    - [ ] Styling of Home Page changes after leaving and returning
+    - [X] Styling of Home Page changes after leaving and returning
     - [ ] Custom Dropdowns
       - [ ] Make Custom book dropdown display name of selected book when choice is made (right now it always says "Book:")
     - [ ] Custom Study Plans
       - [ ] Fix ranges/distances to include entire BOM, not just chapters included in plan.
+    - [X] Disable dropdowns until next round after timeout or first guess
+    - [X] Double strike when you guess immediately after the timer runs out
+    - [X] Make chapter dropdowns auto select chapter one when book is selected
+    - [ ] Fix settings volume select dropdown (finish migrating to custom dropdown)
   - [ ] **Features**
     - [ ] Add nav-bar to header
     - [ ] Offer default difficulty options to make selection easy
@@ -96,7 +124,7 @@
       - [ ] Wire it in to score tracking
     - [ ] Book opening animation for leaving main-menu
     - [ ] Self-drawn runners (build your own team)
-    - [ ] Matrix for difficulty selection
+    - [ ] Matrix for difficulty selection?
       - [ ] Add tool-tip for range details (hover to view)
     - [ ] Separate Statistics from Leaderboard
       - [ ] Graph (scatterplot) of scores over time to show progress
@@ -106,6 +134,8 @@
     - [ ] Add database support for multiplayer high-score tracking
     - [ ] Add custom study patterns
       - [ ] Option for user imports according to a pattern?
+    - [ ] Show difficulty on Game Over screen
+    - [ ] Combine Guess & Reveal Reference buttons (switch between displaying and hiding each as needed)
 - [ ] **Misc**
   - [ ] Walk through all auto-recommendations in dev-tools and research them. Fix if reasonable.
   - [ ] Implement update logic to auto-handle one-time adjustments
