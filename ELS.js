@@ -74,6 +74,7 @@ export const ELS = {
   },
   ACHIEVEMENTS: {
     screen: document.getElementById('achievements-screen'),
+    mainList: document.getElementById('main-achievements-list'),
   },
   STORE: {
     screen: document.getElementById('store-screen'),

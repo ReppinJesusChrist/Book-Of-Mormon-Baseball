@@ -1,5 +1,5 @@
 import {DIFFICULTY_NAMES, BOOK_NAMES, GAME_STATES, BASE_POSITIONS,
-SCREENS} from "./config.js";
+ACHIEVEMENTS} from "./config.js";
 import {ELS} from "./ELS.js";
 import {getRandomVerses, loadPlayerData} from "./data_manager.js";
 import {gameState} from "./game_logic.js";
@@ -15,9 +15,10 @@ export function showScreen(state){
   ELS.GAME.screen.style.display = (state === GAME_STATES.IN_GAME) ? 'block' : 'none';
   ELS.SET.screen.style.display = (state === GAME_STATES.SETTINGS) ? 'block' : 'none';
   ELS.LB.screen.style.display = (state === GAME_STATES.LEADERBOARD) ? 'block' : 'none';
-  ELS.ACHIEVEMENTS.screen.style.display = (state ===  GAME_STATES.ACHIEVEMENTS) ? 'block' : 'none';
+  ELS.ACHIEVEMENTS.screen.style.display = (state ===  GAME_STATES.ACHIEVEMENTS) ? 'flex' : 'none';
   ELS.STORE.screen.style.display = (state ===  GAME_STATES.STORE) ? 'block' : 'none';
 }
+
 
 export function initLBTableRows(){
   for(let i = 0; i < 10; ++i){
@@ -58,6 +59,97 @@ function clearLB(){
   rows.forEach(row => {
     row.children[1].textContent = row.children[2].textContent = row.children[3].textContent = '';
   });
+}
+
+
+export function initAchievementsPage(){
+  const achievements = ACHIEVEMENTS;
+  let achList = ELS.ACHIEVEMENTS.mainList;
+
+  for(const [key, value] of Object.entries(achievements)){
+    const sectionHeader = document.createElement("h2");
+    sectionHeader.innerText = value.sectionHeader;
+    achList.appendChild(sectionHeader);
+
+    if(value.difficultyArrays) {
+      for(const [difficulty, diffArray] of Object.entries(value.difficultyArrays)){
+        const difficultyHeader = document.createElement("h3");
+        difficultyHeader.classList.add('difficulty-header');
+        difficultyHeader.innerText = DIFFICULTY_NAMES[difficulty];
+        achList.appendChild(difficultyHeader);
+
+        expandAchievementArray(diffArray, achList, [key, "difficultyArrays", difficulty]);
+      }
+    } else {
+      expandAchievementArray(value.achievementArray, achList, [key]);
+    }
+  }
+}
+
+function expandAchievementArray(array, targetDiv, basePath){
+  array.forEach((achievement, index) => {
+    const achEl = document.createElement("div");
+    achEl.innerText = achievement.name;
+    achEl.classList.add('main-list-achievement');
+
+    const fullPath = [...basePath, index];
+    achEl.dataset.path = fullPath.join("-");
+
+    targetDiv.appendChild(achEl);
+  });
+}
+
+export function updateAchievementsPage(){
+  const mainList = ELS.ACHIEVEMENTS.mainList;
+
+  const currPlayerAchievementObj = loadPlayerData().achievements;
+
+  walkPlayerAchievements(currPlayerAchievementObj, (value, pathArray) => {
+    const selector = `[data-path="${pathArray.join("-")}"]`;
+    const achEl = mainList.querySelector(selector); 
+
+    if(achEl && value && !achEl.classList.contains("complete")) {
+      completeAchievement(arrayToPath(ACHIEVEMENTS, pathArray), achEl);
+    }
+  });
+}
+
+function arrayToPath(obj, pathArray) {
+  return pathArray.reduce(
+    (accumulator, nextKey) => accumulator?.[nextKey], obj
+  );
+}
+
+/**
+ * 
+ * @param {*} listEl - The achievement element on the main achievements
+ *  list to mark as complete
+ * @param {*} achievement - The actual achievement from config.js
+ * 
+ * This function marks an achievement as complete. At this point, this
+ * could easily be done inline in updateAchievementsPage(), but I intend
+ * to implement a special notification system to display achievements
+ * that will probably be async, so this provides future-proofing 
+ */
+function completeAchievement(achievement, listEl){
+  listEl.classList.add("complete");
+
+  console.log("achievement unlocked: " , achievement);
+}
+
+function walkPlayerAchievements(object, callback, path = []){
+  if(Array.isArray(object)) {
+    object.forEach((value, index) => {
+      walkPlayerAchievements(value, callback, [...path, index]);
+    });
+  } else if (object !== null && typeof object === "object") {
+    for (const [key, value] of Object.entries(object)) {
+      walkPlayerAchievements(value, callback, [...path, key]);
+    }
+  } else {
+    // If we reach this point, obj is a binary leaf node (achievement)
+    callback(object, path);
+  }
 }
 
 export function showGameOver(){

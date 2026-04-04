@@ -99,10 +99,10 @@ export const BASE_POSITIONS = {
 };
 
 // Rows represent score thresholds, cols represent difficulty levels:
-// EST = Easiest, ESR = Easier, ESY = Easy, DEF = Default
+// EST = Easiest, ESR = Easier, ESY = Easy, AVG = Average
 // HRD = Hard, HDR = Harder, HST = Hardest, BYTP = Be ye therefore perfect
 export const SCORING_MATRIX = [
-  // --------------  CST    EST,    ESR,    ESY,    DEF,   HRD,    HDR,   HST,   BYTP                 
+  // --------------  CST    EST,    ESR,    ESY,    AVG,   HRD,    HDR,   HST,   BYTP                 
   /*0 Points*/      [0,     0,      0,      0,      0,     0,      0,     0,     0],
   /*1-2 Points*/    [0,     1.00,   1.50,   2,      3,     5,      8,     13,    21],
   /*3-6 Points*/    [0,     1.10,   2.00,   3,      5,     8,      13,    20,    42],
@@ -136,6 +136,332 @@ export const DIFF_TO_DI_MATRIX = [
 ];
 
 export const ACHIEVEMENTS = {
+  /*
+   *  Achievements for scoring at least X points on a given difficulty in a single game
+   *  Names are placeholders for now. I'm hoping to give each a fun, creative name
+   */ 
+  scoreXonD: {
+    sectionHeader: "Single Round Scores By Difficulty",
+    difficultyArrays: {
+      easiest: [
+        { 
+          name: "Easiest-1-point",
+          requiredPoints: 1,
+        }, 
+        {
+          name: "Easiest-3-point",
+          requiredPoints: 3,
+        },
+        {
+          name: "Easiest-7-point",
+          requiredPoints: 7,
+        }, 
+        {
+          name: "Easiest-12-point",
+          requiredPoints: 12,
+        }, 
+        {
+          name: "Easiest-25-point",
+          requiredPoints: 25,
+        }, 
+        {
+          name: "Easiest-50-point",
+          requiredPoints: 50,
+        }, 
+        {
+          name: "Easiest-100-point",
+          requiredPoints: 100,
+        },
+      ],
+      easier: [
+        { 
+          name: "Easier-1-point",
+          requiredPoints: 1,
+        }, 
+        {
+          name: "Easier-3-point",
+          requiredPoints: 3,
+        },
+        {
+          name: "Easier-7-point",
+          requiredPoints: 7,
+        }, 
+        {
+          name: "Easier-12-point",
+          requiredPoints: 12,
+        }, 
+        {
+          name: "Easier-25-point",
+          requiredPoints: 25,
+        }, 
+        {
+          name: "Easier-50-point",
+          requiredPoints: 50,
+        }, 
+        {
+          name: "Easier-100-point",
+          requiredPoints: 100,
+        },
+      ],
+      easy: [
+        { 
+          name: "Easy-1-point",
+          requiredPoints: 1,
+        }, 
+        {
+          name: "Easy-3-point",
+          requiredPoints: 3,
+        },
+        {
+          name: "Easy-7-point",
+          requiredPoints: 7,
+        }, 
+        {
+          name: "Easy-12-point",
+          requiredPoints: 12,
+        }, 
+        {
+          name: "Easy-25-point",
+          requiredPoints: 25,
+        }, 
+        {
+          name: "Easy-50-point",
+          requiredPoints: 50,
+        }, 
+        {
+          name: "Easy-100-point",
+          requiredPoints: 100,
+        },
+      ],
+      average: [
+        { 
+          name: "Average-1-point",
+          requiredPoints: 1,
+        }, 
+        {
+          name: "Average-3-point",
+          requiredPoints: 3,
+        },
+        {
+          name: "Average-7-point",
+          requiredPoints: 7,
+        }, 
+        {
+          name: "Average-12-point",
+          requiredPoints: 12,
+        }, 
+        {
+          name: "Average-25-point",
+          requiredPoints: 25,
+        }, 
+        {
+          name: "Average-50-point",
+          requiredPoints: 50,
+        }, 
+        {
+          name: "Average-100-point",
+          requiredPoints: 100,
+        },
+      ],
+      hard: [
+        { 
+          name: "Hard-1-point",
+          requiredPoints: 1,
+        }, 
+        {
+          name: "Hard-3-point",
+          requiredPoints: 3,
+        },
+        {
+          name: "Hard-7-point",
+          requiredPoints: 7,
+        }, 
+        {
+          name: "Hard-12-point",
+          requiredPoints: 12,
+        }, 
+        {
+          name: "Hard-25-point",
+          requiredPoints: 25,
+        }, 
+        {
+          name: "Hard-50-point",
+          requiredPoints: 50,
+        }, 
+        {
+          name: "Hard-100-point",
+          requiredPoints: 100,
+        },
+      ],
+      harder: [
+        { 
+          name: "Harder-1-point",
+          requiredPoints: 1,
+        }, 
+        {
+          name: "Harder-3-point",
+          requiredPoints: 3,
+        },
+        {
+          name: "Harder-7-point",
+          requiredPoints: 7,
+        }, 
+        {
+          name: "Harder-12-point",
+          requiredPoints: 12,
+        }, 
+        {
+          name: "Harder-25-point",
+          requiredPoints: 25,
+        }, 
+        {
+          name: "Harder-50-point",
+          requiredPoints: 50,
+        }, 
+        {
+          name: "Harder-100-point",
+          requiredPoints: 100,
+        },
+      ],
+      hardest: [
+        { 
+          name: "Hardest-1-point",
+          requiredPoints: 1,
+        }, 
+        {
+          name: "Hardest-3-point",
+          requiredPoints: 3,
+        },
+        {
+          name: "Hardest-7-point",
+          requiredPoints: 7,
+        }, 
+        {
+          name: "Hardest-12-point",
+          requiredPoints: 12,
+        }, 
+        {
+          name: "Hardest-25-point",
+          requiredPoints: 25,
+        }, 
+        {
+          name: "Hardest-50-point",
+          requiredPoints: 50,
+        }, 
+        {
+          name: "Hardest-100-point",
+          requiredPoints: 100,
+        },
+      ],
+      bePerfect: [
+        { 
+          name: "BePerfect-1-point",
+          requiredPoints: 1,
+        }, 
+        {
+          name: "BePerfect-3-point",
+          requiredPoints: 3,
+        },
+        {
+          name: "BePerfect-7-point",
+          requiredPoints: 7,
+        }, 
+        {
+          name: "BePerfect-12-point",
+          requiredPoints: 12,
+        }, 
+        {
+          name: "BePerfect-25-point",
+          requiredPoints: 25,
+        }, 
+        {
+          name: "BePerfect-50-point",
+          requiredPoints: 50,
+        }, 
+        {
+          name: "BePerfect-100-point",
+          requiredPoints: 100,
+        },
+      ],
+    }
+  },
 
+  /*
+   *  Achievements for earning at least X BomBucks in a single game on any difficulty
+   *  Names are placeholders for now. I'm hoping to give each a fun, creative name
+   */ 
+  bbucksOneRound: {
+    sectionHeader: "Single Round BomBucks Earned",
+    achievementArray: [
+        { 
+          name: "OneRoundBbucks-1",
+          requiredBucks: 1,
+        }, 
+        { 
+          name: "OneRoundBbucks-7",
+          requiredBucks: 7,
+        },
+        { 
+          name: "OneRoundBbucks-50",
+          requiredBucks: 50,
+        },
+        { 
+          name: "OneRoundBbucks-250",
+          requiredBucks: 250,
+        },
+        { 
+          name: "OneRoundBbucks-500",
+          requiredBucks: 500,
+        },
+        { 
+          name: "OneRoundBbucks-K",
+          requiredBucks: 1000,
+        },
+        { 
+          name: "OneRoundBbucks-10K",
+          requiredBucks: 10000,
+        },
+    ],
+  },
+  
+
+  /*
+   *  Achievements for scoring at least X points on a given difficulty in a single game
+   *  Names are placeholders for now. I'm hoping to give each a fun, creative name
+   */ 
+  totalBbucks: {
+    sectionHeader: "Total BomBucks Saved",
+    achievementArray: [
+    { 
+      name: "TotalBbucks-10",
+      requiredBucks: 1,
+    }, 
+    { 
+      name: "TotalBbucks-100",
+      requiredBucks: 7,
+    },
+    { 
+      name: "TotalBbucks-250",
+      requiredBucks: 50,
+    },
+    { 
+      name: "TotalBbucks-K",
+      requiredBucks: 250,
+    },
+    { 
+      name: "TotalBbucks-5K",
+      requiredBucks: 500,
+    },
+    { 
+      name: "TotalBbucks-20K",
+      requiredBucks: 1000,
+    },
+    { 
+      name: "TotalBbucks-One-Million!",
+      requiredBucks: 10000,
+    },
+  ]
+  },
+  
 }
 

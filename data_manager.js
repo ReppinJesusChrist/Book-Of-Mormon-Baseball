@@ -19,7 +19,37 @@ export const gameData = {
 }
 
 const defaultPlayerData = {
-  bomBucks: 0
+  bomBucks: 0,
+  achievements: {
+    /*
+     *  Achievements for scoring at least X points on a given difficulty in a single game
+     *  The values for each in-order (also found in config.js) are: 1, 3, 7, 12, 25, 50, and 100 
+     */ 
+    scoreXonD: {
+      difficultyArrays: {
+        easiest: [false, false, false, false, false, false, false],
+        easier: [false, false, false, false, false, false, false],
+        easy: [false, false, false, false, false, false, false],
+        average: [false, false, false, false, false, false, false],
+        hard: [false, false, false, false, false, false, false],
+        harder: [false, false, false, false, false, false, false],
+        hardest: [false, false, false, false, false, false, false],
+        bePerfect: [false, false, false, false, false, false, false],
+      },
+    },
+
+    /*
+     * Achievements for earning at least X BomBucks in a single round on any difficulty
+     * Values in-order: 1, 7, 50, 250, 500, 1000, and 10000 
+     */
+    bbucksOneRound: [false, false, false, false, false, false, false],
+
+    /*
+     * Achievements for having at least X BomBucks currently saved
+     * Values in-order: 10, 100, 250, 1000, 5000, 20000, and 1000000 
+     */
+    totalBbucks: [false, false, false, false, false, false, false],
+  }
 }
 
 let playerData = loadPlayerData();
@@ -33,6 +63,11 @@ export function savePlayerData(){
   localStorage.setItem(STORAGE_KEYS.playerData, JSON.stringify(playerData));
 }
 
+
+/**
+ * Getter, setter, and incrementer for player BomBucks
+ * 
+ */
 export function addBomBucks(numBucks) {
   let currBucks = parseInt(playerData.bomBucks);
   currBucks += numBucks;
@@ -51,6 +86,18 @@ export function getBomBucks(){
   return playerData.bomBucks;
 }
 
+/**
+ * Getter and setter for player achievements array
+ * 
+ */
+export function getPlayerAchievementsArray(){
+  return playerData.achievements;
+}
+
+export function setPlayerAchievementsArray(newArray){
+  playerData.achievements = newArray;
+  savePlayerData();
+}
 
 
 export async function fetchScriptures(volume){

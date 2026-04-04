@@ -1,14 +1,16 @@
 import {NUM_LB_SCORES, TIMER_DURATIONS, GAME_STATES,
   ANIMATION_TIME_MS, THRESHOLD_ARRAYS, SCORING_MATRIX, 
-  SCORE_TO_SI_MATRIX, DIFFICULTY_NAMES
+  SCORE_TO_SI_MATRIX, DIFFICULTY_NAMES, ACHIEVEMENTS,
 } from "./config.js";
 import {ELS} from "./ELS.js";
 import {showGameOver, updateScoreboard, updateLBTableRows, 
   showVerses, showScreen, setRunnerPosition, animateStrike,
-  updateBbucksDisplay} from "./ui_manager.js";
+  updateBbucksDisplay, updateAchievementsPage} from "./ui_manager.js";
 import {startTimer, stopTimer} from "./timer.js";
 import {sleep, nextFrame, waitForAllRunners} from "./helper_functions.js";
-import { submitScore, addBomBucks } from "./data_manager.js";
+import { submitScore, addBomBucks, getPlayerAchievementsArray,
+  setPlayerAchievementsArray,
+ } from "./data_manager.js";
 
 window.addStrike = addStrike;
 window.advanceRunners = advanceRunners;
@@ -40,10 +42,6 @@ export const gameState = {
     currentVolume : 'bofm',
     customStudyPlan: 'bofm_isaiah'
   },
-
-  playerData: {
-    bomBucks: 0
-  }
 }
 
 export function startRound(){
@@ -81,17 +79,24 @@ export function startGame(){
 
 export async function endGame(){
   ELS.BUTTONS.newRound.disabled = true;
-  ELS.finalScore.textContent = gameState.score;
-  localStorage.setItem("Last Score", gameState.score);
+
+  const finalScore = gameState.score;
+  const difficulty = gameState.settings.difficulty;
+
+  ELS.finalScore.textContent = finalScore;
+  localStorage.setItem("Last Score", finalScore);
   resetBases(gameState.bases, gameState.runners);
   stopTimer();
+
+  checkScoreAchievements(difficulty, finalScore);
+  updateAchievementsPage();
 
   const bBucksEarned = calculateBbucksEarned();
   ELS.GO.TXT.bomBucks.innerText = bBucksEarned;
   addBomBucks(bBucksEarned);
   updateBbucksDisplay();
 
-  updateHighScores(gameState.score);
+  updateHighScores(finalScore);
   updateLBTableRows();
   gameState.inRound = false;
 }
@@ -102,9 +107,7 @@ function calculateBbucksEarned(){
   let SI = convertScoreToIndicator(finalScore); //Score Indicator
   const BBMult = SCORING_MATRIX[SI][DI];
   const BBEarned = BBMult * finalScore;
-  console.log("Calculate Bbucks called. DI:" + DI + ", SI:" + SI +
-    "\nOverall Score: " + BBEarned
-  );
+
   return BBEarned;
 }
 
@@ -122,7 +125,6 @@ function convertScoreToIndicator(score){
 }
 
 function convertDifficultyToIndicator(difficulty){
-  console.log("convert to DI called. Difficulty: " + difficulty);
   const keys = Object.keys(DIFFICULTY_NAMES);
   return keys.indexOf(difficulty);
 }
@@ -287,4 +289,23 @@ export function submitGuess() {
     ELS.GAME.BTNS.submit.disabled = true;
     ELS.GAME.DROPS.bookDropdown.classList.add("disabled");
     ELS.GAME.DROPS.chapterDropdown.classList.add("disabled");
+}
+
+/*
+ *  Functions for checking whether each type of achievement has
+ *  been completed. 
+ */
+
+function checkScoreAchievements(difficulty, score){
+  const configArray = ACHIEVEMENTS.scoreXonD.difficultyArrays[difficulty];
+  let playerArray = getPlayerAchievementsArray();
+  let diffArray = playerArray.scoreXonD.difficultyArrays[difficulty];
+
+  configArray.forEach((achievement, index) => {
+    if(!diffArray[index] && score >= achievement.requiredPoints) {
+      diffArray[index] = true;
+    }
+  });
+
+  setPlayerAchievementsArray(playerArray);
 }

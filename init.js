@@ -1,10 +1,10 @@
 import {ANIMATION_TIME_MS,BOOK_NAMES, DIFFICULTY_NAMES} from "./config.js";
 import {ELS} from "./ELS.js";
-import {fetchScores, loadData} from "./data_manager.js";
+import {fetchScores, loadData, savePlayerData} from "./data_manager.js";
 import * as Handlers from "./event_handlers.js";
 import {populateIncludeExcludeOptions, populateGuessOptions, initLBTableRows,
   updateLBDisplayDifficulty, updateLBTableRows, updateLBDisplayBook, positionBases,
-  updateBbucksDisplay} from "./ui_manager.js";
+  updateBbucksDisplay, initAchievementsPage, updateAchievementsPage} from "./ui_manager.js";
 import {setCustomDropdownValue} from "./helper_functions.js";
 
 const CLICK_HANDLERS = {
@@ -144,6 +144,8 @@ export async function initData(){
     await loadData();
 }
 
+
+
 export async function initEls(){
   updateLBDisplayDifficulty();
   updateLBDisplayBook();
@@ -151,6 +153,11 @@ export async function initEls(){
 
   initLBTableRows();
   updateLBTableRows();
+
+  savePlayerData();
+
+  initAchievementsPage();
+  updateAchievementsPage();
 
   populateGuessOptions();
   populateIncludeExcludeOptions();

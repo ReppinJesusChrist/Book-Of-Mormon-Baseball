@@ -1,0 +1,25 @@
+#achievements-screen {
+    display: flex;
+    flex-direction: column;
+
+    box-sizing: border-box;
+}
+
+#achievements-screen h1 {
+    text-align: center;
+    margin-bottom: 12px;
+}
+
+#main-achievements-list {
+    flex: 1;
+
+    height: 100%;
+    overflow-y: auto;
+
+    width: min(800px, 90%);
+    margin: 0 auto;
+}
+
+.main-list-achievement.complete{
+    text-decoration: line-through;
+}

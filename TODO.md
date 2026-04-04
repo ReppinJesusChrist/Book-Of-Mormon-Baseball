@@ -28,21 +28,24 @@
     - [X] Make a menu to select difficulty
     - [X]   Display high-scores (top 10 [X]; with times[X]) and most recent score in a table
   - [X] Flash text on screen (not an alert) when a strike is hit ("Strike 1!" etc.)
+  - [X] Wire buttons for store and achievements pages
+  - [X] Make chapter dropdowns auto-select chapter one when book is selected
 
 - [ ] **Session Queue**
-  - [ ] Wire buttons for store and achievements pages
-  - [ ] Make chapter dropdowns auto-select chapter one when book is selected
+
 
 - [ ] **Weekly Goal (3/30/26 - 4/5/26)**
   - [ ] Achievements
     - [ ] Create basic system
-      - [ ] Store requirements in config.js for basic set of achievements
-        - [ ] Score X on [difficulty]
-        - [ ] Earn X BomBucks in one round
-        - [ ] Earn X BomBucks total
+      - [X] Store requirements in config.js for basic set of achievements
+        - [X] Score X on [difficulty]
+        - [X] Earn X BomBucks in one round
+        - [X] Earn X BomBucks total
       - [ ] Check for accomplishment at appropriate times
-      - [ ] Display them on the Achievements page
-      - [ ] Mark them as completed on Ach. page when completed
+        - [X] XonD
+        - [ ] BomBucks (I think both are checked in the same place)
+      - [X] Display them on the Achievements page
+      - [X] Mark them as completed on Ach. page when completed
     - [ ] Create an overlay for when an achievement is completed
   - [ ] Store
     - [ ] Add options to the store to buy different colors of runners
@@ -61,6 +64,7 @@
   - [ ] Achievements
   - [ ] Better artwork
   - [ ] Better gameplay loop (currency/vanities, progress over time, unlockable runners/themes)
+  - [ ] Implement update system (start with playerData?)
 
 - [ ] **Styling**
   - [ ] Book of Mormon themed coloring (Maybe wait for Aunt Julie's feedback first)
