@@ -1,4 +1,4 @@
-@media (max-width: 700px) {    
+@media (max-width: 550px) {    
     html, body {
         min-width: 0px;
         overflow: auto;
@@ -9,9 +9,33 @@
         min-height: calc(100dvh - var(--header-height) -
             var(--footer-height));
     }
-    
+
     #container {
         flex-direction: column;
+    }
+
+    /*
+        Main Menu
+    */
+
+    #menu-screen h1 {
+        margin-bottom: 10px;
+    }
+
+    #menu-screen .lb-button {
+        display: none;
+    }
+
+    #menu-screen .achievements-page-button {
+        display: none;
+    }
+
+    #menu-screen button {
+        padding: 20px 30px;
+        margin: 3px;
+        font-weight: bold;
+        font-size: var(--font-size-large);
+        box-shadow: 0 3px 5px rgba(0,0,0,0.4);
     }
 
     #left-panel,
@@ -76,6 +100,7 @@
     .strike-box {
         width: var(--size-strbox-mob);
         height: var(--size-strbox-mob);
+        font-size: var(--size-strbox-mob);
     }
 
     #game-main-menu-btn {

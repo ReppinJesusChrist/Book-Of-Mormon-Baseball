@@ -42,8 +42,8 @@
             <button class="start-button" id="start-button">Start Game</button>
             <button id="settings-button" class="settings-button">Settings</button>
             <button id="leaderboard-button" class="lb-button">Leaderboard</button>
-            <button class="store-page-button" id="main-menu-store-button">BomBucks Store **NOT YET IMPLEMENTED**</button>
-            <button class="achievements-page-button" id="main-menu-achievement-button">Achievements **NOT YET IMPLEMENTED**</button>
+            <button class="store-page-button" id="main-menu-store-button">BomBucks Store</button>
+            <button class="achievements-page-button" id="main-menu-achievement-button">Achievements</button>
         </div>
         <div class="screen" id="game-screen" style="display:none;">
             <div id="container">
@@ -108,7 +108,7 @@
                 <p>You earned: <span id="go-currency-earned-display"></span> BOM-bucks.</p>
                 <button class="start-button GO-button" id="go-btns-tryagain">Play Again?</button>
                 <button class="main-menu-button GO-button" id="game-over-menu-btn">Back to Main Menu</button>
-                <button class="GO-button" id="hide-overlay">Back to Game Screen</button>
+                <button class="GO-button" id="hide-overlay">Hide Game Over Screen</button>
             </div>
         </div>
         <div class="overlay" id="strike-effect-display" aria-hidden="true">
@@ -148,17 +148,22 @@
                 <button id="uncheck-all-inex">Deselect All</button>
             </div>
             <div id="threshold-selection">
-                <div class="tutorial" id="threshold-label-explanation">((Single, Double, Triple, Homerun) represent Max guess distance for that difficulty)</div>
+                <div class="tutorial" id="threshold-label-explanation">
+                    [Single, Double, Triple, Homerun]: how close your guess has to be (# chapters off) to get each type of hit, 
+                    0: must be exactly correct, N/A: it is impossible to get that type of hit; 
+                    X sec: how long you have to guess;
+                    Verses: number verses displayed while guessing.
+                </div>
                 <label for="threshold-dropdown-label">Select Difficulty:</label>
                 <select id="threshold-value">
-                    <option value="easiest">Hit the side of Noah's ark (250 chapters, 100 chapters, 50 chapters, 25 chapters)</option>
-                    <option value="easier">Hit the side of a barn (100 chapters, 50 chapters, 25 chapters, 12 chapters)</option>
-                    <option value="easy">Love thy neighbor (50 chapters, 25 chapters, 12 chapters, 7 chapters)</option>
-                    <option value="average">Follow the star (25 chapters, 12 chapters, 7 chapters, 3 chapters)</option>
-                    <option value="hard" selected>Enter at the gate (12 chapters, 7 chapters, 3 chapters, 1 chapter)</option>
-                    <option value="harder">Hold the iron rod (7 chapters, 3 chapters, 1 chapter, Exact Match)</option>
-                    <option value="hardest">Find the piece of silver (3 chapters, 1 chapter, Exact Match, N/A)</option>
-                    <option value="bePerfect">Be Ye Therefore Perfect **WARNING, VERY HARD** (1 chapter, Exact Match, N/A, N/A)</option>
+                    <option value="easiest">Hit the side of Noah's ark ([250, 100, 50, 25], 180 sec, 5 verses)</option>
+                    <option value="easier">Hit the side of the stable ([100 , 50, 25, 12], 90 sec, 4 verses)</option>
+                    <option value="easy">Love thy neighbor ([50, 25, 12, 7], 60 sec, 3 verses)</option>
+                    <option value="average">Follow the star ([25, 12, 7, 3], 30 sec, 3 verses)</option>
+                    <option value="hard" selected>Enter at the gate ([12, 7, 3, 1], 20 sec, 3 verses)</option>
+                    <option value="harder">Hold the iron rod ([7, 3, 1, 0], 15 sec, 2 verses)</option>
+                    <option value="hardest">Find the piece of silver ([3, 1, 0, N/A], 10 sec, 2 verses)</option>
+                    <option value="bePerfect">Be Ye Therefore Perfect **VERY HARD** ([1, Exact Match, N/A, N/A], 7 sec, 1 verse)</option>
                 </select>
             </div>
             <button class="main-menu-button">Back to Menu</button>

@@ -384,7 +384,7 @@ select:hover {
     display: flex;
     justify-content: center;
     align-items: center;
-    font-size: 6rem;
+    font-size: var(--strike-box-size);
     font-weight: bold;
     color: red;
 }

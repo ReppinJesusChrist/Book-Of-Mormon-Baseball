@@ -35,26 +35,39 @@
 
 
 - [ ] **Weekly Goal (3/30/26 - 4/5/26)**
-  - [X] Achievements
-    - [X] Create basic system
-      - [X] Store requirements in config.js for basic set of achievements
-        - [X] Score X on [difficulty]
-        - [X] Earn X BomBucks in one round
-        - [X] Earn X BomBucks total
-      - [X] Check for accomplishment at appropriate times
-        - [X] XonD
-        - [X] BomBucks (I think both are checked in the same place)
-      - [X] Display them on the Achievements page
-      - [X] Mark them as completed on Ach. page when completed
-    - [X] Create an overlay for when an achievement is completed
-  - [X] Store
-    - [X] Add options to the store to buy different colors of runners
-    - [X] Allow switching colors in the store for now (different screen later?)
-  - [ ] Bug/formatting fixes
-    - [ ] Finish migrating settings dropdowns completely to custom ddowns and remove old ones
-    - [ ] Fix custom ddowns to show selected option instead of default text
-    - [ ] Make settings screen presentable enought to push
-  - [ ] PUSH TO GITHUB SITE!!! 
+  - [ ] **Store**
+    - [ ] Track store buyables in config(definitions), and playerData(purchased?), just like achievements
+    - [ ] Use ^^ data to stock & update store, and to handle purchases
+  - [ ] **GenCon**
+    - [ ] Finish scraper
+    - [ ] Wire different ranges into settings (see vv)
+  - [ ] **Overlapping ELS**
+    - [ ] Make "subsections" turn into "subselect" for GenCon (how far back), and Custom Study Plans (which plan)
+    - [ ] Combine guess+revealRef
+    - [ ] Turn 'newRound' into 'show game-over'
+  - [ ] **Implement basic update system**
+    - [ ] Add version tracking (const and localStorage)
+    - [ ] Check stored version and compare to current version during init
+    - [ ] Implement function behavior
+      - [ ]  default behavior for no version -> version 4.2026.0
+      - [ ]  Do nothing if versions match
+      - [ ]  Placeholder function for new version + migrations
+  - [ ] **Bug/formatting fixes**
+    - [ ] Dropdowns
+      - [ ] Finish migrating settings dropdowns completely to custom ddowns and remove old ones.
+      - [ ] Fix wiring and functions
+      - [ ] Fix custom ddowns to show selected option instead of default text
+    - [ ] Make settings screen presentable enought to push (Spend >= 10 minutes working on formatting after praying & pondering how to ^ it)
+  - [ ] **PUSH version 4.2026.0 TO GITHUB SITE!!!**
+  - [X] **Mini mobile update**
+    - [X] Hide everything that doesn't work on mobile yet
+    - [X] Shrink title to show properly
+    - [X] Adjust main-menu button formatting to fit on small screen
+    - [X] Add more detail to mobile TODOs
+      - [X] Fix one: Scale strike Xs to fit boxes
+  - [ ] **GitHub branch work**
+    - [ ] Study branch checking out, especially checking out a different one for bug fixes and the next major update
+    - [ ] Check out a branch for each feature above to practice using them
 
 - [ ] **Major Projects**
   - [ ] Mobile Formatting
@@ -85,7 +98,8 @@
   - [ ] **Game Screen**
     - [ ] Set fixed size verse display with auto-scrolling as needed
     - [ ] Adjustable verse text-size slider
-    - [ ] Diamond and Leaderboard side-by-side (at bottom of screen), not vertical
+    - [ ] Clamp strike-box size better
+    - [ ] Adjust minimum element sizes to reflect new 550px cutoff for mobile
     - [ ] Auto-reveal distance, reference requires button press. (remove distance button)
     - [ ] auto scroll to top when verses load
     - [ ] Add bottom fade to indicate scrollability
@@ -97,9 +111,14 @@
         - [ ] Center text
         - [ ] Show title and description
       - [ ] Completed
+  - [ ] **Mobile**
+    - [ ] Fix game-screen dropdowns cutoff on left side
+    - [ ] Make header and footer smaller
+    - [ ] Make strike Xs smaller
+    - [ ] Clamp Main Menu buttons vertically to let them shrink
+    - [ ] Make difficulty ddown label selection wrap so it doesn't overflow right
 
   - [ ] **Main Menu**
-    - [X] Center vertically (even after out-and-back)
     - [ ] Buttons all same size
 
 
@@ -131,6 +150,7 @@
     - [X] Make chapter dropdowns auto select chapter one when book is selected
     - [ ] Fix settings volume select dropdown (finish migrating to custom dropdown)
   - [ ] **Features**
+    - [ ] Improve pseudo-random
     - [ ] Add nav-bar to header
     - [ ] Offer default difficulty options to make selection easy
     - [ ] Implement Custom Difficulty
