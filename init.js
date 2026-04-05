@@ -33,6 +33,7 @@ const MULTI_HANDLERS = [
   {selector: '.restart-button', event: 'click', handler: Handlers.handleRestartButton},
   {selector: '.achievements-page-button', event: 'click', handler: Handlers.handleAchPageButton},
   {selector: '.store-page-button', event: 'click', handler: Handlers.handleStorePageButton},
+  {selector: '.team-color-button', event: 'click', handler: Handlers.handleStoreTeamColorButton},
 ];
 
 export function initCSSVars() {

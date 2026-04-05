@@ -328,9 +328,18 @@ select:hover {
 }
 
 .runner {
+    --runner-red : red;
+    --runner-blue : blue;
+    --runner-yellow : yellow;
+    --runner-green : green;
+    --runner-orange : orange;
+    --runner-purple : purple;
+
+    --runner-color: var(--runner-red);
+
     width: var(--size-runner);
     height: var(--size-runner);
-    background: #ff4444;
+    background: var(--runner-color);
     border-radius: 50%;
     position: absolute;
     transition: left var(--runner-animation-time) ease, top var(--runner-animation-time) ease;

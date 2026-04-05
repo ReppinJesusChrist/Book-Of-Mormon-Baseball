@@ -8,8 +8,8 @@ import {showGameOver, updateScoreboard, updateLBTableRows,
   updateBbucksDisplay, updateAchievementsPage} from "./ui_manager.js";
 import {startTimer, stopTimer} from "./timer.js";
 import {sleep, nextFrame, waitForAllRunners} from "./helper_functions.js";
-import { submitScore, addBomBucks, getPlayerAchievementsArray,
-  setPlayerAchievementsArray,
+import { submitScore, addBomBucks, getBomBucks, getPlayerAchievementsArray,
+  setPlayerAchievementsArray, 
  } from "./data_manager.js";
 
 window.addStrike = addStrike;
@@ -38,6 +38,8 @@ export const gameState = {
     difficulty : 'hard', // easiest -> average -> hardest
     lbDifficulty : 'hard',
     lbVolume : 'bofm',
+
+    runnerColor: 'red',
 
     currentVolume : 'bofm',
     customStudyPlan: 'bofm_isaiah'
@@ -88,13 +90,14 @@ export async function endGame(){
   resetBases(gameState.bases, gameState.runners);
   stopTimer();
 
-  checkScoreAchievements(difficulty, finalScore);
-  updateAchievementsPage();
-
-  const bBucksEarned = calculateBbucksEarned();
-  ELS.GO.TXT.bomBucks.innerText = bBucksEarned;
-  addBomBucks(bBucksEarned);
+  const BbucksEarned = calculateBbucksEarned();
+  ELS.GO.TXT.bomBucks.innerText = BbucksEarned;
+  addBomBucks(BbucksEarned);
   updateBbucksDisplay();
+
+  checkScoreAchievements(difficulty, finalScore);
+  checkBomBuckAchievements(BbucksEarned);
+  updateAchievementsPage();
 
   updateHighScores(finalScore);
   updateLBTableRows();
@@ -166,6 +169,12 @@ export function getNextBase(currentBase){
 export function spawnRunner(){
   const runner = document.createElement('div');
   runner.classList.add('runner');
+  console.log(gameState.settings.runnerColor);
+  runner.style.setProperty(
+    '--runner-color',
+    `var(--runner-${gameState.settings.runnerColor})`
+  );
+
   ELS.GAME.diamond.appendChild(runner);
 
   setRunnerPosition(runner, "home");
@@ -308,4 +317,35 @@ function checkScoreAchievements(difficulty, score){
   });
 
   setPlayerAchievementsArray(playerArray);
+}
+
+function checkBomBuckAchievements(BbucksEarned){
+  const oneRoundArray = ACHIEVEMENTS.bbucksOneRound.achievementsArray;
+  const totalArray = ACHIEVEMENTS.totalBbucks.achievementsArray;
+
+  const totalBbucks = getBomBucks();
+  let playerArray = getPlayerAchievementsArray();
+  
+  let playerOneRound = playerArray.bbucksOneRound.achievementsArray;
+  let playerTotal = playerArray.totalBbucks.achievementsArray;
+
+  // One round earned check
+  oneRoundArray.forEach((achievement, index) => {
+    if(!playerOneRound[index] && BbucksEarned >= achievement.requiredBucks) {
+      playerOneRound[index] = true;
+    }
+  });
+
+  // Total currently owned check
+  totalArray.forEach((achievement, index) => {
+    if(!playerTotal[index] && totalBbucks >= achievement.requiredBucks) {
+      playerTotal[index] = true;
+    }
+  });
+
+  setPlayerAchievementsArray(playerArray);
+}
+
+export function setRunnerColor(color){
+  gameState.settings.runnerColor = color;
 }

@@ -392,7 +392,7 @@ export const ACHIEVEMENTS = {
    */ 
   bbucksOneRound: {
     sectionHeader: "Single Round BomBucks Earned",
-    achievementArray: [
+    achievementsArray: [
         { 
           name: "OneRoundBbucks-1",
           requiredBucks: 1,
@@ -431,34 +431,34 @@ export const ACHIEVEMENTS = {
    */ 
   totalBbucks: {
     sectionHeader: "Total BomBucks Saved",
-    achievementArray: [
+    achievementsArray: [
     { 
       name: "TotalBbucks-10",
-      requiredBucks: 1,
+      requiredBucks: 10,
     }, 
     { 
       name: "TotalBbucks-100",
-      requiredBucks: 7,
+      requiredBucks: 100,
     },
     { 
       name: "TotalBbucks-250",
-      requiredBucks: 50,
-    },
-    { 
-      name: "TotalBbucks-K",
       requiredBucks: 250,
     },
     { 
-      name: "TotalBbucks-5K",
-      requiredBucks: 500,
-    },
-    { 
-      name: "TotalBbucks-20K",
+      name: "TotalBbucks-K",
       requiredBucks: 1000,
     },
     { 
+      name: "TotalBbucks-5K",
+      requiredBucks: 5000,
+    },
+    { 
+      name: "TotalBbucks-20K",
+      requiredBucks: 20000,
+    },
+    { 
       name: "TotalBbucks-One-Million!",
-      requiredBucks: 10000,
+      requiredBucks: 1000000,
     },
   ]
   },

@@ -35,21 +35,21 @@
 
 
 - [ ] **Weekly Goal (3/30/26 - 4/5/26)**
-  - [ ] Achievements
-    - [ ] Create basic system
+  - [X] Achievements
+    - [X] Create basic system
       - [X] Store requirements in config.js for basic set of achievements
         - [X] Score X on [difficulty]
         - [X] Earn X BomBucks in one round
         - [X] Earn X BomBucks total
-      - [ ] Check for accomplishment at appropriate times
+      - [X] Check for accomplishment at appropriate times
         - [X] XonD
-        - [ ] BomBucks (I think both are checked in the same place)
+        - [X] BomBucks (I think both are checked in the same place)
       - [X] Display them on the Achievements page
       - [X] Mark them as completed on Ach. page when completed
-    - [ ] Create an overlay for when an achievement is completed
-  - [ ] Store
-    - [ ] Add options to the store to buy different colors of runners
-    - [ ] Allow switching colors in the store for now (different screen later?)
+    - [X] Create an overlay for when an achievement is completed
+  - [X] Store
+    - [X] Add options to the store to buy different colors of runners
+    - [X] Allow switching colors in the store for now (different screen later?)
   - [ ] Bug/formatting fixes
     - [ ] Finish migrating settings dropdowns completely to custom ddowns and remove old ones
     - [ ] Fix custom ddowns to show selected option instead of default text
@@ -89,6 +89,14 @@
     - [ ] Auto-reveal distance, reference requires button press. (remove distance button)
     - [ ] auto scroll to top when verses load
     - [ ] Add bottom fade to indicate scrollability
+  - [ ] **Achievements Screen**
+    - [ ] Add special styling for individual achievements
+      - [ ] Base appearance
+        - [ ] Make bigger
+        - [ ] Put in boxes
+        - [ ] Center text
+        - [ ] Show title and description
+      - [ ] Completed
 
   - [ ] **Main Menu**
     - [X] Center vertically (even after out-and-back)
@@ -111,6 +119,8 @@
 
 - [ ] **Bugs and Features** 
   - [ ] **Bugs**
+    - [ ] Total BomBucks achievements don't register until more bucks are earned. (Does this need to be fixed?)
+      - [ ] Fix: Check total Bbucks achievements on startup as well as when more are earned.
     - [X] Styling of Home Page changes after leaving and returning
     - [ ] Custom Dropdowns
       - [ ] Make Custom book dropdown display name of selected book when choice is made (right now it always says "Book:")

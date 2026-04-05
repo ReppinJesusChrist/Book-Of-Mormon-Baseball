@@ -1,0 +1,4 @@
+.store-section {
+    display: flex;
+    flex-direction: column;
+}

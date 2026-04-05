@@ -1,16 +1,17 @@
 import {GAME_STATES} from './config.js';
 import {ELS} from "./ELS.js";
 import { gameState, endGame, startRound, 
-  startGame, advanceRunners, submitGuess,
+  startGame, submitGuess, setRunnerColor,
   } from "./game_logic.js";
 import { stopTimer } from "./timer.js";
 import { toggleAllBoxes, makeScriptureLink} from "./helper_functions.js";
 import {} from "./data_manager.js";
-import {populateIncludeExcludeOptions, populateGuessOptions, updateScoreboard,
-  hideGameOver, updateLBDisplayDifficulty,
+import {populateIncludeExcludeOptions, populateGuessOptions, 
+  updateScoreboard, hideGameOver, updateLBDisplayDifficulty,
   updateLBTableRows, updateLBDisplayBook, showScreen,
+  updateBbucksDisplay,
 } from "./ui_manager.js";
-import {loadData} from "./data_manager.js";
+import {loadData, getBomBucks, addBomBucks} from "./data_manager.js";
 
 // Event Listener Functions (Will be exported or regrouped soon I think)
 export function handleThreshValueChange(){
@@ -176,4 +177,39 @@ export function handleLBBookButton(event){
   gameState.settings.lbBook = diff;
   updateLBDisplayBook();
   updateLBTableRows();
+}
+
+/*                  
+ *                  *
+ *  Store buttons   *
+ *                  *
+ */
+
+// Team color Buy/Select buttons
+export function handleStoreTeamColorButton(event){
+  const button = event.currentTarget;
+  const color = button.value;
+
+  const section = button.closest('.store-section');
+  const allColorButtons = section.querySelectorAll(
+    '.team-color-button'
+  );
+
+  const cost = 10;
+
+  if(getBomBucks() >= cost){
+    addBomBucks(-cost);
+
+    allColorButtons.forEach((currButton) => {
+      const indicator = currButton.querySelector('.selected-indicator');
+      if(currButton !== button){
+        indicator.classList.add('hidden');
+      } else {
+        indicator.classList.remove('hidden');
+      }
+    });
+
+    setRunnerColor(color);
+    updateBbucksDisplay();
+  }
 }

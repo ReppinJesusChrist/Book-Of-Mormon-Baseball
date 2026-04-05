@@ -12,7 +12,8 @@
     <link rel="stylesheet" href="_pages.css" /> 
     <link rel="stylesheet" href="_components.css" />
     <link rel="stylesheet" href="_mobile.css" />
-    <link rel="stylesheet" href="_achievements.css" /> 
+    <link rel="stylesheet" href="_achievements.css" />
+    <link rel="stylesheet" href="_store.css" /> 
 </head>
 
 <body>
@@ -100,14 +101,14 @@
                 </div>
             </div>
         </div>
-        <div class="overlay" id="game-over-overlay" class="hidden">
+        <div class="overlay hidden" id="game-over-overlay">
             <div class="overlay-content">
-            <h2>Game Over</h2>
-            <p>Your final score is: <span id="final-score">__</span></p>
-            <p>You earned: <span id="go-currency-earned-display"></span> BOM-bucks.</p>
-            <button class="start-button GO-button" id="go-btns-tryagain">Play Again?</button>
-            <button class="main-menu-button GO-button" id="game-over-menu-btn">Back to Main Menu</button>
-            <button class="GO-button" id="hide-overlay">Back to Game Screen</button>
+                <h2>Game Over</h2>
+                <p>Your final score is: <span id="final-score">__</span></p>
+                <p>You earned: <span id="go-currency-earned-display"></span> BOM-bucks.</p>
+                <button class="start-button GO-button" id="go-btns-tryagain">Play Again?</button>
+                <button class="main-menu-button GO-button" id="game-over-menu-btn">Back to Main Menu</button>
+                <button class="GO-button" id="hide-overlay">Back to Game Screen</button>
             </div>
         </div>
         <div class="overlay" id="strike-effect-display" aria-hidden="true">
@@ -206,12 +207,45 @@
         </div>
         <div class="screen" id="achievements-screen" style="display:none;">
             <h1>Achievements</h1>
-            <div id="main-achievements-list">
-
-            </div>
+            <div id="main-achievements-list"></div>
         </div>
+        <div class="overlay timed-overlay hidden" id="achievement-unlock-overlay">
+            <div class="overlay-content">
+                <h2>
+                Achievement Unlocked: <span id="overlay-achievement-name">Test Achievement Name</span>
+                </h2>
+                <div id="overlay-achievement-description">Test Description</div>
+            </div>
+        </div> 
         <div class="screen" id="store-screen" style="display:none;">
             <h1>BOM Bucks Store</h1>
+            <div class="store-section" id="team-color-store-section">
+                <h2 class="store-section-header">Team Color Options</h2>
+                <button class="buy-button team-color-button" value="red">
+                    Team Color Red (<span class="cost-display">10</span>BB to switch)
+                    <span class="selected-indicator">--Selected--</span>
+                </button>
+                <button class="buy-button team-color-button" value="blue">
+                    Team Color Blue (<span class="cost-display">10</span>BB to switch)
+                    <span class="selected-indicator hidden">--Selected--</span>
+                </button>
+                <button class="buy-button team-color-button" value="yellow">
+                    Team Color Yellow (<span class="cost-display">10</span>BB to switch)
+                    <span class="selected-indicator hidden">--Selected--</span>
+                </button>
+                <button class="buy-button team-color-button" value="green">
+                    Team Color Green (<span class="cost-display">10</span>BB to switch)
+                    <span class="selected-indicator hidden">--Selected--</span>
+                </button>
+                <button class="buy-button team-color-button" value="orange">
+                    Team Color Orange (<span class="cost-display">10</span>BB to switch)
+                    <span class="selected-indicator hidden">--Selected--</span>
+                </button>
+                <button class="buy-button team-color-button" value="purple">
+                    Team Color Purple (<span class="cost-display">10</span>BB to switch)
+                    <span class="selected-indicator hidden">--Selected--</span>
+                </button>
+            </div>
         </div>
     </div>
     <footer id="footer-bar">

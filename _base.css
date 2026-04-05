@@ -73,6 +73,11 @@
     --size-strbox-mob: 30px;
     --size-base-mob: 7dvw;
     --size-runner-mob: 25px;
+
+    /*
+     *  Timer durations
+     */
+    --achievement-display-duration: 0.7s;
 }
 
 @keyframes flash-red {

@@ -62,8 +62,16 @@ function clearLB(){
 }
 
 
+
+/**
+ * ****************** *
+ * Achievements Stuff *
+ * ****************** *
+**/
 export function initAchievementsPage(){
   const achievements = ACHIEVEMENTS;
+  const currPlayerAchievementObj = loadPlayerData().achievements;
+
   let achList = ELS.ACHIEVEMENTS.mainList;
 
   for(const [key, value] of Object.entries(achievements)){
@@ -78,22 +86,36 @@ export function initAchievementsPage(){
         difficultyHeader.innerText = DIFFICULTY_NAMES[difficulty];
         achList.appendChild(difficultyHeader);
 
-        expandAchievementArray(diffArray, achList, [key, "difficultyArrays", difficulty]);
+        expandAchievementsArray(
+          diffArray, currPlayerAchievementObj, achList,
+          [key, "difficultyArrays", difficulty]
+        );
       }
     } else {
-      expandAchievementArray(value.achievementArray, achList, [key]);
+      expandAchievementsArray(
+        value.achievementsArray, currPlayerAchievementObj, achList, 
+        [key, "achievementsArray"]
+      );
     }
   }
 }
 
-function expandAchievementArray(array, targetDiv, basePath){
-  array.forEach((achievement, index) => {
+function expandAchievementsArray(configArray, playerObj, targetDiv, basePath){
+  configArray.forEach((achievement, index) => {
     const achEl = document.createElement("div");
     achEl.innerText = achievement.name;
     achEl.classList.add('main-list-achievement');
 
     const fullPath = [...basePath, index];
     achEl.dataset.path = fullPath.join("-");
+
+    /*
+     * Check current player array and mark as complete initially if
+     * completed in a previous session.
+     */
+    if(arrayToPath(playerObj, fullPath)){
+      achEl.classList.add('complete');
+    }
 
     targetDiv.appendChild(achEl);
   });
@@ -122,21 +144,15 @@ function arrayToPath(obj, pathArray) {
 
 /**
  * 
- * @param {*} listEl - The achievement element on the main achievements
- *  list to mark as complete
- * @param {*} achievement - The actual achievement from config.js
+ * @param {*} object 
+ * @param {*} callback 
+ * @param {*} path 
  * 
- * This function marks an achievement as complete. At this point, this
- * could easily be done inline in updateAchievementsPage(), but I intend
- * to implement a special notification system to display achievements
- * that will probably be async, so this provides future-proofing 
+ * I don't understand this one very well and I think I could learn a lot
+ * about JS by doing a deep dive into how it works. I asked some
+ * follow-up questions to chat after asking for help making it, but I 
+ * could use another good conversation.
  */
-function completeAchievement(achievement, listEl){
-  listEl.classList.add("complete");
-
-  console.log("achievement unlocked: " , achievement);
-}
-
 function walkPlayerAchievements(object, callback, path = []){
   if(Array.isArray(object)) {
     object.forEach((value, index) => {
@@ -151,6 +167,97 @@ function walkPlayerAchievements(object, callback, path = []){
     callback(object, path);
   }
 }
+
+/**
+ * 
+ * Code for tracking and displaying achievements. This should be 
+ * refactored into it's own file along with the above achievements-
+ * related code soon I think.
+ *  
+ */ 
+
+const DISPLAY_TIME_PER_ACHIEVEMENT = 3000;
+const achievementDisplayQueue = [];
+let isShowingAchievement = false;
+
+/**
+ * 
+ * @param {*} listEl - The achievement element on the main achievements
+ *  list to mark as complete
+ * @param {*} achievement - The actual achievement from config.js
+ * 
+ * This function marks an achievement as complete. At this point, this
+ * could easily be done inline in updateAchievementsPage(), but I intend
+ * to implement a special notification system to display achievements
+ * that will probably be async, so this provides future-proofing 
+ */
+async function completeAchievement(achievement, listEl){
+  listEl.classList.add("complete");
+
+  if(achievement === undefined){
+    throw new Error(
+      `No valid achievement was passed ${listEl.innerText}`
+    );
+  } 
+
+  console.log("achievement unlocked: " , achievement);
+
+  achievementDisplayQueue.push(achievement);
+  processAchievementQueue();
+}
+
+async function processAchievementQueue() {
+  if(isShowingAchievement) return;
+  if(achievementDisplayQueue.length === 0) return;
+
+  isShowingAchievement = true;
+
+  const achievement = achievementDisplayQueue.shift();
+
+  const overlay = ELS.OVERLAYS.achievementUnlocked;
+  const nameEl = ELS.OVERLAYS.achievementName;
+  const descEl = ELS.OVERLAYS.achievementDescription;
+
+  // Update display info
+  nameEl.textContent = achievement.name;
+  descEl.textContent = achievement.description || "No description entered yet";
+
+  // Make overlay visible
+  overlay.classList.remove("hidden");
+  overlay.classList.remove("fade-out");
+
+  // I don't understand this line, but chatGPT says it's to force a reflow
+  void overlay.offsetWidth;
+
+  overlay.classList.add("show");
+
+  await wait(DISPLAY_TIME_PER_ACHIEVEMENT);
+
+  overlay.classList.remove("show");
+  overlay.classList.add("fade-out");
+
+  /**
+   *  This time must be adjusted along with --achievement-display-time
+   * in _base.css root:
+   */  
+  await wait(700);
+
+  overlay.classList.add("hidden");
+
+  isShowingAchievement = false;
+
+  processAchievementQueue();
+}
+
+function wait(ms) {
+  return new Promise(resolve => setTimeout(resolve, ms));
+}
+
+/**
+ * *******************************************************
+ * Next Section ******************************************
+ * *******************************************************
+ */
 
 export function showGameOver(){
   ELS.finalScore.textContent = gameState.score;
@@ -288,12 +395,20 @@ export function showVerses() {
   });
 }
 
+/**
+ * 
+ * Runner functions
+ * 
+ */
+
 export function setRunnerPosition(runner, base){
   const coords = BASE_POSITIONS[base];
   runner.style.left = coords.left + -2.5 + "%";
   runner.style.top = coords.top + -2.5 + "%";
   //runner.style.transform = `translate(${coords.left}%, ${coords.top}%)`; 
 }
+
+
 
 export function animateStrike(){
   const sd = ELS.GAME.strikeEffectText;

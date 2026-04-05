@@ -43,27 +43,6 @@
     background-color: var(--color-primary-gold-hover);
 }
 
-#game-over-overlay {
-  position: fixed;          /* stays over everything */
-  top: 0;
-  left: 0;
-  width: 100vw;
-  height: 100vh;
-  background-color: rgba(0, 0, 0, 0.6); /* translucent black */
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  z-index: 1000;            /* make sure it's above everything else */
-  opacity: 0;
-  pointer-events: none;
-  transition: opacity 0.3s ease;
-}
-
-#game-over-overlay.visible {
-  opacity: 1;
-  pointer-events: all;
-}
-
 #strike-effect-display {
     position: fixed;
     inset: 0;
@@ -89,6 +68,26 @@
     animation: strike-spin-shrink 2s forwards;
 }
 
+/*
+ *  Overlays 
+ */
+
+.timed-overlay {
+    opacity: 0;
+    pointer-events: none;
+
+    transition: opacity var(--achievement-display-duration) ease;
+}
+
+.timed-overlay.show {
+    opacity: 1;
+    pointer-events: auto;
+}
+
+.timed-overlay.fade-out {
+    opacity: 0;
+}
+
 .overlay-content {
   background-color: white;
   color: black;
@@ -98,7 +97,27 @@
   box-shadow: 0 0 10px rgba(0,0,0,0.3);
 }
 
-/* optional helper class to keep it hidden initially */
+#game-over-overlay {
+  position: fixed;          /* stays over everything */
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.6); /* translucent black */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;            /* make sure it's above everything else */
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s ease;
+}
+
+#game-over-overlay.visible {
+  opacity: 1;
+  pointer-events: all;
+}
+
 .hidden {
   display: none;
 }

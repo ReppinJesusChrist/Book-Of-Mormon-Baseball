@@ -42,13 +42,17 @@ const defaultPlayerData = {
      * Achievements for earning at least X BomBucks in a single round on any difficulty
      * Values in-order: 1, 7, 50, 250, 500, 1000, and 10000 
      */
-    bbucksOneRound: [false, false, false, false, false, false, false],
+    bbucksOneRound: {
+      achievementsArray: [false, false, false, false, false, false, false],
+    },
 
     /*
      * Achievements for having at least X BomBucks currently saved
      * Values in-order: 10, 100, 250, 1000, 5000, 20000, and 1000000 
      */
-    totalBbucks: [false, false, false, false, false, false, false],
+    totalBbucks: {
+      achievementsArray: [false, false, false, false, false, false, false],
+    },
   }
 }
 

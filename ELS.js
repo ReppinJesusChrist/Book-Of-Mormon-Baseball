@@ -80,7 +80,11 @@ export const ELS = {
     screen: document.getElementById('store-screen'),
   },
   vSelect: document.getElementById('settings-vselect-value'),
-  
+  OVERLAYS: {
+    achievementUnlocked: document.getElementById('achievement-unlock-overlay'),
+    achievementName: document.getElementById('overlay-achievement-name'),
+    achievementDescription: document.getElementById('overlay-achievement-description'),
+  },
   overlay: document.getElementById('game-over-overlay'),
   finalScore: document.getElementById('final-score'),
 }
