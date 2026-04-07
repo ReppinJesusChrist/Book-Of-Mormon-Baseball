@@ -245,11 +245,9 @@ function walkPlayerAchievements(object, callback, path = []){
 }
 
 /**
- * 
  * Code for tracking and displaying achievements. This should be 
  * refactored into it's own file along with the above achievements-
  * related code soon I think.
- *  
  */ 
 
 const DISPLAY_TIME_PER_ACHIEVEMENT = 3000;
@@ -472,18 +470,14 @@ export function showVerses() {
 }
 
 /**
- * 
  * Runner functions
- * 
  */
-
 export function setRunnerPosition(runner, base){
   const coords = BASE_POSITIONS[base];
   runner.style.left = coords.left + -2.5 + "%";
   runner.style.top = coords.top + -2.5 + "%";
   //runner.style.transform = `translate(${coords.left}%, ${coords.top}%)`; 
 }
-
 
 
 export function animateStrike(){
@@ -503,4 +497,14 @@ export function positionBases(){
     baseEl.style.top = `${pos.top}%`;
     baseEl.style.transform = "translate(-50%, -50%) rotate(45deg)"; // Center and rotate
   }
+}
+
+/**
+ * Update system related functions
+ */
+export function apologizeForLostData(){
+  console.log("I had to reset your data just now because your save file was too old.",
+    "I'm sorry for any data you just lost. God will always comfort you if you ask Him.",
+    "Also, thanks so much for playing such an early version that you needed this message!"
+  );
 }

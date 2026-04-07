@@ -1,12 +1,14 @@
-import {ANIMATION_TIME_MS,BOOK_NAMES, DIFFICULTY_NAMES} from "./config.js";
+import {ANIMATION_TIME_MS,} from "./config.js";
 import {ELS} from "./ELS.js";
-import {fetchScores, loadData, savePlayerData} from "./data_manager.js";
+import {fetchScores, loadScriptureData, savePlayerData, getUserVersion, setUserVersion,
+  isPlayerDataSaved, loadPlayerData, setPlayerData} from "./data_manager.js";
 import * as Handlers from "./event_handlers.js";
 import {populateIncludeExcludeOptions, populateGuessOptions, initLBTableRows,
   updateLBDisplayDifficulty, updateLBTableRows, updateLBDisplayBook, positionBases,
   updateBbucksDisplay, initAchievementsPage, updateAchievementsPage,
   stockStore} from "./ui_manager.js";
 import {setCustomDropdownValue} from "./helper_functions.js";
+
 
 const CLICK_HANDLERS = {
   'revealReference': Handlers.handleRevealReference,
@@ -127,26 +129,9 @@ function attachCustomDropdown(toggleEl, dropdownEl){
   });
 }
 
-export function initScores(){
-  let scores = fetchScores();
-  if(!scores){
-    const initial = {};
-    for(const bookName in BOOK_NAMES){
-      initial[bookName] = {};
-      for(const difficultyName in DIFFICULTY_NAMES){
-      initial[bookName][difficultyName] = [];
-      }
-    }
-    scores = JSON.stringify(initial);
-    localStorage.setItem("topScores", scores);
-  };
-}
-
 export async function initData(){
-    await loadData();
+    await loadScriptureData();
 }
-
-
 
 export async function initEls(){
   updateLBDisplayDifficulty();

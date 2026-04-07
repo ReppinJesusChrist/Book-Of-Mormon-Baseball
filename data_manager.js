@@ -1,4 +1,6 @@
-import {STANDARD_WORKS_FILE_NAMES, CUSTOM_STUDY_FILE_NAMES, DB_DEBUG, VERSE_NUMS} from "./config.js";
+import {STANDARD_WORKS_FILE_NAMES, CUSTOM_STUDY_FILE_NAMES, DB_DEBUG, VERSE_NUMS,
+  BOOK_NAMES, DIFFICULTY_NAMES,
+} from "./config.js";
 import {gameState} from "./game_logic.js";
 
 
@@ -9,8 +11,10 @@ import {gameState} from "./game_logic.js";
     SUPABASE_URL, SUPABASE_ANON_KEY
   ) : null;
 
+
 const STORAGE_KEYS = {
   playerData: "playerData",
+  version: "version"
 }
 
 export const gameData = {
@@ -59,7 +63,72 @@ const defaultPlayerData = {
   }
 }
 
+export function checkAndFixLocalStorage(){
+  const playerScores = fetchScores();
+  const playerData = loadPlayerData();
+
+  // Rebuild leaderboard if data has been deleted
+  if(!playerScores){
+    initScores();
+  }
+
+  // Restore default playerData if none saved
+  if(!isPlayerDataSaved()){
+    setPlayerData(playerData);
+  }
+}
+
+export function initScores(){
+  let scores = fetchScores();
+  if(!scores){
+    const initial = {};
+    for(const bookName in BOOK_NAMES){
+      initial[bookName] = {};
+      for(const difficultyName in DIFFICULTY_NAMES){
+      initial[bookName][difficultyName] = [];
+      }
+    }
+    scores = JSON.stringify(initial);
+    localStorage.setItem("topScores", scores);
+  };
+}
+
+/**
+ * Restores all localStorage saved data to default values
+ */
+export function resetAllLocalData(){
+  localStorage.clear();
+  checkAndFixLocalStorage();
+}
+
 let playerData = loadPlayerData();
+
+/**
+ * Version getter/setter (as stored in localStorage)
+ */
+export function getUserVersion(){
+  // Using storage_keys for this isn't necessary, but it feels more stable in case I change keys in the future
+  const version = localStorage.getItem(STORAGE_KEYS.version);
+  
+  return version;
+}
+
+export function setUserVersion(updatedVersion){
+  localStorage.setItem(STORAGE_KEYS.version, updatedVersion);
+}
+
+/**
+ * 
+ * PlayerData getter/setter (to/from localStorage)
+ * 
+ */
+export function isPlayerDataSaved(){
+  return (localStorage.getItem(STORAGE_KEYS.playerData) != null);
+}
+
+export function setPlayerData(data){
+  playerData = data;
+}
 
 export function loadPlayerData(){
   const saved = localStorage.getItem(STORAGE_KEYS.playerData);
@@ -69,6 +138,7 @@ export function loadPlayerData(){
 export function savePlayerData(){
   localStorage.setItem(STORAGE_KEYS.playerData, JSON.stringify(playerData));
 }
+
 
 /**
  * Getter, setter, and incrementer for player BomBucks 
@@ -122,7 +192,7 @@ export async function fetchScriptures(volume){
   return await response.json();
 }
 
-export async function loadData() {
+export async function loadScriptureData() {
   try{
     const volume = gameState.settings.currentVolume;
     let response;

@@ -1,16 +1,18 @@
-import { initCSSVars, initEventListeners, initScores, initData,
+import { initCSSVars, initEventListeners, initData,
   initEls
 } from "./init.js";
-// let updateNeeded = true;
+import { checkAndFixLocalStorage } from "./data_manager.js";
+import {checkVersionAndUpdate} from "./version_control.js";
 
 document.addEventListener('DOMContentLoaded', async function () {
   initCSSVars();
+
+  checkVersionAndUpdate();
+  checkAndFixLocalStorage();
 
   await initData();
   
   initEls();
 
-  initEventListeners();
-  initScores();
-  
+  initEventListeners();  
 });

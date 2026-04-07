@@ -82,7 +82,6 @@
 
 .timed-overlay.show {
     opacity: 1;
-    pointer-events: auto;
 }
 
 .timed-overlay.fade-out {

@@ -11,7 +11,7 @@ import {populateIncludeExcludeOptions, populateGuessOptions,
   updateLBTableRows, updateLBDisplayBook, showScreen,
   updateBbucksDisplay, refreshStore
 } from "./ui_manager.js";
-import {loadData, getBomBucks, addBomBucks} from "./data_manager.js";
+import {loadScriptureData, getBomBucks, addBomBucks} from "./data_manager.js";
 import {STORE_DEFS, unlockStoreItem, isStoreItemUnlocked} from "./store.js";
 
 // Event Listener Functions (Will be exported or regrouped soon I think)
@@ -95,7 +95,7 @@ function showNongameScreen(targetScreen){
 export async function handleVSelectChange(){
   gameState.settings.currentVolume = ELS.vSelect.value;
   gameState.settings.lbVolume = ELS.vSelect.value;
-  await loadData();
+  await loadScriptureData();
   populateGuessOptions();
   populateIncludeExcludeOptions();
 }

@@ -35,9 +35,9 @@
 
 
 - [ ] **Weekly Goal (3/30/26 - 4/5/26)**
-  - [ ] **Store**
-    - [ ] Track store buyables in config(definitions), and playerData(purchased?), just like achievements
-    - [ ] Use ^^ data to stock & update store, and to handle purchases
+  - [X] **Store**
+    - [X] Track store buyables in config(definitions), and playerData(purchased?), just like achievements
+    - [X] Use ^^ data to stock & update store, and to handle purchases
   - [ ] **GenCon**
     - [ ] Finish scraper
     - [ ] Wire different ranges into settings (see vv)
@@ -66,7 +66,7 @@
     - [X] Add more detail to mobile TODOs
       - [X] Fix one: Scale strike Xs to fit boxes
   - [ ] **GitHub branch work**
-    - [ ] Study branch checking out, especially checking out a different one for bug fixes and the next major update
+    - [X] Study branch checking out, especially checking out a different one for bug fixes and the next major update
     - [ ] Check out a branch for each feature above to practice using them
 
 - [ ] **Major Projects**
@@ -78,6 +78,7 @@
   - [ ] Better artwork
   - [ ] Better gameplay loop (currency/vanities, progress over time, unlockable runners/themes)
   - [ ] Implement update system (start with playerData?)
+  - [ ] Testing harnesses? (If there's something they could be useful for, even if they aren't necessary. I want to get practice because I have no idea how they work right now).
 
 - [ ] **Styling**
   - [ ] Book of Mormon themed coloring (Maybe wait for Aunt Julie's feedback first)
@@ -87,6 +88,11 @@
     - [ ] Adjust all elements to fit on a single, non-scrolling screen
     - [ ] Custom Dropdowns
       - [ ] Sync width between content and buttons
+  - [ ] **Main Menu**
+    - [ ] Buttons all same size
+  - [ ] **Header Bar**
+  - [ ] **Footer Bar**
+    - [ ] Make it slightly taller and allow text wrap so the whole link to churchofjesuschrist.org is visible.
   - [ ] **Settings Screen**
     - [ ] Add multiple tabs for space management
     - [ ] Match styling of multi-check dropdown with other dropdowns
@@ -111,6 +117,9 @@
         - [ ] Center text
         - [ ] Show title and description
       - [ ] Completed
+  - [ ] **Store**
+    - [ ] Make runner color buttons the right colors
+  - [ ] **Overlays**
   - [ ] **Mobile**
     - [ ] Fix game-screen dropdowns cutoff on left side
     - [ ] Make header and footer smaller
@@ -118,22 +127,18 @@
     - [ ] Clamp Main Menu buttons vertically to let them shrink
     - [ ] Make difficulty ddown label selection wrap so it doesn't overflow right
 
-  - [ ] **Main Menu**
-    - [ ] Buttons all same size
-
 
 - [ ] **Refactoring**
   - [ ] **HTML**
     - [ ] Use the system I was using in ELS to name elements instead of sorting them afterwards in JS (E.G. 'go-btns-menu')???
   - [ ] **JS**
     - [ ] Run through the whole file and prayerfully record refactoring ideas and insights
-    - [X] Move ELS into its own file (JSON instead of .js maybe?)
-    - [X] Adjust all references to ELS to use the new file instead of the old reference from config.js
   - [ ] **CSS**
   - [ ] **Combo**
     - [ ] Convert all native selects to custom .dropdowns
     - [ ] Auto-populate setting-volume-dropdown-options on startup based on a const list to make adding new/custom options easier in the future
     - [ ] Update page button class names to include "-page" to increase consistency and allow for page specific styling in the future
+    - [ ] Make a resusable ('toast'?) system for notifications 
 
 
 - [ ] **Bugs and Features** 
