@@ -53,6 +53,9 @@ const defaultPlayerData = {
     totalBbucks: {
       achievementsArray: [false, false, false, false, false, false, false],
     },
+  },
+  purchases: {
+    colorOptions: [true, false, false, false, false, false],
   }
 }
 
@@ -67,10 +70,8 @@ export function savePlayerData(){
   localStorage.setItem(STORAGE_KEYS.playerData, JSON.stringify(playerData));
 }
 
-
 /**
- * Getter, setter, and incrementer for player BomBucks
- * 
+ * Getter, setter, and incrementer for player BomBucks 
  */
 export function addBomBucks(numBucks) {
   let currBucks = parseInt(playerData.bomBucks);
@@ -88,6 +89,18 @@ export function setBomBucks(amount){
 
 export function getBomBucks(){
   return playerData.bomBucks;
+}
+
+/**
+ * Getter and setter for player purchases array
+ */
+export function getPurchases(){
+  return playerData.purchases;
+}
+
+export function setPurchases(moddedArray){
+  playerData.purchases = moddedArray;
+  savePlayerData();
 }
 
 /**

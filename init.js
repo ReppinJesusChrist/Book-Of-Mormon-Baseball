@@ -4,7 +4,8 @@ import {fetchScores, loadData, savePlayerData} from "./data_manager.js";
 import * as Handlers from "./event_handlers.js";
 import {populateIncludeExcludeOptions, populateGuessOptions, initLBTableRows,
   updateLBDisplayDifficulty, updateLBTableRows, updateLBDisplayBook, positionBases,
-  updateBbucksDisplay, initAchievementsPage, updateAchievementsPage} from "./ui_manager.js";
+  updateBbucksDisplay, initAchievementsPage, updateAchievementsPage,
+  stockStore} from "./ui_manager.js";
 import {setCustomDropdownValue} from "./helper_functions.js";
 
 const CLICK_HANDLERS = {
@@ -33,7 +34,7 @@ const MULTI_HANDLERS = [
   {selector: '.restart-button', event: 'click', handler: Handlers.handleRestartButton},
   {selector: '.achievements-page-button', event: 'click', handler: Handlers.handleAchPageButton},
   {selector: '.store-page-button', event: 'click', handler: Handlers.handleStorePageButton},
-  {selector: '.team-color-button', event: 'click', handler: Handlers.handleStoreTeamColorButton},
+  {selector: '.runner-color-button', event: 'click', handler: Handlers.handleStoreTeamColorButton},
 ];
 
 export function initCSSVars() {
@@ -159,6 +160,8 @@ export async function initEls(){
 
   initAchievementsPage();
   updateAchievementsPage();
+
+  stockStore();
 
   populateGuessOptions();
   populateIncludeExcludeOptions();

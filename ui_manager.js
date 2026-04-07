@@ -1,9 +1,10 @@
 import {DIFFICULTY_NAMES, BOOK_NAMES, GAME_STATES, BASE_POSITIONS,
 ACHIEVEMENTS} from "./config.js";
 import {ELS} from "./ELS.js";
-import {getRandomVerses, loadPlayerData} from "./data_manager.js";
+import {getRandomVerses, loadPlayerData, getPurchases} from "./data_manager.js";
 import {gameState} from "./game_logic.js";
-import {setCustomDropdownValue} from "./helper_functions.js";
+import {STORE_DEFS} from "./store.js";
+import {arrayToPath} from "./helper_functions.js";
 
 
 const LB_tbody = document.querySelector("#leaderboard-table tbody"); 
@@ -61,7 +62,88 @@ function clearLB(){
   });
 }
 
+/**
+ * ****************** *
+ * Store Stuff        *
+ * ****************** *
+**/
 
+export function stockStore(){
+  const store = ELS.STORE.screen;
+  const merchandise = STORE_DEFS;
+  const receipts = getPurchases();
+
+
+  for(const [sectionName, {headerText, colorOptions}] of Object.entries(merchandise)){
+    const aisleReceipts = receipts.colorOptions;
+
+    const aisle = document.createElement("div");
+    aisle.id = sectionName;
+    aisle.classList.add('store-section');
+    store.appendChild(aisle);
+
+    const header = document.createElement("h2");
+    header.classList.add('store-section-header');
+    header.textContent = headerText;
+    aisle.appendChild(header);
+
+    let index = 0;
+    for(const {value, price} of colorOptions){
+      const colorButton = document.createElement("button");
+
+      colorButton.classList.add('buy-button', 'runner-color-button');
+      colorButton.value = value;
+      colorButton.dataset.cost = price;
+
+      const isSelected = (value == gameState.settings.runnerColor);
+      const isUnlocked = aisleReceipts[index];
+      colorButton.innerHTML = `
+          Make runners ${value} (<span class="cost-display"></span>)
+          <span class="selected-indicator ${isSelected ? '':'hidden'}">--Selected--</span>
+          <span class="locked-indicator ${isUnlocked ? 'hidden':''}">--LOCKED-- ${price} BB to unlock</span>
+      `;
+      aisle.appendChild(colorButton);
+      ++index;
+    }
+  }
+}
+
+export function refreshStore(){
+  const store = ELS.STORE.screen;
+  const merchandise = STORE_DEFS;
+  const receipts = getPurchases();
+
+
+  for(const [sectionName, {headerText, colorOptions}] of Object.entries(merchandise)){
+    const aisleReceipts = receipts.colorOptions;
+    const aisle = store.querySelector(`#${sectionName}`);
+
+    let index = 0;
+    for(const {value, price} of colorOptions){
+      const colorButton = aisle.querySelector(`button[value=${value}]`);
+
+      const isSelected = (value == gameState.settings.runnerColor);
+      const isUnlocked = aisleReceipts[index];
+
+      const selectedIndicator = colorButton.querySelector('.selected-indicator');
+      const lockedIndicator = colorButton.querySelector('.locked-indicator');
+
+      if(isSelected){
+        selectedIndicator.classList.remove('hidden');
+      } else {
+        selectedIndicator.classList.add('hidden');
+      }
+
+      if(isUnlocked){
+        lockedIndicator.classList.add('hidden');
+      } else {
+        lockedIndicator.classList.remove('hidden');
+      }
+
+      ++index;
+    }
+  }
+}
 
 /**
  * ****************** *
@@ -134,12 +216,6 @@ export function updateAchievementsPage(){
       completeAchievement(arrayToPath(ACHIEVEMENTS, pathArray), achEl);
     }
   });
-}
-
-function arrayToPath(obj, pathArray) {
-  return pathArray.reduce(
-    (accumulator, nextKey) => accumulator?.[nextKey], obj
-  );
 }
 
 /**

@@ -5,9 +5,12 @@ import { initCSSVars, initEventListeners, initScores, initData,
 
 document.addEventListener('DOMContentLoaded', async function () {
   initCSSVars();
-  initEventListeners();
-  initScores();
+
   await initData();
   
   initEls();
+
+  initEventListeners();
+  initScores();
+  
 });

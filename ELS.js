@@ -78,6 +78,9 @@ export const ELS = {
   },
   STORE: {
     screen: document.getElementById('store-screen'),
+    SECTIONS: {
+      teamColor: digby('team-color-store-section'),
+    },
   },
   vSelect: document.getElementById('settings-vselect-value'),
   OVERLAYS: {
@@ -87,4 +90,9 @@ export const ELS = {
   },
   overlay: document.getElementById('game-over-overlay'),
   finalScore: document.getElementById('final-score'),
+}
+
+// Helper function to shorten the declarations above. d.gEBI -> Digby
+function digby(ID){
+  return document.getElementById(ID);
 }

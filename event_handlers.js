@@ -9,9 +9,10 @@ import {} from "./data_manager.js";
 import {populateIncludeExcludeOptions, populateGuessOptions, 
   updateScoreboard, hideGameOver, updateLBDisplayDifficulty,
   updateLBTableRows, updateLBDisplayBook, showScreen,
-  updateBbucksDisplay,
+  updateBbucksDisplay, refreshStore
 } from "./ui_manager.js";
 import {loadData, getBomBucks, addBomBucks} from "./data_manager.js";
+import {STORE_DEFS, unlockStoreItem, isStoreItemUnlocked} from "./store.js";
 
 // Event Listener Functions (Will be exported or regrouped soon I think)
 export function handleThreshValueChange(){
@@ -192,24 +193,36 @@ export function handleStoreTeamColorButton(event){
 
   const section = button.closest('.store-section');
   const allColorButtons = section.querySelectorAll(
-    '.team-color-button'
+    '.buy-button'
   );
 
-  const cost = 10;
+  const cost = button.dataset.cost;
 
-  if(getBomBucks() >= cost){
-    addBomBucks(-cost);
+  const lockedIndicator = button.querySelector('.locked-indicator');
+  const isLocked = !(lockedIndicator.classList.contains('hidden'));
 
+  if(isLocked){
+    if(getBomBucks() >= cost){
+
+      addBomBucks(-cost);
+      updateBbucksDisplay();
+
+      unlockStoreItem(color);
+      refreshStore();
+    } else {
+      console.log("Sorry, not enough BomBucks. Get back to studying!");
+      return;
+    }
+  } else {
     allColorButtons.forEach((currButton) => {
-      const indicator = currButton.querySelector('.selected-indicator');
-      if(currButton !== button){
-        indicator.classList.add('hidden');
-      } else {
-        indicator.classList.remove('hidden');
-      }
-    });
+        const sIndicator = currButton.querySelector('.selected-indicator');
+        if(currButton !== button){
+          sIndicator.classList.add('hidden');
+        } else {
+          sIndicator.classList.remove('hidden');
+        }
+      });
 
-    setRunnerColor(color);
-    updateBbucksDisplay();
+      setRunnerColor(color);
   }
 }

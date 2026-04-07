@@ -161,3 +161,9 @@ export function setCustomDropdownValue(dropdown, value){
 
   dropdown._settingValue = false;
 }
+
+export function arrayToPath(obj, pathArray) {
+  return pathArray.reduce(
+    (accumulator, nextKey) => accumulator?.[nextKey], obj
+  );
+}
