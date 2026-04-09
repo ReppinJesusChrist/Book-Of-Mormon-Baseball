@@ -28,6 +28,7 @@ export const ELS = {
       revealReference: document.getElementById('revealReference'),
       newRound: document.getElementById('newRound'),
       submit: document.getElementById('finalizeGuess'),
+      showGo: document.getElementById('game-show-go-overlay'),
     },
     DROPS: {
       bookDropdown: document.getElementById('book-dropdown'),

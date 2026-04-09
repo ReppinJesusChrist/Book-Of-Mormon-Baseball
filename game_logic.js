@@ -53,7 +53,14 @@ export function startRound(){
   startTimer(handleTimeUp, TIMER_DURATIONS[gameState.settings.difficulty]);
 
   ELS.GAME.BTNS.newRound.disabled = true;
-  ELS.GAME.BTNS.revealReference.disabled = true;
+  ELS.GAME.BTNS.revealReference.disabled = false;
+
+  /**
+   * Toggle which button is visible. I'm hoping to generalize this for 
+   * button pairs and groups in the near future.
+  */
+  ELS.GAME.BTNS.submit.classList.remove('hidden');
+  ELS.GAME.BTNS.revealReference.classList.add('hidden');
 
   ELS.GAME.DROPS.bookDropdown.classList.remove("disabled");
   ELS.GAME.DROPS.chapterDropdown.classList.remove("disabled");
@@ -74,13 +81,18 @@ export function startGame(){
   gameState.score = 0;
   gameState.round = 0;
   gameState.inRound = true;
+
+  ELS.GAME.BTNS.newRound.classList.remove('hidden');
+  ELS.GAME.BTNS.showGo.classList.add('hidden');
+
   updateScoreboard()
   showScreen(GAME_STATES.IN_GAME);
   startRound();
 }
 
 export async function endGame(){
-  ELS.BUTTONS.newRound.disabled = true;
+  ELS.GAME.BTNS.newRound.classList.add('hidden');
+  ELS.GAME.BTNS.showGo.classList.remove('hidden');
 
   const finalScore = gameState.score;
   const difficulty = gameState.settings.difficulty;
@@ -247,8 +259,14 @@ function handleTimeUp() {
   ELS.GAME.DROPS.chapterDropdown.classList.remove("open");
 
   ELS.GAME.BTNS.newRound.disabled = false;
-  ELS.GAME.BTNS.revealReference.disabled = false;
-  ELS.GAME.BTNS.submit.disabled = true;
+
+  /**
+     * Toggle which button is visible. I'm hoping to generalize this for 
+     * button pairs and groups in the near future because this code is
+     * already reused twice for this specific pair and there will be more.
+     */
+    ELS.GAME.BTNS.submit.classList.add('hidden');
+    ELS.GAME.BTNS.revealReference.classList.remove('hidden');
 }
 
 export function submitGuess() {
@@ -257,7 +275,13 @@ export function submitGuess() {
 
     const resultEl = ELS.GAME.TXT.result;
     ELS.GAME.BTNS.newRound.disabled = false;
-      ELS.GAME.BTNS.revealReference.disabled = false;
+
+    /**
+     * Toggle which button is visible. I'm hoping to generalize this for 
+     * button pairs and groups in the near future.
+     */
+    ELS.GAME.BTNS.submit.classList.add('hidden');
+    ELS.GAME.BTNS.revealReference.classList.remove('hidden');
 
     if (!gameState.currentSelection) {
       resultEl.textContent = "No verses loaded yet.";

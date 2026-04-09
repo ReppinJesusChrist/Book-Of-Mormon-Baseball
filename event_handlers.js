@@ -7,7 +7,7 @@ import { stopTimer } from "./timer.js";
 import { toggleAllBoxes, makeScriptureLink} from "./helper_functions.js";
 import {} from "./data_manager.js";
 import {populateIncludeExcludeOptions, populateGuessOptions, 
-  updateScoreboard, hideGameOver, updateLBDisplayDifficulty,
+  hideGameOver, showGameOver, updateLBDisplayDifficulty,
   updateLBTableRows, updateLBDisplayBook, showScreen,
   updateBbucksDisplay, refreshStore
 } from "./ui_manager.js";
@@ -23,7 +23,7 @@ export function handleThreshValueChange(){
 
 export function handleRevealReference(){
   const refEl = ELS.GAME.TXT.refReveal;
-  //refEl.hidden = false;
+  ELS.GAME.BTNS.revealReference.disabled = true;
   
   if (!refEl.textContent && gameState.currentSelection) {
     let cs = gameState.currentSelection;
@@ -160,8 +160,13 @@ export function handleGORestartButton(){
   startGame();
 }
 
+// Used for all game-over buttons because they all hide the overlay
 export function handleGOButton(){
   hideGameOver();
+}
+
+export function handleShowGOButton(){
+  showGameOver();
 }
 
 export function handleLBDiffButton(event){

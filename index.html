@@ -74,10 +74,15 @@
 
                     <div class="controls">
                         <div id="submit-reveal-button-slot">
-                            <button id="finalizeGuess" disabled="true">Guess</button>
-                            <button id="revealReference" disabled>Reveal Reference</button>
+                            <div class="combo-button">
+                                <button id="finalizeGuess" disabled="true">Guess</button>
+                                <button id="revealReference" class="hidden" disabled="true">Reveal Reference</button>
+                            </div>
                         </div>
-                        <button id="newRound" disabled>New Round</button>
+                        <div class="combo-button">
+                            <button id="newRound" class="">New Round</button>
+                            <button id="game-show-go-overlay" class="hidden">Show Game Over</button>
+                        </div>
                     </div>
 
                     <button class="restart-button hidden" id="restart-button">Restart Game</button>

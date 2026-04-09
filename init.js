@@ -16,7 +16,9 @@ const CLICK_HANDLERS = {
   'finalizeGuess': Handlers.handleFinalizeGuess,
   'check-all-inex': Handlers.handleCheckAllInex,
   'uncheck-all-inex': Handlers.handleUncheckAllInex,
-  'go-btns-tryagain': Handlers.handleGORestartButton
+  'go-btns-tryagain': Handlers.handleGORestartButton,
+  'game-show-go-overlay': Handlers.handleShowGOButton,
+  
 }
 
 const CHANGE_HANDLERS = {
