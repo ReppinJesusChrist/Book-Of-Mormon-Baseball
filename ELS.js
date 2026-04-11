@@ -65,12 +65,26 @@ export const ELS = {
     screen: document.getElementById('settings-screen'),
 
     DROPS: {
-      difEl: document.getElementById('threshold-value'),
-      inEx: document.getElementById("include-exclude-values"),
       chapSelect: document.getElementById('chapterSelect'),
-      inExToggle: document.getElementById('include-exclude-toggle'),
-      inExDropdown: document.getElementById('include-exclude-dropdown'),
-      IESelect: document.getElementById('include-exclude-values'),
+      vSelect: digby('settings-vselect-dropdown'),
+
+      // Default Include-exclude select dropdown elements
+      defInExToggle: document.getElementById('include-exclude-toggle'),
+      defInExDropdown: document.getElementById('include-exclude-dropdown'),
+      defInExValues: document.getElementById('include-exclude-values'),
+
+      // GenCon range select dropdown elements
+      gcInExToggle: document.getElementById('include-exclude-toggle'),
+      gcInExDropdown: document.getElementById('include-exclude-dropdown'),
+      gcInExValues: document.getElementById('include-exclude-values'),
+
+      // Default Include-exclude select dropdown elements
+      customInExToggle: document.getElementById('include-exclude-toggle'),
+      customInExDropdown: document.getElementById('include-exclude-dropdown'),
+      customInExValues: document.getElementById('include-exclude-values'),
+
+      threshDropdown: digby('settings-threshold-dropdown'),
+      threshValues: digby('settings-thresh-dropdown-values'),
     }
   },
   ACHIEVEMENTS: {
@@ -83,7 +97,6 @@ export const ELS = {
       teamColor: digby('team-color-store-section'),
     },
   },
-  vSelect: document.getElementById('settings-vselect-value'),
   OVERLAYS: {
     achievementUnlocked: document.getElementById('achievement-unlock-overlay'),
     achievementName: document.getElementById('overlay-achievement-name'),

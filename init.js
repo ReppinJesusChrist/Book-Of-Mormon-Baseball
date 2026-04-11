@@ -22,10 +22,10 @@ const CLICK_HANDLERS = {
 }
 
 const CHANGE_HANDLERS = {
-  'settings-vselect-value': Handlers.handleVSelectChange,
+  'settings-vselect-dropdown': Handlers.handleVSelectChange,
   'book-dropdown': Handlers.handleBookSelectChange,
   'game-chapter-dropdown': Handlers.handleChapterSelectChange,
-  'threshold-value' : Handlers.handleThreshValueChange,
+  'settings-threshold-dropdown': Handlers.handleThreshValueChange,
 }
 
 const MULTI_HANDLERS = [
@@ -80,14 +80,24 @@ function initAllCustomDropdowns() {
     }
   });
 
+  /**
+   * Handler for change events in custom dropdowns
+   */
   document.addEventListener("click", (e) => {
     const option = e.target.closest(".custom-option");
     if(!option) return;
     if(!("value" in option.dataset)) return;
 
+    const value = option.dataset.value;
     const dropdown = option.closest(".dropdown");
-    setCustomDropdownValue(dropdown, option.dataset.value);
+    const trigger = dropdown.querySelector(".dropdown-trigger");
+
+
+    setCustomDropdownValue(dropdown, value);
+    dropdown.dispatchEvent(new Event("change", {bubbles: true}));
     dropdown.classList.remove("open");
+
+    trigger.textContent = option.textContent;
   });
 
   document.querySelectorAll(".dropdown").forEach( ddown => {

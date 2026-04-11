@@ -16,7 +16,7 @@ import {STORE_DEFS, unlockStoreItem, isStoreItemUnlocked} from "./store.js";
 
 // Event Listener Functions (Will be exported or regrouped soon I think)
 export function handleThreshValueChange(){
-  let difEl = ELS.SET.DROPS.difEl;
+  let difEl = ELS.SET.DROPS.threshDropdown;
   gameState.settings.thresholdSetting = difEl.value;
   gameState.settings.difficulty = difEl.value;
 }
@@ -55,13 +55,13 @@ export function handleSettingsButton(){
 }
 
 export function handleCheckAllInex(){
-  let inEx = ELS.SET.DROPS.inEx;
+  let inEx = ELS.SET.DROPS.defInExValues;
   toggleAllBoxes(inEx, true);
   populateIncludeExcludeOptions();
 }
 
 export function handleUncheckAllInex(){
-  let inEx = ELS.SET.DROPS.inEx;
+  let inEx = ELS.SET.DROPS.defInExValues;
   toggleAllBoxes(inEx, false);
   gameState.includedBooks.clear();
 }
@@ -92,10 +92,13 @@ function showNongameScreen(targetScreen){
   showScreen(targetScreen);
 }
 
-export async function handleVSelectChange(){
-  gameState.settings.currentVolume = ELS.vSelect.value;
-  gameState.settings.lbVolume = ELS.vSelect.value;
+export async function handleVSelectChange(event){
+  const value = event.currentTarget.value;
+  gameState.settings.currentVolume = value;
+  gameState.settings.lbVolume = value;
+
   await loadScriptureData();
+
   populateGuessOptions();
   populateIncludeExcludeOptions();
 }

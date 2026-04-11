@@ -19,7 +19,6 @@ select:hover {
 /*  Custom Dropdowns */
 .dropdown {
     width: 100%;
-    max-width: fit-content;
     font-size: var(--font-size-med);
 }
 

@@ -344,7 +344,7 @@ export function hideGameOver(){
 
 export function populateIncludeExcludeOptions() {
   // Clear previous options
-  ELS.SET.DROPS.IESelect.innerHTML = '';
+  ELS.SET.DROPS.defInExValues.innerHTML = '';
   gameState.includedBooks.clear();
   
   Object.keys(gameState.scriptures).forEach(bookName => {
@@ -378,7 +378,7 @@ export function populateIncludeExcludeOptions() {
 
     wrapper.appendChild(checkbox);
     wrapper.appendChild(labelSpan);
-    ELS.SET.DROPS.IESelect.appendChild(wrapper);
+    ELS.SET.DROPS.defInExValues.appendChild(wrapper);
   });
 }
 

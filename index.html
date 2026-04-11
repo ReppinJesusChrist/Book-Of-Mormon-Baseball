@@ -121,33 +121,44 @@
         </div>
         <div class="screen" id="settings-screen" style="display:none;">
             <h2>Settings</h2>
-            <label for="volume-dropdown-label">Select Volume:</label>
-            <div class="dropdown single-select">
-                <button type="button" class="dropdown-trigger">Select Volume:</button>
-                <div id="settings-volume-dropdown-values" class="dropdown-content">
-                    <div class="custom-option" value="ot">Old Testament</div>
-                    <div class="custom-option" value="nt">New Testament</div>
-                    <div class="custom-option" value="bofm">Book of Mormon</div>
-                    <div class="custom-option" value="dc">Doctrine & Covenants</div>
-                    <div class="custom-option" value="gc">General Conference</div>
-                    <div class="custom-option" value="custom">Custom Study Plan</div>
-                </div>
-            </div>
             <div id="settings-book-volume-selection">
-                <label for="volume-select-dropdown-label">Select Volume:</label>
-                <select id="settings-vselect-value">
-                    <option value="ot">Old Testament</option>
-                    <option value="nt">New Testament</option>
-                    <option value="bofm" selected>Book of Mormon</option>
-                    <option value="dc">Doctrine and Covenants</option>
-                    <option value="gc">General Conference (2024 and later)</option>
-                    <option value="custom">Custom Study Plan</option>
-                </select>
-                <label for="include-exclude-dropdown-label">Select Books/Subsections to include</label>
-                <div class="dropdown multi-select">
-                    <button type="button" class="dropdown-trigger">Show/Hide book options</button>
-                    <div id="include-exclude-values" class="dropdown-content"></div>
+                <label class="custom-dropdown-label">Select Volume:</label>
+                <div class="dropdown single-select" id="settings-vselect-dropdown">
+                    <button type="button" class="dropdown-trigger">Book of Mormon</button>
+                    <div id="settings-volume-dropdown-values" class="dropdown-content">
+                        <div class="custom-option" data-value="ot">Old Testament</div>
+                        <div class="custom-option" data-value="nt">New Testament</div>
+                        <div class="custom-option" data-value="bofm">Book of Mormon</div>
+                        <div class="custom-option" data-value="dc">Doctrine & Covenants</div>
+                        <div class="custom-option" data-value="gc">General Conference</div>
+                        <div class="custom-option" data-value="custom">Custom Study Plan</div>
+                    </div>
                 </div>
+
+                <div class="combo-dropdown" id="settings-subsections-dropdown">
+                    <div class="combo-dropdown-item">
+                        <label class="custom-dropdown-label">Select Books/Subsections to include</label>
+                        <div class="dropdown multi-select" id="default-in-ex-dropdown">
+                            <button type="button" class="dropdown-trigger">Show/Hide book options</button>
+                            <div id="include-exclude-values" class="dropdown-content"></div>
+                        </div>
+                    </div>
+                    <div class="combo-dropdown-item hidden">
+                        <label class="custom-dropdown-label">Select GenCon Range</label>
+                        <div class="dropdown multi-select" id="gencon-in-ex-dropdown">
+                            <button type="button" class="dropdown-trigger">Select Conferences to Include</button>
+                            <div id="gencon-include-exclude-values" class="dropdown-content"></div>
+                        </div>
+                    </div>
+                    <div class="combo-dropdown-item hidden">
+                        <label class="custom-dropdown-label">Select Custom Study Plan</label>
+                        <div class="dropdown multi-select" id="custom-plan-in-ex-dropdown">
+                            <button type="button" class="dropdown-trigger">Select Custom Study Plan</button>
+                            <div id="custom-study-include-exclude-values" class="dropdown-content"></div>
+                        </div>
+                    </div>
+                </div>
+                
                     <!-- Options will be populated dynamically based on selected volume -->
                 <button id="check-all-inex">Select All</button>
                 <button id="uncheck-all-inex">Deselect All</button>
@@ -159,17 +170,20 @@
                     X sec: how long you have to guess;
                     Verses: number verses displayed while guessing.
                 </div>
-                <label for="threshold-dropdown-label">Select Difficulty:</label>
-                <select id="threshold-value">
-                    <option value="easiest">Hit the side of Noah's ark ([250, 100, 50, 25], 180 sec, 5 verses)</option>
-                    <option value="easier">Hit the side of the stable ([100 , 50, 25, 12], 90 sec, 4 verses)</option>
-                    <option value="easy">Love thy neighbor ([50, 25, 12, 7], 60 sec, 3 verses)</option>
-                    <option value="average">Follow the star ([25, 12, 7, 3], 30 sec, 3 verses)</option>
-                    <option value="hard" selected>Enter at the gate ([12, 7, 3, 1], 20 sec, 3 verses)</option>
-                    <option value="harder">Hold the iron rod ([7, 3, 1, 0], 15 sec, 2 verses)</option>
-                    <option value="hardest">Find the piece of silver ([3, 1, 0, N/A], 10 sec, 2 verses)</option>
-                    <option value="bePerfect">Be Ye Therefore Perfect **VERY HARD** ([1, Exact Match, N/A, N/A], 7 sec, 1 verse)</option>
-                </select>
+                <div class="dropdown single-select" id="settings-threshold-dropdown">
+                    <label class="custom-dropdown-label">Select Difficulty Mode:</label>
+                    <button type="button" class="dropdown-trigger">Enter at the gate ([12, 7, 3, 1], 20 sec, 3 verses)</button>
+                    <div id="settings-thresh-dropdown-values" class="dropdown-content">
+                        <div class="custom-option" data-value="easiest">Hit the side of Noah's ark ([250, 100, 50, 25], 180 sec, 5 verses)</div>
+                        <div class="custom-option" data-value="easier">Hit the side of the stable ([100 , 50, 25, 12], 90 sec, 4 verses)</div>
+                        <div class="custom-option" data-value="easy">Love thy neighbor ([50, 25, 12, 7], 60 sec, 3 verses)</div>
+                        <div class="custom-option" data-value="average">Follow the star ([25, 12, 7, 3], 30 sec, 3 verses)</div>
+                        <div class="custom-option" data-value="hard" selected>Enter at the gate ([12, 7, 3, 1], 20 sec, 3 verses)</div>
+                        <div class="custom-option" data-value="harder">Hold the iron rod ([7, 3, 1, 0], 15 sec, 2 verses)</div>
+                        <div class="custom-option" data-value="hardest">Find the piece of silver ([3, 1, 0, N/A], 10 sec, 2 verses)</div>
+                        <div class="custom-option" data-value="bePerfect">Be Ye Therefore Perfect **VERY HARD** ([1, Exact Match, N/A, N/A], 7 sec, 1 verse)</div>
+                    </div>
+                </div>
             </div>
             <button class="main-menu-button">Back to Menu</button>
         </div>
